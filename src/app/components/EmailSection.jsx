@@ -52,7 +52,7 @@ const EmailSection = () => {
       {/* 上方文本描述 */}
       <div className="z-10 w-full max-w-lg text-center">
         <h2 className="text-center text-4xl font-bold text-white mt-4 mb-2 md:mb-4">
-          Let's Connect
+          Let&apos;s Connect
         </h2>
         <p className="text-[#ADB7BE] mb-0">
           I&apos;m currently looking for new opportunities. Whether you have a
