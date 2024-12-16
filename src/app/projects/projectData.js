@@ -6,7 +6,7 @@ const PROJECT_DATA = [
       "Using Next.js and Tailwind CSS, with Framer Motion animations, my personal portfolio website showcases my projects, skills, and achievements.",
     image: "/images/projects/1.png",
     tag: ["All", "Web"],
-    gitUrl: "/",
+    gitUrl: "https://github.com/Rickyoung221/my-portfolio",
     previewUrl: "/",
   },
   {
