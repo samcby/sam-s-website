@@ -5,8 +5,10 @@ import NavLink from "./NavLink";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import MenuOverlay from "./MenuOverlay";
 import Logo from "./Logo";
-import GithubIcon from "../../../public/github-icon.svg";
-import LinkedinIcon from "../../../public/linkedin-icon.svg";
+import GithubIcon from "../../../public/github-white-icon.png";
+import LinkedinIcon from "../../../public/linkedin-app-white-icon.svg";
+import InstagramIcon from "../../../public/instagram-white-icon.svg";
+
 import Image from "next/image";
 
 const navLinks = [
@@ -43,10 +45,17 @@ const Navbar = () => {
         {/* Socials at center */}
         <div className="socials flex flex-row gap-2">
           <Link href="https://github.com/Rickyoung221" target="_blank">
-            <Image src={GithubIcon} alt="Github Icon" />
+            <Image src={GithubIcon} alt="Github Icon" className="w-8 h-8" />
           </Link>
           <Link href="https://www.linkedin.com/in/weikeng-yang" target="_blank">
-            <Image src={LinkedinIcon} alt="Linkedin Icon" />
+            <Image src={LinkedinIcon} alt="Linkedin Icon" className="w-8 h-8" />
+          </Link>
+          <Link href="https://www.instagram.com/rick_young0221" target="_blank">
+            <Image
+              src={InstagramIcon}
+              alt="Instagram Icon"
+              className="w-8 h-8"
+            />
           </Link>
         </div>
         <div className="mobile-menu block md:hidden">
