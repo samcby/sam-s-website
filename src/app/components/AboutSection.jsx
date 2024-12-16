@@ -15,10 +15,13 @@ const AboutSection = () => {
   };
 
   return (
-    <section className="text-white" id="about">
-      <div className="flex flex-col items-center justify-center py-8 px-4 sm:py-16">
+    <section
+      id="about"
+      className="flex flex-col my-12 py-24 gap-8 relative items-center text-white"
+    >
+      <div className="flex flex-col items-center justify-center">
         {/* 图片区域 */}
-        <div className="w-full max-w-[500px] mt-5">
+        <div className="w-full max-w-[500px]">
           <Image
             src="https://images.squarespace-cdn.com/content/v1/5ccdb6eeb91449580563d995/1585071507659-79IGQEUKOLMRHVKV3NS8/ComputerCat_06.gif?format=2500w"
             alt="Computer Cat GIF"

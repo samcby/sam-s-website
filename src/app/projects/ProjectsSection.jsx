@@ -24,7 +24,11 @@ const ProjectsSection = () => {
   };
 
   return (
-    <section id="projects">
+    <section
+      id="projects"
+      className="flex flex-col my-12 py-24 gap-8 relative items-center"
+    >
+      {/* keep this as template for each page */}
       <h2 className="text-center text-4xl font-bold text-white mt-4 mb-2 md:mb-4">
         My Projects
       </h2>
