@@ -2,43 +2,7 @@
 import React, { useTransition, useState } from "react";
 import Image from "next/image";
 import TabButton from "./TabButton";
-
-const TAB_DATA = [
-  {
-    title: "Skills",
-    id: "skills",
-    content: (
-      <ul className="list-disc pl-2">
-        <li>Node.js</li>
-        <li>Express</li>
-        <li>PostgreSQL</li>
-        <li>Sequelize</li>
-        <li>JavaScript</li>
-        <li>React</li>
-      </ul>
-    ),
-  },
-  {
-    title: "Education",
-    id: "education",
-    content: (
-      <ul className="list-disc pl-2">
-        <li>Fullstack Academy of Code</li>
-        <li>University of California, Santa Cruz</li>
-      </ul>
-    ),
-  },
-  {
-    title: "Certifications",
-    id: "certifications",
-    content: (
-      <ul className="list-disc pl-2">
-        <li>AWS Cloud Practitioner</li>
-        <li>Google Professional Cloud Developer</li>
-      </ul>
-    ),
-  },
-];
+import TAB_DATA from "./tabData";
 
 const AboutSection = () => {
   const [tab, setTab] = useState("skills");
@@ -52,41 +16,76 @@ const AboutSection = () => {
 
   return (
     <section className="text-white" id="about">
-      <div className="md:grid md:grid-cols-2 gap-8 items-center py-8 px-4 xl:gap-16 sm:py-16 xl:px-16">
-        <Image src="/images/about-image.png" width={500} height={500} />
-        <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
-          <h2 className="text-4xl font-bold text-white mb-4">About Me</h2>
-          <p className="text-base lg:text-lg">
-            I am a full stack web developer with a passion for creating
-            interactive and responsive web applications. I have experience
-            working with JavaScript, React, Redux, Node.js, Express, PostgreSQL,
-            Sequelize, HTML, CSS, and Git. I am a quick learner and I am always
-            looking to expand my knowledge and skill set. I am a team player and
-            I am excited to work with others to create amazing applications.
+      <div className="flex flex-col items-center justify-center py-8 px-4 sm:py-16">
+        {/* 图片区域 */}
+        <div className="w-full max-w-[500px] mt-5">
+          <Image
+            src="https://images.squarespace-cdn.com/content/v1/5ccdb6eeb91449580563d995/1585071507659-79IGQEUKOLMRHVKV3NS8/ComputerCat_06.gif?format=2500w"
+            alt="Computer Cat GIF"
+            width={500}
+            height={500}
+            priority
+            className="mx-auto"
+          />
+        </div>
+
+        {/* 文本区域 */}
+        <div className="mt-8 text-center w-full max-w-[800px]">
+          <h2 className="text-4xl font-bold mb-4">About Me</h2>
+          <p className="text-base lg:text-lg text-left">
+            I am Rick Yang, a passionate Full Stack Developer with a strong
+            foundation in Computer Science, holding a B.S. and pursuing an M.S.
+            from UCLA. I specialize in creating dynamic, scalable, and
+            user-focused web and mobile applications using technologies such as
+            React, Redux, Node.js, Express, PostgreSQL, and MongoDB. My
+            expertise spans front-end and back-end development, complemented by
+            a solid understanding of software architecture and machine learning.
+            <br />
+            <br />
+            As a quick learner and problem solver, I excel in refactoring
+            complex codebases to improve performance and maintainability. My
+            commitment to balancing design and functionality ensures a seamless
+            user experience.
+            <br />
+            <br />
+            Beyond coding, I have explored 10 countries this year, combining my
+            passion for travel with a global perspective. I stay active with
+            fitness and enjoy strategic challenges through games like Teamfight
+            Tactics (TFT). I am eager to continue growing, collaborate with
+            talented teams, and contribute to impactful projects that make a
+            difference.
           </p>
-          <div className="flex flex-row justify-start mt-8">
+
+          {/* Tab 按钮 */}
+          <div className="flex flex-row justify-center mt-8 space-x-4">
             <TabButton
               selectTab={() => handleTabChange("skills")}
               active={tab === "skills"}
             >
-              {" "}
-              Skills{" "}
+              Skills
             </TabButton>
             <TabButton
               selectTab={() => handleTabChange("education")}
               active={tab === "education"}
             >
-              {" "}
-              Education{" "}
+              Education
             </TabButton>
             <TabButton
               selectTab={() => handleTabChange("certifications")}
               active={tab === "certifications"}
             >
-              {" "}
-              Certifications{" "}
+              Certifications
+            </TabButton>
+
+            <TabButton
+              selectTab={() => handleTabChange("awards")}
+              active={tab === "awards"}
+            >
+              Awards
             </TabButton>
           </div>
+
+          {/* Tab 内容 */}
           <div className="mt-8">
             {TAB_DATA.find((t) => t.id === tab).content}
           </div>
