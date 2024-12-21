@@ -1,10 +1,4 @@
-Including dependency versions in the `README.md` is a good practice if you want to ensure compatibility and provide clarity to users about the exact versions of tools and libraries used in your project.
-
-Here’s an updated version of the `README.md`, including the dependencies with their versions:
-
----
-
-# Portfolio Website
+# Rick's Portfolio Website
 
 This is a portfolio website built with Next.js and Tailwind CSS. It showcases your skills, projects, and achievements in an elegant and responsive design.
 
