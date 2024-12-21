@@ -3,7 +3,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@api/*": ["./src/app/api/*"],
-      "@components/*": ["./src/app/components/*"]
+      "@components/*": ["./src/app/components/*"],
+      "@companies/*": ["./public/images/experience/*"]
     }
   }
 }

@@ -10,7 +10,7 @@ const Logo = () => {
           alt="Logo"
           width={200}
           height={200}
-          objectFit="contain" // 保持原比例
+          style={{ objectFit: "contain" }} // 使用 style 替代 objectFit
           priority
         />
       </div>
