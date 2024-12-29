@@ -1,7 +1,18 @@
 // tabData.js
 import Image from "next/image";
+import Timeline from "./Timeline";
+import TimelineDynamics from "./TimelineDynamics";
 
 const TAB_DATA = [
+  {
+    title: "Experience",
+    id: "experience",
+    content: (
+      <div className="flex flex-col items-center justify-center">
+        <TimelineDynamics />
+      </div>
+    ),
+  },
   {
     title: "Skills",
     id: "skills",
@@ -55,6 +66,7 @@ const TAB_DATA = [
       </div>
     ),
   },
+
   {
     title: "Certifications",
     id: "certifications",

@@ -4,7 +4,7 @@ import DraggableWindow from "@/app/components/DraggableWindow";
 import Image from "next/image";
 
 const Interests = () => {
-  const [windowPositions, setWindowPositions] = useState([]);
+  const [windowPositions, setWindowPositions] = useState(null);
 
   // 在客户端生成随机位置
   useEffect(() => {
@@ -21,6 +21,7 @@ const Interests = () => {
       };
     };
 
+    // 在客户端渲染时生成位置
     setWindowPositions([
       getRandomPosition(),
       getRandomPosition(),
@@ -28,52 +29,46 @@ const Interests = () => {
     ]);
   }, []); // 空依赖数组，保证只在初次渲染时执行
 
+  // 等待 positions 初始化后再渲染
+  if (!windowPositions) return null;
+
   return (
     <>
-      {windowPositions.length > 0 && (
-        <>
-          <DraggableWindow
-            title="Photography"
-            defaultPosition={windowPositions[0]}
-            bounds="parent"
-          >
-            <p className="text-sm">
-              {" I love capturing landscapes and portraits. "}
-            </p>
-          </DraggableWindow>
+      <DraggableWindow
+        title="Photography"
+        defaultPosition={windowPositions[0]}
+        bounds="parent"
+      >
+        <p className="text-sm">
+          {"I love capturing landscapes and portraits."}
+        </p>
+      </DraggableWindow>
 
-          <DraggableWindow
-            title="Music"
-            defaultPosition={windowPositions[1]}
-            bounds="parent"
-          >
-            <p className="text-sm">
-              {
-                "Listening to jazz and electronic music is my hobby. I also play DJ."
-              }
-            </p>
-            <Image src="/images/DJ.png" width={300} height={200} alt="dj" />
-          </DraggableWindow>
+      <DraggableWindow
+        title="Music"
+        defaultPosition={windowPositions[1]}
+        bounds="parent"
+      >
+        <p className="text-sm">
+          {
+            "Listening to jazz and electronic music is my hobby. I also play DJ."
+          }
+        </p>
+        <Image src="/images/DJ.png" width={300} height={200} alt="dj" />
+      </DraggableWindow>
 
-          <DraggableWindow
-            title="Pet"
-            defaultPosition={windowPositions[2]}
-            bounds="parent"
-          >
-            <p className="text-sm">
-              {
-                ' I love cat and dog. I have 2 cats named "DoiYuk" (white) and "WongChoi" (black). '
-              }
-            </p>
-            <Image
-              src="/images/cats.jpg"
-              width={300}
-              height={200}
-              alt="myCat"
-            />
-          </DraggableWindow>
-        </>
-      )}
+      <DraggableWindow
+        title="Pet"
+        defaultPosition={windowPositions[2]}
+        bounds="parent"
+      >
+        <p className="text-sm">
+          {
+            'I love cat and dog. I have 2 cats named "DoiYuk" (white) and "WongChoi" (black).'
+          }
+        </p>
+        <Image src="/images/cats.jpg" width={300} height={200} alt="myCat" />
+      </DraggableWindow>
     </>
   );
 };
