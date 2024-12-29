@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useRef } from "react";
 import Draggable from "react-draggable";
 
 const DraggableWindow = React.memo(
   ({ title, children, defaultPosition, bounds }) => {
+    const nodeRef = useRef(null); // 添加 ref
+
     return (
-      <Draggable defaultPosition={defaultPosition} bounds={bounds}>
-        <div className="bg-gray-800 text-white rounded-md shadow-lg w-[300px] cursor-move absolute">
+      <Draggable
+        defaultPosition={defaultPosition}
+        bounds={bounds}
+        nodeRef={nodeRef}
+      >
+        <div
+          ref={nodeRef}
+          className="bg-gray-800 text-white rounded-md shadow-lg w-[300px] cursor-move absolute"
+        >
           {/* 窗口顶部 */}
           <div className="flex justify-between items-center bg-gray-700 p-2 rounded-t-md">
             <span className="text-sm">{title}</span>
@@ -19,7 +28,6 @@ const DraggableWindow = React.memo(
   }
 );
 
-// 添加 displayName
 DraggableWindow.displayName = "DraggableWindow";
 
 export default DraggableWindow;

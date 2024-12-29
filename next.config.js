@@ -3,12 +3,15 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 module.exports = withBundleAnalyzer({
-  // 这里可以添加其他 Next.js 配置
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.squarespace-cdn.com",
+        hostname: "p.ipic.vip",
+      },
+      {
+        protocol: "https",
+        hostname: "media.licdn.com",
       },
     ],
   },

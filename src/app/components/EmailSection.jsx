@@ -47,7 +47,7 @@ const EmailSection = () => {
   return (
     <section
       id="contact"
-      className="flex flex-col my-12 py-24 gap-8 relative items-center"
+      className="flex flex-col my-12 gap-8 relative items-center"
     >
       {/* 上方文本描述 */}
       <div className="z-10 w-full max-w-lg text-center">
@@ -57,7 +57,7 @@ const EmailSection = () => {
         <p className="text-[#ADB7BE] mb-0">
           I&apos;m currently looking for new opportunities. Whether you have a
           question or just want to say hi, I&apos;ll try my best to get back to
-          you!
+          you! 😊
         </p>
       </div>
 
