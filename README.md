@@ -6,6 +6,15 @@ This is a portfolio website built with Next.js and Tailwind CSS. It showcases yo
 
 https://github.com/judygab/nextjs-portfolio
 
+### Features added:
+- Dynamic Timelines feature for the experience section, can show the work experience in detail.
+- Drag and Drop features: could be extended for showing hobbies, life, or sharing photographs. Anything!
+- Mini Game: Snake Game import. And more will be added in the future. could be used to show a demo. 
+
+## Todo
+- [ ] Dark mode and light mode switch
+- [ ] multiple language switch
+  
 ---
 
 ## Usage
