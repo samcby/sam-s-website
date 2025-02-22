@@ -43,7 +43,7 @@ const HeroSection = () => {
           </p>
           <div className="flex justify-center sm:justify-start">
             <Link
-              href="https://drive.google.com/file/d/1g0Mk_Z1Ku7Z4LfGL0IFMv7ux7oUbAJK3/view?usp=sharing"
+              href="https://drive.google.com/file/d/1EylGF1FCQxpzEh8GCx9TBZQUYpvgcCeF/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className=" inline-block items-center px-1 py-1 w-full sm:w-fit rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 hover:bg-slate-800 text-white mt-3"

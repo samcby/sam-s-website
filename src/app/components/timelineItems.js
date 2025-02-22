@@ -1,13 +1,21 @@
 const TIMELINE_ITEMS = [
   {
-    date: "Dec 2024 - Present",
+    date: "Feb 2025 - June 2025",
+    title: "Software Engineer Intern",
+    location: "Nvidia ",
+    description: "CUDA Development",
+    logo: "https://p.ipic.vip/t7fbmt.png",
+    details: "Incoming",
+  },
+  {
+    date: "Dec 2024 - Feb 2025",
     title: "Software Engineer Intern",
     location: "Mercedes-Benz | Beijing, China",
     description:
       "Designing and implementing scalable software systems to enhance system performance and reliability. Leading critical projects focused on optimizing workflows and system robustness.",
     logo: "https://p.ipic.vip/ru4usl.svg",
     details:
-      "Contributed to the development of cloud-based distributed systems, achieving a 15% reduction in processing latency.",
+      "Part of the Autonomous Driving Perception Algorithm Team, focusing on data visualization and system optimization. Developed a simulation GUI tool using Python (PyQt5) to visualize JSON data, creating interactive 3D HD maps for debugging and evaluation",
   },
   {
     date: "Sept 2024 - Present",
@@ -16,8 +24,7 @@ const TIMELINE_ITEMS = [
     description:
       "GPA: 4.0/4.0 | Focused on distributed systems, artificial intelligence, and big data analytics.",
     logo: "https://p.ipic.vip/q1ysgx.png",
-    details:
-      "Key Courses: Big Data Analytics (A+) | Software Engineering (A-) ",
+    details: "Key Courses: Big Data Analytics (A+)  ",
   },
   {
     date: "March 2023 - May 2023",
