@@ -1,6 +1,6 @@
 const TIMELINE_ITEMS = [
   {
-    date: "Feb 2025 - June 2025",
+    date: "March 2025 - June 2025",
     title: "Software Engineer Intern",
     location: "Nvidia ",
     description: "CUDA Development",
