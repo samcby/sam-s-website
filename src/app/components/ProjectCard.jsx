@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { memo } from "react";
 import { CodeBracketIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import Image from "next/image";
 import { useTheme } from '../context/ThemeContext';
 
-const ProjectCard = ({ imgUrl, title, description, gitUrl }) => {
+const ProjectCard = memo(({ imgUrl, title, description, gitUrl }) => {
   const { isDarkMode } = useTheme();
   
   return (
@@ -12,10 +13,16 @@ const ProjectCard = ({ imgUrl, title, description, gitUrl }) => {
                     ${isDarkMode 
                       ? 'bg-[#073642] border border-[#586e75]' 
                       : 'bg-[#eee8d5] border border-[#93a1a1]'}`}>
-      <div
-        className="h-48 sm:h-52 md:h-52 relative group"
-        style={{ background: `url(${imgUrl})`, backgroundSize: "cover", backgroundPosition: "center" }}
-      >
+      <div className="h-48 sm:h-52 md:h-52 relative group">
+        <Image
+          src={imgUrl}
+          alt={title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          quality={75}
+          priority={false}
+        />
         <div className={`overlay items-center justify-center absolute top-0 left-0 w-full h-full 
                         ${isDarkMode ? 'bg-[#073642]' : 'bg-[#eee8d5]'}
                         bg-opacity-0 hidden group-hover:flex group-hover:bg-opacity-80 
@@ -37,18 +44,18 @@ const ProjectCard = ({ imgUrl, title, description, gitUrl }) => {
           </Link>
         </div>
       </div>
-      <div className="py-4 sm:py-6 px-4 flex flex-col h-[calc(400px-208px)]">
-        <h5 className={`text-lg sm:text-xl font-semibold mb-2 transition-colors duration-300
-                       ${isDarkMode ? 'text-[#93a1a1]' : 'text-[#002b36]'}`}>
+      <div className="p-4">
+        <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-[#002b36]'}`}>
           {title}
-        </h5>
-        <p className={`text-sm sm:text-base transition-colors duration-300
-                      ${isDarkMode ? 'text-[#839496]' : 'text-[#586e75]'}`}>
+        </h3>
+        <p className={`text-sm ${isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'}`}>
           {description}
         </p>
       </div>
     </div>
   );
-};
+});
+
+ProjectCard.displayName = 'ProjectCard';
 
 export default ProjectCard;

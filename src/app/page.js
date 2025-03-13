@@ -1,10 +1,21 @@
 "use client";
+import dynamic from 'next/dynamic';
 import HeroSection from "./components/HeroSection";
-import ProjectsSection from "./projects/ProjectsSection";
-import AchievementsSection from "./components/AchievementsSection";
-import AboutSection from "./components/AboutSection";
-import EmailSection from "./components/EmailSection";
 import { useTheme } from './context/ThemeContext';
+
+// 动态导入非关键组件
+const ProjectsSection = dynamic(() => import("./projects/ProjectsSection"), {
+  loading: () => <div>Loading...</div>,
+  ssr: false
+});
+
+const AboutSection = dynamic(() => import("./components/AboutSection"), {
+  loading: () => <div>Loading...</div>
+});
+
+const EmailSection = dynamic(() => import("./components/EmailSection"), {
+  loading: () => <div>Loading...</div>
+});
 
 export default function Home() {
   const { isDarkMode } = useTheme();

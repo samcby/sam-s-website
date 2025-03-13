@@ -13,6 +13,14 @@ module.exports = withBundleAnalyzer({
         protocol: "https",
         hostname: "media.licdn.com",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.squarespace-cdn.com",
+      }
     ],
   },
 });
