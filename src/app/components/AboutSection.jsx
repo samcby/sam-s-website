@@ -2,11 +2,14 @@
 import React, { useTransition, useState } from "react";
 import Image from "next/image";
 import TabButton from "./TabButton";
-import TAB_DATA from "./tabData";
+import TabDataContent from "./tabData";
+import { useTheme } from '../context/ThemeContext';
 
 const AboutSection = () => {
   const [tab, setTab] = useState("experience");
   const [isPending, startTransition] = useTransition();
+  const { isDarkMode } = useTheme();
+  const TAB_DATA = TabDataContent();
 
   const handleTabChange = (id) => {
     startTransition(() => {
@@ -17,9 +20,10 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="flex flex-col my-12 py-12 gap-8 relative items-center text-white"
+      className={`flex flex-col my-8 sm:my-12 py-8 sm:py-12 gap-6 sm:gap-8 relative items-center px-4 sm:px-6
+                  ${isDarkMode ? 'text-white' : 'text-[#002b36]'}`}
     >
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center w-full max-w-[1200px]">
         {/* 图片区域 */}
         {/* 
         <div className="w-full max-w-[500px]">
@@ -37,9 +41,13 @@ const AboutSection = () => {
         Computer Cat GIF */}
 
         {/* 文本区域 */}
-        <div className="mt-8 text-center w-full max-w-[800px]">
-          <h2 className="text-4xl font-bold mb-4">About Me</h2>
-          <p className="text-base lg:text-lg text-left">
+        <div className="w-full">
+          <h2 className={`text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-center
+                         ${isDarkMode ? 'text-white' : 'text-[#002b36]'}`}>
+            About Me
+          </h2>
+          <p className={`text-sm sm:text-base lg:text-lg text-left space-y-4
+                        ${isDarkMode ? 'text-[#ADB7BE]' : 'text-[#586e75]'}`}>
             I am Rick Yang, a passionate Full Stack Developer with a strong
             foundation in Computer Science, holding a B.S. and pursuing an M.S.
             from UCLA. I specialize in creating dynamic, scalable, and
@@ -47,14 +55,14 @@ const AboutSection = () => {
             React, Redux, Node.js, Express, PostgreSQL, and MongoDB. My
             expertise spans front-end and back-end development, complemented by
             a solid understanding of software architecture and machine learning.
-            <br />
-            <br />
+            <br className="hidden sm:block" />
+            <br className="hidden sm:block" />
             As a quick learner and problem solver, I excel in refactoring
             complex codebases to improve performance and maintainability. My
             commitment to balancing design and functionality ensures a seamless
             user experience.
-            <br />
-            <br />
+            <br className="hidden sm:block" />
+            <br className="hidden sm:block" />
             Beyond coding, I have explored 10 countries this year, combining my
             passion for travel with a global perspective. I stay active with
             fitness and enjoy strategic challenges through games like Teamfight
@@ -64,7 +72,7 @@ const AboutSection = () => {
           </p>
 
           {/* Tab 按钮 */}
-          <div className="flex flex-row justify-center mt-8 space-x-4">
+          <div className="flex flex-wrap justify-center mt-6 sm:mt-8 gap-2 sm:gap-4">
             <TabButton
               selectTab={() => handleTabChange("experience")}
               active={tab === "experience"}
@@ -83,14 +91,12 @@ const AboutSection = () => {
             >
               Education
             </TabButton>
-
             <TabButton
               selectTab={() => handleTabChange("certifications")}
               active={tab === "certifications"}
             >
               Certifications
             </TabButton>
-
             <TabButton
               selectTab={() => handleTabChange("awards")}
               active={tab === "awards"}
@@ -100,8 +106,8 @@ const AboutSection = () => {
           </div>
 
           {/* Tab 内容 */}
-          <div className="mt-8">
-            {TAB_DATA.find((t) => t.id === tab).content}
+          <div className="mt-6 sm:mt-8">
+            {TAB_DATA.find((t) => t.id === tab)?.content}
           </div>
         </div>
       </div>

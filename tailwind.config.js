@@ -2,6 +2,7 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
+  darkMode: 'class',
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -15,13 +16,28 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        primary: colors.cyan,
+        primary: {
+          light: '#60a5fa',
+          dark: '#3b82f6',
+        },
         secondary: colors.amber,
         sky: colors.sky,
         stone: colors.stone,
         neutral: colors.neutral,
         gray: colors.gray,
         slate: colors.slate,
+        background: {
+          light: '#f9fafb',
+          dark: '#121212',
+        },
+        surface: {
+          light: '#ffffff',
+          dark: '#1e1e1e',
+        },
+        text: {
+          light: '#111827',
+          dark: '#f3f4f6',
+        },
       },
     },
   },

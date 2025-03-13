@@ -4,25 +4,28 @@ import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useTheme } from '../context/ThemeContext';
 
 const HeroSection = () => {
+  const { isDarkMode } = useTheme();
+
   return (
-    <section className="lg:py-16">
-      <div className="grid grid-cols-1 sm:grid-cols-12 place-items-center">
+    <section className="py-8 sm:py-12 lg:py-16">
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-12 place-items-center">
         {/* 左侧文字部分 */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="w-full md:w-3/4 lg:w-2/3 h-auto col-span-12 sm:col-span-8 text-center sm:text-left"
+          className="w-full col-span-12 sm:col-span-7 lg:col-span-8 text-center sm:text-left px-4 sm:px-0"
         >
-          <h1 className="text-white mb-4 text-4xl sm:text-5xl lg:text-6xl lg:leading-normal font-extrabold">
+          <h1 className={`mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight ${isDarkMode ? 'text-white' : 'text-[#002b36]'}`}>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-600">
               Hello, I&apos;m{" "}
             </span>
-            <br />
+            <br className="hidden sm:block" />
             <TypeAnimation
-              className="text-3xl sm:text-4xl lg:text-5xl"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
               sequence={[
                 "Rick",
                 1000,
@@ -38,7 +41,7 @@ const HeroSection = () => {
               repeat={Infinity}
             />
           </h1>
-          <p className="text-[#ADB7BE] text-base sm:text-lg mb-6 lg:text-xl">
+          <p className={`text-sm sm:text-base lg:text-lg mb-6 max-w-[600px] mx-auto sm:mx-0 ${isDarkMode ? 'text-[#ADB7BE]' : 'text-[#586e75]'}`}>
             Welcome to see my Portfolio
           </p>
           <div className="flex justify-center sm:justify-start">
@@ -46,9 +49,11 @@ const HeroSection = () => {
               href="https://drive.google.com/file/d/1EylGF1FCQxpzEh8GCx9TBZQUYpvgcCeF/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
-              className=" inline-block items-center px-1 py-1 w-full sm:w-fit rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 hover:bg-slate-800 text-white mt-3"
+              className="inline-block px-1 py-1 w-full sm:w-fit rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 hover:bg-slate-800 text-white mt-3"
             >
-              <span className="flex items-center justify-center gap-x-2 bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">
+              <span className={`flex items-center justify-center gap-x-2 rounded-full px-4 sm:px-5 py-2 text-sm sm:text-base
+                              ${isDarkMode ? 'bg-[#002b36] hover:bg-[#073642]' : 'bg-[#fdf6e3] hover:bg-[#eee8d5]'}
+                              ${isDarkMode ? 'text-white' : 'text-[#002b36]'}`}>
                 Resume
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +61,7 @@ const HeroSection = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-5 h-5 align-middle"
+                  className="w-4 h-4 sm:w-5 sm:h-5"
                 >
                   <path
                     strokeLinecap="round"
@@ -74,15 +79,18 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="col-span-12 sm:col-span-4 place-self-center mt-4 lg:mt-0"
+          className="col-span-12 sm:col-span-5 lg:col-span-4 place-self-center mt-8 sm:mt-0"
         >
-          <div className="rounded-full bg-[#181818] w-[250px] h-[250px] lg:w-[400px] lg:h-[400px] relative">
+          <div className={`rounded-full w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] lg:w-[400px] lg:h-[400px] relative
+                          ${isDarkMode ? 'bg-[#073642]' : 'bg-[#eee8d5]'}`}>
             <Image
               src="/images/usagi-image.png"
               alt="usagi image"
               className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               width={300}
               height={300}
+              sizes="(max-width: 640px) 180px, (max-width: 1024px) 230px, 280px"
+              priority
             />
           </div>
         </motion.div>

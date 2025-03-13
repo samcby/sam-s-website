@@ -1,7 +1,11 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import { useTheme } from '../context/ThemeContext';
 
 const Logo = () => {
+  const { isDarkMode } = useTheme();
+  
   return (
     <div className="flex justify-center items-center">
       <div className="relative w-full max-w-[300px] h-auto">
@@ -10,7 +14,8 @@ const Logo = () => {
           alt="Logo"
           width={200}
           height={200}
-          style={{ objectFit: "contain" }} // 使用 style 替代 objectFit
+          style={{ objectFit: "contain" }}
+          className={`transition-opacity duration-300 ${isDarkMode ? 'opacity-100' : 'opacity-90'}`}
           priority
         />
       </div>
