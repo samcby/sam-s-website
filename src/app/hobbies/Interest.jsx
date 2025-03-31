@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import DraggableWindow from "@/app/components/DraggableWindow";
-import Image from "next/image";
 import { useTheme } from '../context/ThemeContext';
+import WindowContent from './components/WindowContent';
+import { getInitialPosition, getWindowTitle } from './utils/windowUtils';
 
 const Interests = ({ containerRef }) => {
   const { isDarkMode } = useTheme();
@@ -82,38 +83,10 @@ const Interests = ({ containerRef }) => {
   useEffect(() => {
     if (isInitializedRef.current || !containerDimensions.width || !containerDimensions.height) return;
 
-    const getInitialPosition = (index, total) => {
-      const windowWidth = 300;
-      const windowHeight = 300;
-      const maxX = Math.max(0, containerDimensions.width - windowWidth);
-      const maxY = Math.max(0, containerDimensions.height - windowHeight);
-
-      const cols = Math.ceil(Math.sqrt(total));
-      const rows = Math.ceil(total / cols);
-      const col = index % cols;
-      const row = Math.floor(index / cols);
-
-      const x = (maxX / (cols - 1 || 1)) * col;
-      const y = (maxY / (rows - 1 || 1)) * row;
-
-      return {
-        position: {
-          x: Math.max(0, Math.min(x, maxX)),
-          y: Math.max(0, Math.min(y, maxY))
-        },
-        velocity: {
-          x: (Math.random() - 0.5) * 0.5,
-          y: (Math.random() - 0.5) * 0.5
-        },
-        isDragging: false,
-        isVisible: true
-      };
-    };
-
-    const windowIds = ['photography', 'music', 'pet', 'travel', 'fitness'];
+    const windowIds = ['photography', 'music', 'pet', 'travel', 'fitness', 'anime', 'art', 'volunteer'];
     setWindows(
       windowIds.map((id, index) => ({
-        ...getInitialPosition(index, windowIds.length),
+        ...getInitialPosition(index, windowIds.length, containerDimensions),
         id
       }))
     );
@@ -247,16 +220,7 @@ const Interests = ({ containerRef }) => {
         window.isVisible && (
           <DraggableWindow
             key={window.id}
-            title={(() => {
-              switch(window.id) {
-                case 'photography': return "Photography";
-                case 'music': return "Music";
-                case 'pet': return "Pet";
-                case 'travel': return "Travel";
-                case 'fitness': return "Fitness";
-                default: return "";
-              }
-            })()}
+            title={getWindowTitle(window.id)}
             defaultPosition={window.position}
             bounds="parent"
             onStart={() => handleDragStart(window.id)}
@@ -266,100 +230,7 @@ const Interests = ({ containerRef }) => {
             onClose={() => handleClose(window.id)}
             className={`${isDarkMode ? 'bg-[#073642] text-[#93a1a1]' : 'bg-[#eee8d5] text-[#586e75]'}`}
           >
-            {(() => {
-              switch(window.id) {
-                case 'photography':
-                  return (
-                    <div data-handle="true">
-                      <p className="text-sm mb-4">
-                        {"I love capturing landscapes and portraits."}
-                      </p>
-                      <Image 
-                        src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
-                        width={300} 
-                        height={200} 
-                        alt="photography"
-                        className="rounded-md object-cover select-none pointer-events-none"
-                        sizes="(max-width: 640px) 100vw, 300px"
-                        quality={75}
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSEkLUEwLi0tLTAtQFBGPzpQQERYYE9QUFJ5WGB3enh+P0BJeXhgY3j/2wBDAR"
-                      />
-                    </div>
-                  );
-                case 'music':
-                  return (
-                    <div data-handle="true">
-                      <p className="text-sm mb-4">
-                        {"Listening to jazz and electronic music is my hobby. I also play DJ."}
-                      </p>
-                      <Image 
-                        src="/images/DJ.png" 
-                        width={300} 
-                        height={200} 
-                        alt="dj"
-                        className="rounded-md select-none pointer-events-none"
-                        sizes="(max-width: 640px) 100vw, 300px"
-                        quality={75}
-                      />
-                    </div>
-                  );
-                case 'pet':
-                  return (
-                    <div data-handle="true">
-                      <p className="text-sm mb-4">
-                        {'I love cat and dog. I have 2 cats named "DoiYuk" (white) and "WongChoi" (black).'}
-                      </p>
-                      <Image 
-                        src="/images/cats.jpg" 
-                        width={300} 
-                        height={200} 
-                        alt="myCat"
-                        className="rounded-md select-none pointer-events-none"
-                        sizes="(max-width: 640px) 100vw, 300px"
-                        quality={75}
-                      />
-                    </div>
-                  );
-                case 'travel':
-                  return (
-                    <div data-handle="true">
-                      <p className="text-sm mb-4">
-                        {"I love traveling and exploring new places. I've visited 10 countries in 2024, experiencing different cultures and capturing beautiful moments."}
-                      </p>
-                      <Image 
-                        src="https://images.unsplash.com/photo-1488085061387-422e29b40080"
-                        width={300} 
-                        height={200} 
-                        alt="travel"
-                        className="rounded-md object-cover select-none pointer-events-none"
-                        sizes="(max-width: 640px) 100vw, 300px"
-                        quality={75}
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSEkLUEwLi0tLTAtQFBGPzpQQERYYE9QUFJ5WGB3enh+P0BJeXhgY3j/2wBDAR"
-                      />
-                    </div>
-                  );
-                case 'fitness':
-                  return (
-                    <div data-handle="true">
-                      <p className="text-sm mb-4">
-                        {"Staying active is important to me. I enjoy working out and maintaining a healthy lifestyle through regular exercise and proper nutrition."}
-                      </p>
-                      <Image 
-                        src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438"
-                        width={300} 
-                        height={200} 
-                        alt="fitness"
-                        className="rounded-md object-cover select-none pointer-events-none"
-                        unoptimized
-                      />
-                    </div>
-                  );
-                default:
-                  return null;
-              }
-            })()}
+            <WindowContent id={window.id} />
           </DraggableWindow>
         )
       ))}
