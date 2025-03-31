@@ -11,13 +11,13 @@ const HeroSection = () => {
 
   return (
     <section className="py-8 sm:py-12 lg:py-16">
-      <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-12 place-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-12 place-items-center max-w-5xl mx-auto px-4">
         {/* 左侧文字部分 */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="w-full col-span-12 sm:col-span-7 lg:col-span-8 text-center sm:text-left px-4 sm:px-0"
+          className="w-full col-span-12 sm:col-span-6 lg:col-span-7 text-center sm:text-left"
         >
           <h1 className={`mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight ${isDarkMode ? 'text-white' : 'text-[#002b36]'}`}>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-primary-400 to-secondary-500">
@@ -77,7 +77,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="col-span-12 sm:col-span-5 lg:col-span-4 place-self-center mt-8 sm:mt-0"
+          className="col-span-12 sm:col-span-6 lg:col-span-5 place-self-center mt-8 sm:mt-0"
         >
           <div className={`rounded-full w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] lg:w-[400px] lg:h-[400px] relative
                           ${isDarkMode ? 'bg-[#073642]' : 'bg-[#eee8d5]'}`}>

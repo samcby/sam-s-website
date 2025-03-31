@@ -6,9 +6,11 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 import TIMELINE_ITEMS from "./timelineItems";
 import Image from "next/image";
+import { useTheme } from '../context/ThemeContext';
 
 function Timeline() {
   const [selectedMilestone, setSelectedMilestone] = useState(null);
+  const { isDarkMode } = useTheme();
 
   const handleMilestoneClick = (milestone) => {
     setSelectedMilestone(milestone);
@@ -20,7 +22,10 @@ function Timeline() {
 
   return (
     <>
-      <h1 className="text-4xl font-bold text-center my-8">My Timeline 🚀</h1>
+      <h3 className={`text-xl sm:text-2xl font-medium text-center mb-4 transition-colors duration-300
+                    ${isDarkMode ? 'text-[#93a1a1]' : 'text-[#002b36]'}`}>
+        My Timeline 🚀
+      </h3>
       <div className="mx-auto max-w-5xl">
         <VerticalTimeline>
           {TIMELINE_ITEMS.map((item, index) => (
@@ -77,17 +82,19 @@ function Timeline() {
 }
 
 const TimelineItem = ({ item, index, onClick }) => {
+  const { isDarkMode } = useTheme();
+  
   return (
     <VerticalTimelineElement
       date={item.date}
-      dateClassName={
+      dateClassName={`${isDarkMode ? 'text-white' : 'text-[#002b36]'} ${
         index % 2 === 0
-          ? "date-right text-white text-left ml-6" //这里可以修改日期的位置
-          : "date-left text-white text-center !text-right !mr-6" //这里不管怎么修改都不会改变日期的位置, 要通过 !important 来修改
-      } // 控制日期样式
+          ? "date-right text-left ml-6"
+          : "date-left text-center !text-right !mr-6"
+      }`}
       contentStyle={{
         background: index % 2 === 0 ? "#e0f7fa" : "#fce4ec",
-        color: "#333", // text color, but it holds for both the data and the content container text
+        color: "#333",
         cursor: "pointer",
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
       }}

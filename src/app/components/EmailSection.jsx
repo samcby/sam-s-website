@@ -49,15 +49,11 @@ const EmailSection = () => {
   return (
     <section
       id="contact"
-      className="flex flex-col my-8 sm:my-12 py-8 sm:py-12 gap-6 sm:gap-8 relative items-center px-4 sm:px-6"
+      className="flex flex-col items-center"
     >
       {/* 上方文本描述 */}
-      <div className="z-10 w-full max-w-lg text-center">
-        <h2 className={`text-center text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 transition-colors duration-300
-                      ${isDarkMode ? 'text-[#93a1a1]' : 'text-[#002b36]'}`}>
-          Let&apos;s Connect
-        </h2>
-        <p className={`text-sm sm:text-base mb-0 px-4 sm:px-0 transition-colors duration-300
+      <div className="w-full max-w-lg text-center">
+        <p className={`text-sm sm:text-base mb-8 px-4 sm:px-0 transition-colors duration-300
                     ${isDarkMode ? 'text-[#839496]' : 'text-[#586e75]'}`}>
           I&apos;m currently looking for new opportunities. Whether you have a
           question or just want to say hi, I&apos;ll try my best to get back to
@@ -66,7 +62,7 @@ const EmailSection = () => {
       </div>
 
       {/* 下方表单 */}
-      <div className="z-10 w-full max-w-lg">
+      <div className="w-full max-w-lg">
         {emailSubmitted ? (
           <p className="text-green-500 text-center text-sm mt-4">
             Email sent successfully! 🎉

@@ -26,15 +26,8 @@ const ProjectsSection = () => {
   };
 
   return (
-    <section
-      id="projects"
-      className={`flex flex-col my-8 sm:my-12 py-12 sm:py-24 gap-6 sm:gap-8 relative items-center px-4 sm:px-6`}
-    >
-      <h2 className={`text-center text-3xl sm:text-4xl font-bold mt-4 mb-2 md:mb-4 transition-colors duration-300
-                    ${isDarkMode ? 'text-[#93a1a1]' : 'text-[#002b36]'}`}>
-        My Projects
-      </h2>
-      <div className={`flex flex-wrap justify-center items-center gap-2 sm:gap-3 py-4 sm:py-6 transition-colors duration-300
+    <section id="projects" className="flex flex-col items-center">
+      <div className={`flex flex-wrap justify-center items-center gap-2 sm:gap-3 py-6 sm:py-8 transition-colors duration-300
                     ${isDarkMode ? 'text-[#93a1a1]' : 'text-[#002b36]'}`}>
         <ProjectTag
           onClick={handleTagChange}

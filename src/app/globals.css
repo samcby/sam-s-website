@@ -6,6 +6,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --navbar-height: 4.5rem; /* py-4(2rem) + content height(~2.5rem) */
+  --navbar-height-mobile: 4rem; /* 较小的移动端高度 */
 }
 
 @layer base {

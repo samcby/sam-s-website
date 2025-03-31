@@ -1,15 +1,15 @@
 "use client";
 import EmailSection from "@components/EmailSection";
-import { useTheme } from '../context/ThemeContext';
+import PageTitle from "@components/PageTitle";
+import PageContainer from "@components/PageContainer";
 
 export default function ContactPage() {
-  const { isDarkMode } = useTheme();
-  
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-[#002b36]' : 'bg-[#fdf6e3]'}`}>
-      <div className="container mx-auto px-12 py-24">
+    <PageContainer>
+      <PageTitle title="Contact Me" />
+      <div className="container mx-auto px-4">
         <EmailSection />
       </div>
-    </div>
+    </PageContainer>
   );
 }

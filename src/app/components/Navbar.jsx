@@ -10,6 +10,7 @@ import LinkedinIcon from "../../../public/linkedin-app-white-icon.svg";
 import InstagramIcon from "../../../public/instagram-white-icon.svg";
 import { useTheme } from '../context/ThemeContext';
 import Image from "next/image";
+import ThemeSwitch from './ThemeSwitch';
 
 const navLinks = [
   {
@@ -35,10 +36,10 @@ const Navbar = () => {
   const { isDarkMode } = useTheme();
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 border-b transition-colors duration-300
+    <nav className={`fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-md transition-colors duration-300
                     ${isDarkMode 
-                      ? 'bg-[#073642] border-[#586e75] bg-opacity-95' 
-                      : 'bg-[#eee8d5] border-[#93a1a1] bg-opacity-95'}`}>
+                      ? 'bg-[#073642]/80 border-[#586e75]' 
+                      : 'bg-[#eee8d5]/80 border-[#93a1a1]'}`}>
       <div className="container mx-auto flex flex-wrap items-center justify-between px-4 py-4">
         <Link
           href={"/"}
@@ -57,6 +58,9 @@ const Navbar = () => {
 
         {/* Socials */}
         <div className="hidden md:flex items-center space-x-4">
+          <div className="mr-2">
+            <ThemeSwitch />
+          </div>
           <Link href="https://github.com/Rickyoung221" target="_blank">
             <Image 
               src={GithubIcon} 

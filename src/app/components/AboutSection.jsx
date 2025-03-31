@@ -20,10 +20,10 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className={`flex flex-col my-8 sm:my-12 py-8 sm:py-12 gap-6 sm:gap-8 relative items-center px-4 sm:px-6
+      className={`flex flex-col gap-6 sm:gap-8 relative items-center
                   ${isDarkMode ? 'text-white' : 'text-[#002b36]'}`}
     >
-      <div className="flex flex-col items-center justify-center w-full max-w-[1200px]">
+      <div className="flex flex-col items-center justify-center w-full max-w-5xl">
         {/* 图片区域 */}
         {/* 
         <div className="w-full max-w-[500px]">
@@ -42,11 +42,7 @@ const AboutSection = () => {
 
         {/* 文本区域 */}
         <div className="w-full">
-          <h2 className={`text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-center
-                         ${isDarkMode ? 'text-white' : 'text-[#002b36]'}`}>
-            About Me
-          </h2>
-          <p className={`text-sm sm:text-base lg:text-lg text-left space-y-4
+          <p className={`text-sm sm:text-base lg:text-lg text-left space-y-4 leading-relaxed
                         ${isDarkMode ? 'text-[#ADB7BE]' : 'text-[#586e75]'}`}>
             I am Rick Yang, a passionate Full Stack Developer with a strong
             foundation in Computer Science, holding a B.S. and pursuing an M.S.
