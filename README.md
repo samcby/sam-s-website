@@ -11,11 +11,18 @@ https://www.youtube.com/watch?v=K-hGb9W6wHc
 - Dynamic Timelines feature for the experience section, can show the work experience in detail.
 - Drag and drop features: These could be extended to show hobbies and life or share photographs. Anything!
 - Mini Game: Snake Game import. And more will be added in the future. could be used to show a demo. 
+- Music Player: A modern, responsive music player with dynamic playlist loading, metadata extraction, and theme support. [Learn more](docs/MUSIC_PLAYER.md)
 
 ## Todo
 - [ ] Dark mode and light mode switch
 - [ ] multiple language switch
 - [ ] Moblie adaptation responsive
+- [ ] Music Player Enhancements
+  - [ ] Advanced UI: Minimized mode, PiP, visualizer effects
+  - [ ] Streaming: NetEase Cloud Music & Spotify integration
+  - [ ] Features: Lyrics display, playlist management
+  - [ ] Performance: Caching, preloading optimization
+  [See detailed roadmap](docs/MUSIC_PLAYER.md#future-enhancements)
   
 ---
 
@@ -111,16 +118,4 @@ npm install
 
 The `@next/bundle-analyzer` plugin is already integrated into the project. To enable it, ensure the following configuration exists in your `next.config.js`:
 
-```javascript
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
-
-module.exports = withBundleAnalyzer({});
 ```
-
----
-
-## License
-
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT). Feel free to use, modify, and distribute the code as per the terms of the license.
