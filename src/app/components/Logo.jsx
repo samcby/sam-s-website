@@ -3,17 +3,20 @@ import React from "react";
 import Image from "next/image";
 import { useTheme } from '../context/ThemeContext';
 
-const Logo = () => {
+const Logo = ({ isFooter = false }) => {
   const { isDarkMode } = useTheme();
   
   return (
     <div className="flex justify-center items-center">
-      <div className="relative w-full max-w-[300px] h-auto">
+      <div className={`relative ${
+        isFooter 
+          ? 'w-24 h-24 md:w-28 md:h-28' 
+          : 'w-16 h-16 md:w-20 md:h-20'
+      }`}>
         <Image
           src="/images/RICK_logo_vaporwave.png"
           alt="Logo"
-          width={200}
-          height={200}
+          fill
           style={{ objectFit: "contain" }}
           className={`transition-opacity duration-300 ${isDarkMode ? 'opacity-100' : 'opacity-90'}`}
           priority

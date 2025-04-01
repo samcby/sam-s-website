@@ -15,7 +15,7 @@ const Footer = () => {
         {/* Logo */}
         <div className={`transition-colors duration-300
                         ${isDarkMode ? 'text-[#93a1a1]' : 'text-[#002b36]'}`}>
-          <Logo />
+          <Logo isFooter={true} />
         </div>
         {/* Footer Text */}
         <p className={`text-sm text-center md:text-left transition-colors duration-300
