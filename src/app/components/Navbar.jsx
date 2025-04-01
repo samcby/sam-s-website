@@ -34,9 +34,9 @@ const Navbar = () => {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-md transition-colors duration-300
                     ${isDarkMode 
-                      ? 'bg-[#073642]/80 border-[#586e75]' 
-                      : 'bg-[#eee8d5]/80 border-[#93a1a1]'}`}>
-      <div className="container mx-auto flex flex-wrap items-center justify-between px-4 py-2 md:py-4">
+                      ? 'border-t-[#586e75] bg-[#00212b] text-[#93a1a1]' 
+                      : 'border-t-[#93a1a1] bg-[#eee8d5] text-[#586e75]'}`}>
+      <div className="container mx-auto flex flex-wrap items-center justify-between px-3 py-0.5 md:py-1">
         {/* Logo */}
         <Link
           href={"/"}
@@ -47,21 +47,21 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden md:flex items-center space-x-6">
           {navLinks.map((link, index) => (
             <NavLink key={index} href={link.path} title={link.title} />
           ))}
         </div>
 
         {/* 右侧工具栏 */}
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden md:flex items-center space-x-3">
           {/* 暗色模式切换按钮 */}
           <motion.button
             onClick={toggleTheme}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-full border-2
               ${isDarkMode 
-                ? 'bg-[#073642]/80 border-[#586e75] text-[#93a1a1]' 
-                : 'bg-[#eee8d5]/80 border-[#93a1a1] text-[#586e75]'}`}
+                ? 'bg-[#00212b] border-[#586e75] text-[#93a1a1]' 
+                : 'bg-[#eee8d5] border-[#93a1a1] text-[#586e75]'}`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -101,8 +101,8 @@ const Navbar = () => {
               rel="noopener noreferrer"
               className={`p-2 rounded-full border-2 transition-colors duration-300
                 ${isDarkMode 
-                  ? 'bg-[#073642]/80 border-[#586e75] text-[#93a1a1] hover:border-[#93a1a1]' 
-                  : 'bg-[#eee8d5]/80 border-[#93a1a1] text-[#586e75] hover:border-[#586e75]'}`}
+                  ? 'bg-[#00212b] border-[#586e75] text-[#93a1a1] hover:border-[#93a1a1]' 
+                  : 'bg-[#eee8d5] border-[#93a1a1] text-[#586e75] hover:border-[#586e75]'}`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -122,8 +122,8 @@ const Navbar = () => {
               rel="noopener noreferrer"
               className={`p-2 rounded-full border-2 transition-colors duration-300
                 ${isDarkMode 
-                  ? 'bg-[#073642]/80 border-[#586e75] text-[#93a1a1] hover:border-[#93a1a1]' 
-                  : 'bg-[#eee8d5]/80 border-[#93a1a1] text-[#586e75] hover:border-[#586e75]'}`}
+                  ? 'bg-[#00212b] border-[#586e75] text-[#93a1a1] hover:border-[#93a1a1]' 
+                  : 'bg-[#eee8d5] border-[#93a1a1] text-[#586e75] hover:border-[#586e75]'}`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -143,8 +143,8 @@ const Navbar = () => {
               rel="noopener noreferrer"
               className={`p-2 rounded-full border-2 transition-colors duration-300
                 ${isDarkMode 
-                  ? 'bg-[#073642]/80 border-[#586e75] text-[#93a1a1] hover:border-[#93a1a1]' 
-                  : 'bg-[#eee8d5]/80 border-[#93a1a1] text-[#586e75] hover:border-[#586e75]'}`}
+                  ? 'bg-[#00212b] border-[#586e75] text-[#93a1a1] hover:border-[#93a1a1]' 
+                  : 'bg-[#eee8d5] border-[#93a1a1] text-[#586e75] hover:border-[#586e75]'}`}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -187,7 +187,7 @@ const Navbar = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           className={`md:hidden ${
-            isDarkMode ? 'bg-[#073642]/95' : 'bg-[#eee8d5]/95'
+            isDarkMode ? 'bg-[#00212b]/95' : 'bg-[#eee8d5]/95'
           }`}
         >
           <div className="flex flex-col items-center py-4 space-y-4">
