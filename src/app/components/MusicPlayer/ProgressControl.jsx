@@ -40,7 +40,7 @@ const ProgressControl = ({
         </span>
       </div>
       {/* 音量控制 */}
-      <div className="flex items-center justify-center space-x-1.5 mt-1.5">
+      <div className="hidden md:flex items-center justify-center space-x-1.5 mt-1.5">
         <button
           onClick={() => onVolumeChange({ target: { value: volume === 0 ? 1 : 0 } })}
           className={`p-2 rounded-full hover:bg-[${isDarkMode ? '#586e75' : '#93a1a1'}]/20 transition-colors duration-300`}

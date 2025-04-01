@@ -175,6 +175,7 @@ const MusicPlayer = () => {
               <AlbumCover
                 currentCover={currentCover}
                 isDarkMode={isDarkMode}
+                isPlaying={isPlaying}
               />
 
               <ProgressControl

@@ -43,43 +43,32 @@ const Controls = ({ isDarkMode, isPlaying, onPlayPrevious, onTogglePlay, onPlayN
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
-        <motion.div
-          initial={{ rotate: 0 }}
-          animate={isPlaying ? { rotate: [0, 360] } : { rotate: 0 }}
-          transition={isPlaying ? { 
-            duration: 3,
-            repeat: Infinity,
-            ease: "linear",
-            repeatType: "loop"
-          } : { duration: 0.3 }}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className={`h-6 w-6 md:h-7 md:w-7 ${
+            isDarkMode 
+              ? 'text-[#93a1a1]' 
+              : 'text-[#586e75]'
+          }`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2.5}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className={`h-6 w-6 md:h-7 md:w-7 ${
-              isDarkMode 
-                ? 'text-[#93a1a1]' 
-                : 'text-[#586e75]'
-            }`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2.5}
-          >
-            {isPlaying ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-              />
-            )}
-          </svg>
-        </motion.div>
+          {isPlaying ? (
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          ) : (
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+            />
+          )}
+        </svg>
       </motion.button>
 
       {/* 下一首按钮 */}
