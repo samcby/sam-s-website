@@ -61,7 +61,7 @@ const TIMELINE_ITEMS = [
     location: "Clique | San Francisco, CA",
     description:
       "Optimized developer workflows by refining Webpack configurations and creating an open-source Chrome extension scaffold using ES6+.",
-    logo: "https://media.licdn.com/dms/image/v2/D4D0BAQH9eBUFFNRKTA/company-logo_200_200/company-logo_200_200/0/1710428744900/clique2046_logo?e=1743033600&v=beta&t=UDyUqM5FNQJiBpvoaSo_u7hEoQTCa-d3N5Yz-MuvWgU",
+    logo: "/images/experience/clique_logo.jpeg",
     details:
       "The scaffold was adopted by 100+ developers globally, contributing to open-source community growth.",
   },

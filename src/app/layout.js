@@ -3,6 +3,7 @@ import "react-resizable/css/styles.css";
 import { Inter } from "next/font/google";
 import Navbar from "@components/Navbar";
 import Footer from "@components/Footer";
+import MusicPlayer from "@components/MusicPlayer";
 import { ThemeProvider } from './context/ThemeContext';
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
               {children}
             </main>
             <Footer />
+            <MusicPlayer />
           </div>
         </ThemeProvider>
       </body>

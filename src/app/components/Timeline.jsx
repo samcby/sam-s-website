@@ -7,6 +7,7 @@ import {
   FaLightbulb,
 } from "react-icons/fa";
 import { useTheme } from '../context/ThemeContext';
+import ExperienceLogo from "./ExperienceLogo";
 
 const timelineData = [
   {
@@ -60,35 +61,38 @@ const Timeline = () => {
       <div className="relative wrap overflow-hidden p-10 h-full">
         <div className={`border-2-2 absolute border-opacity-20 h-full border left-1/2 transition-colors duration-300
                         ${isDarkMode ? 'border-[#586e75]' : 'border-[#93a1a1]'}`}></div>
-        {sortedTimelineData.map((milestone, index) => (
-          <div
-            key={milestone.id}
-            className={`mb-8 flex justify-between items-center w-full ${
-              index % 2 === 0 ? "flex-row-reverse" : "flex-row"
-            }`}
-          >
-            <div className="order-1 w-5/12"></div>
-            <div className={`z-20 flex items-center order-1 shadow-xl w-8 h-8 rounded-full min-w-fit p-2
-                           transition-colors duration-300
-                           ${isDarkMode ? 'bg-[#586e75]' : 'bg-[#93a1a1]'}`}>
-              <h1 className={`mx-auto font-semibold text-lg transition-colors duration-300
-                            ${isDarkMode ? 'text-[#fdf6e3]' : 'text-[#fdf6e3]'}`}>
-                {milestone.date}
-              </h1>
+        {sortedTimelineData.map((item, index) => (
+          <div key={index} className="relative pl-8 sm:pl-32 py-6 group">
+            {/* 时间线指示器 */}
+            <div className="flex flex-col sm:flex-row items-start mb-1 group-last:before:hidden before:absolute before:left-2 sm:before:left-0 before:h-full before:px-px before:bg-slate-300 sm:before:ml-[6.5rem] before:my-6 before:mt-8 dark:before:bg-slate-500">
+              <div className="absolute left-0 sm:left-[8.5rem] flex items-center justify-center w-4 h-4 rounded-full bg-slate-300 dark:bg-slate-500 sm:mb-0 -translate-x-1/2">
+                <div className="w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-400"></div>
+              </div>
             </div>
-            <button
-              onClick={() => handleMilestoneClick(milestone)}
-              className={`order-1 w-5/12 px-6 py-4 rounded-lg shadow-xl ${
-                milestone.color
-              } text-white cursor-pointer transition-all duration-300 transform hover:scale-105 
-              focus:outline-none focus:ring-2 focus:ring-offset-2 hover:opacity-90`}
-            >
-              <h3 className="mb-3 font-bold text-xl">{milestone.title}</h3>
-              <milestone.icon className="text-4xl mb-3 inline-block" />
-              <p className="text-sm leading-snug tracking-wide text-opacity-100">
-                Click for more details
-              </p>
-            </button>
+            {/* 内容 */}
+            <div className="flex flex-col sm:flex-row items-start mb-1">
+              <div className="sm:min-w-[8rem] sm:text-right sm:mr-8">
+                <time className="text-sm font-semibold text-slate-600 dark:text-slate-400">{item.date}</time>
+              </div>
+              <div className="flex-grow">
+                <div className="flex items-center mb-2">
+                  <div className="mr-3">
+                    <ExperienceLogo
+                      src={item.logo}
+                      alt={`${item.location} logo`}
+                    />
+                  </div>
+                  <div>
+                    <div className="text-xl font-bold text-slate-900 dark:text-slate-200">{item.title}</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-400">{item.location}</div>
+                  </div>
+                </div>
+                <div className="text-slate-700 dark:text-slate-300">{item.description}</div>
+                {item.details && (
+                  <div className="mt-2 text-sm text-slate-600 dark:text-slate-400">{item.details}</div>
+                )}
+              </div>
+            </div>
           </div>
         ))}
       </div>

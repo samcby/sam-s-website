@@ -33,7 +33,7 @@ export default function Home() {
           <SectionTitle title="My Projects" />
           <ProjectsSection />
         </div>
-        <div className="mt-16 sm:mt-20">
+        <div className="mt-16 sm:mt-20 mb-16 sm:mb-24">
           <SectionTitle title="Contact Me" />
           <EmailSection />
         </div>
