@@ -153,15 +153,15 @@ const MusicPlayer = () => {
   }, [currentTrackIndex, isPlaying]);
 
   return (
-    <div className="fixed inset-x-0 bottom-0 flex justify-center items-center pb-2 md:pb-8 z-50 pointer-events-none">
+    <div className="fixed inset-x-0 bottom-0 flex justify-center items-center pb-1 md:pb-8 z-50 pointer-events-none">
       <motion.div
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className={`pointer-events-auto w-full mx-2 md:mx-4 md:w-[600px] backdrop-blur-md rounded-xl md:rounded-2xl p-2 md:p-4 shadow-lg
+        className={`pointer-events-auto w-[75%] mx-auto md:mx-4 md:w-[600px] backdrop-blur-md rounded-lg md:rounded-2xl p-1.5 md:p-4 shadow-lg
                    ${isDarkMode 
                      ? 'bg-[#073642]/80 border-[#586e75]' 
                      : 'bg-[#eee8d5]/80 border-[#93a1a1]'}
-                   border-2`}
+                   border`}
       >
         {!isLoading && playlist.length > 0 && (
           <>
@@ -171,7 +171,7 @@ const MusicPlayer = () => {
               preload="auto"
             />
             
-            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+            <div className="flex flex-col md:flex-row items-center space-y-1 md:space-y-0 md:space-x-4">
               <AlbumCover
                 currentCover={currentCover}
                 isDarkMode={isDarkMode}
