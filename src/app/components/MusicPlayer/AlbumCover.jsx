@@ -71,25 +71,29 @@ const AlbumCover = ({ currentCover, isDarkMode, isPlaying }) => {
             />
           </motion.div>
         ) : (
-          <div className={`w-full h-full flex items-center justify-center ${
+          <div className={`w-full h-full flex items-center justify-center rounded-full ${
             isDarkMode ? 'bg-[#586e75]' : 'bg-[#93a1a1]'
           }`}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={`h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 ${
-                isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'
-              }`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-              />
-            </svg>
+            <div className={`w-[60%] h-[60%] rounded-full flex items-center justify-center ${
+              isDarkMode ? 'bg-[#073642]' : 'bg-[#002b36]'
+            }`}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className={`h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 ${
+                  isDarkMode ? 'text-[#93a1a1]' : 'text-[#93a1a1]'
+                }`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+                />
+              </svg>
+            </div>
           </div>
         )}
       </div>

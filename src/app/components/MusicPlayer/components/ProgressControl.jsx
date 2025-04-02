@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import ScrollingTitle from './ScrollingTitle';
 
 const ProgressControl = ({
   isDarkMode,
@@ -11,69 +11,9 @@ const ProgressControl = ({
   formatTime,
   getVolumeIcon
 }) => {
-  const titleRef = useRef(null);
-  const [isOverflow, setIsOverflow] = useState(false);
-  const [shouldAnimate, setShouldAnimate] = useState(false);
-  const timeoutRef = useRef(null);
-
-  // 检测文本是否溢出
-  useEffect(() => {
-    const checkOverflow = () => {
-      const element = titleRef.current;
-      if (element) {
-        const isTextOverflow = element.scrollWidth > element.clientWidth;
-        setIsOverflow(isTextOverflow);
-        
-        // 清除之前的定时器
-        if (timeoutRef.current) {
-          clearTimeout(timeoutRef.current);
-        }
-        
-        // 如果文本溢出，3秒后开始动画
-        if (isTextOverflow) {
-          timeoutRef.current = setTimeout(() => {
-            setShouldAnimate(true);
-          }, 3000);
-        } else {
-          setShouldAnimate(false);
-        }
-      }
-    };
-
-    checkOverflow();
-    // 添加窗口大小变化监听
-    window.addEventListener('resize', checkOverflow);
-    
-    return () => {
-      window.removeEventListener('resize', checkOverflow);
-      // 清除定时器
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [title]); // 当标题改变时重新检测
-
   return (
     <div className="flex-1 min-w-0 w-full md:min-w-[200px] order-2 md:order-none">
-      <div 
-        ref={titleRef}
-        className={`text-sm md:text-sm font-medium mb-1 text-center md:text-left whitespace-nowrap overflow-hidden ${
-          isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'
-        }`}
-      >
-        <div
-          className={`inline-block ${
-            shouldAnimate ? 'animate-marquee' : ''
-          }`}
-          style={{
-            animation: shouldAnimate ? 'marquee 15s linear infinite' : 'none',
-            paddingRight: isOverflow ? '50px' : '0'
-          }}
-          onAnimationEnd={() => setShouldAnimate(false)}
-        >
-          {title}
-        </div>
-      </div>
+      <ScrollingTitle title={title} isDarkMode={isDarkMode} />
       <div className="flex items-center space-x-1 md:space-x-2">
         <span className={`text-[10px] md:text-xs ${
           isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'
