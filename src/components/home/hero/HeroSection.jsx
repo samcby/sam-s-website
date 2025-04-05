@@ -1,14 +1,14 @@
 "use client";
 import React from "react";
 import HeroTextContent from "./HeroTextContent";
-import HeroImage from "./HeroImage";
+import HeroModel from './HeroModel';
 
 const HeroSection = () => {
   return (
-    <section className="py-8 sm:py-12 lg:py-16">
-      <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 sm:gap-12 place-items-center max-w-5xl mx-auto px-4">
+    <section className="py-4 sm:py-8">
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 sm:gap-8 place-items-center max-w-5xl mx-auto px-4">
         <HeroTextContent />
-        <HeroImage />
+        <HeroModel />
       </div>
     </section>
   );

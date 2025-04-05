@@ -1,6 +1,6 @@
 "use client";
 import dynamic from 'next/dynamic';
-import HeroSection from "@/components/layout/HeroSection";
+import HeroSection from "@/components/home/hero/HeroSection";
 import SectionTitle from "@/components/ui/SectionTitle";
 import { useTheme } from '@/context/ThemeContext';
 
