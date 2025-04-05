@@ -1,25 +1,27 @@
 "use client";
 import React, { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
 import ReCAPTCHA from "react-google-recaptcha";
-import { MailApi } from "@/api/email/mailApi";
 import { useTheme } from '@/context/ThemeContext';
+
+const EMAILJS_CONFIG = {
+  PUBLIC_KEY: "qlrGWyjsdHevNChv6",
+  TEMPLATE_ID: "template_d540mj5",
+  SERVICE_ID: "service_z6qunbl",
+};
 
 const EmailSection = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState(""); // 保存 reCAPTCHA token
-  const [isVerified, setIsVerified] = useState(false); // 是否验证成功
-  const form = useRef(); // 绑定表单
+  const [recaptchaToken, setRecaptchaToken] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
+  const form = useRef();
   const { isDarkMode } = useTheme();
 
-  // reCAPTCHA 生成 token
   const handleRecaptchaChange = (token) => {
     setRecaptchaToken(token);
-    setIsVerified(true); // 验证通过
+    setIsVerified(true);
   };
 
-  // 发送邮件逻辑
-  const sendEmail = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
 
     if (!isVerified) {
@@ -27,23 +29,32 @@ const EmailSection = () => {
       return;
     }
 
-    emailjs
-      .sendForm(
-        MailApi.SERVICE_ID,
-        MailApi.TEMPLATE_ID,
-        form.current,
-        MailApi.PUBLIC_KEY
-      )
-      .then(
-        (result) => {
-          console.log("Email sent:", result.text);
-          setEmailSubmitted(true);
+    const formData = new FormData(form.current);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      message: formData.get('message'),
+    };
+
+    try {
+      const response = await fetch('/api/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        (error) => {
-          console.error("Failed to send email:", error.text);
-          alert("Failed to send message. Please check your information.");
-        }
-      );
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
+      setEmailSubmitted(true);
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      alert("Failed to send message. Please check your information.");
+    }
   };
 
   return (
