@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@emailjs/nodejs": "^5.0.2",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.0.18",
     "@react-three/drei": "^9.88.0",

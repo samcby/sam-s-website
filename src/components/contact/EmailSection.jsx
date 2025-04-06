@@ -2,52 +2,107 @@
 import React, { useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useTheme } from '@/context/ThemeContext';
+import emailjs from '@emailjs/browser';
 
 const EmailSection = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState("");
   const [isVerified, setIsVerified] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const form = useRef();
   const { isDarkMode } = useTheme();
 
   const handleRecaptchaChange = (token) => {
     setRecaptchaToken(token);
     setIsVerified(true);
+    setError(""); // 清除之前的错误
+  };
+
+  const validateFields = (data) => {
+    const errors = {};
+    
+    if (!data.user_name || data.user_name.trim().length < 2) {
+      errors.name = 'Name must be at least 2 characters';
+    }
+
+    if (!data.user_email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.user_email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    if (!data.subject || data.subject.trim().length < 3) {
+      errors.subject = 'Subject must be at least 3 characters';
+    }
+
+    if (!data.message || data.message.trim().length < 10) {
+      errors.message = 'Message must be at least 10 characters';
+    }
+
+    return {
+      isValid: Object.keys(errors).length === 0,
+      errors
+    };
   };
 
   const sendEmail = async (e) => {
     e.preventDefault();
+    console.log('Form submission started');
+
+    setIsLoading(true);
+    setError(""); // Clear previous errors
 
     if (!isVerified) {
-      alert("Please verify the reCAPTCHA first.");
+      setError("Please complete the reCAPTCHA verification");
+      setIsLoading(false);
       return;
     }
 
-    const formData = new FormData(form.current);
+    // Get values directly from form elements
     const data = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      subject: formData.get('subject'),
-      message: formData.get('message'),
+      user_name: form.current.name.value,
+      user_email: form.current.email.value,
+      subject: form.current.subject.value,
+      message: form.current.message.value,
     };
 
+    console.log('Form data:', data);
+
+    // Validate form data
+    const validation = validateFields(data);
+    if (!validation.isValid) {
+      setError(Object.values(validation.errors)[0]); // Show first error
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const response = await fetch('/api/email/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+      console.log('Attempting to send email...');
+      console.log('EmailJS configuration:', {
+        serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to send email');
-      }
+      const response = await emailjs.sendForm(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        form.current,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      );
+
+      console.log('Email sent successfully:', response);
 
       setEmailSubmitted(true);
+      form.current.reset();
+      setIsVerified(false);
+      if (window.grecaptcha) {
+        window.grecaptcha.reset();
+      }
     } catch (error) {
       console.error('Failed to send email:', error);
-      alert("Failed to send message. Please check your information.");
+      setError(error.message || "Failed to send message. Please check your information and try again");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -56,7 +111,7 @@ const EmailSection = () => {
       id="contact"
       className="flex flex-col items-center"
     >
-      {/* 上方文本描述 */}
+      {/* Description text */}
       <div className="w-full max-w-lg text-center">
         <p className={`text-sm sm:text-base mb-8 px-4 sm:px-0 transition-colors duration-300
                     ${isDarkMode ? 'text-[#839496]' : 'text-[#586e75]'}`}>
@@ -66,7 +121,7 @@ const EmailSection = () => {
         </p>
       </div>
 
-      {/* 下方表单 */}
+      {/* Form section */}
       <div className="w-full max-w-lg">
         {emailSubmitted ? (
           <p className="text-green-500 text-center text-sm mt-4">
@@ -74,7 +129,13 @@ const EmailSection = () => {
           </p>
         ) : (
           <form ref={form} onSubmit={sendEmail} className="flex flex-col space-y-4 sm:space-y-6">
-            {/* Email */}
+            {error && (
+              <div className="text-red-500 text-sm text-center bg-red-100 p-2 rounded">
+                {error}
+              </div>
+            )}
+            
+            {/* Email field */}
             <div>
               <label
                 htmlFor="email"
@@ -84,7 +145,7 @@ const EmailSection = () => {
                 Your Email
               </label>
               <input
-                name="email"
+                name="user_email"
                 type="email"
                 id="email"
                 required
@@ -96,7 +157,7 @@ const EmailSection = () => {
               />
             </div>
 
-            {/* Name */}
+            {/* Name field */}
             <div>
               <label
                 htmlFor="name"
@@ -106,7 +167,7 @@ const EmailSection = () => {
                 Your Name
               </label>
               <input
-                name="name"
+                name="user_name"
                 type="text"
                 id="name"
                 placeholder="Your Name"
@@ -118,7 +179,7 @@ const EmailSection = () => {
               />
             </div>
 
-            {/* Subject */}
+            {/* Subject field */}
             <div>
               <label
                 htmlFor="subject"
@@ -140,7 +201,7 @@ const EmailSection = () => {
               />
             </div>
 
-            {/* Message */}
+            {/* Message field */}
             <div>
               <label
                 htmlFor="message"
@@ -164,41 +225,31 @@ const EmailSection = () => {
 
             {/* reCAPTCHA */}
             <div className="flex justify-center items-center transform scale-90 sm:scale-100">
-              {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
-                <ReCAPTCHA
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                  onChange={handleRecaptchaChange}
-                  className="g-recaptcha"
-                  theme={isDarkMode ? "dark" : "light"}
-                  hl="en"
-                  asyncScriptOnLoad={() => {
-                    console.log('reCAPTCHA script loaded');
-                  }}
-                  onErrored={() => {
-                    console.error('reCAPTCHA failed to load');
-                  }}
-                  onExpired={() => {
-                    console.log('reCAPTCHA expired');
-                    setIsVerified(false);
-                  }}
-                />
-              ) : (
-                <div className="text-red-500">reCAPTCHA site key is missing</div>
-              )}
+              <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                onChange={handleRecaptchaChange}
+                className="g-recaptcha"
+                theme={isDarkMode ? "dark" : "light"}
+                hl="en"
+                onExpired={() => {
+                  setIsVerified(false);
+                  setError("reCAPTCHA expired. Please verify again.");
+                }}
+              />
             </div>
 
-            {/* 发送按钮 */}
+            {/* Submit button */}
             <button
               type="submit"
-              disabled={!isVerified}
+              disabled={!isVerified || isLoading}
               className={`w-full font-medium py-2 sm:py-2.5 px-4 sm:px-5 rounded-lg text-sm sm:text-base transition-colors
-                       ${isVerified
+                       ${isVerified && !isLoading
                          ? isDarkMode
                            ? 'bg-[#268bd2] text-[#fdf6e3] hover:bg-[#2aa198]'
                            : 'bg-[#268bd2] text-[#fdf6e3] hover:bg-[#2aa198]'
                          : 'bg-gray-500 cursor-not-allowed text-[#fdf6e3]'}`}
             >
-              Send Message
+              {isLoading ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         )}
