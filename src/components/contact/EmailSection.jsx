@@ -22,11 +22,11 @@ const EmailSection = () => {
   const validateFields = (data) => {
     const errors = {};
     
-    if (!data.user_name || data.user_name.trim().length < 2) {
+    if (!data.name || data.name.trim().length < 2) {
       errors.name = 'Name must be at least 2 characters';
     }
 
-    if (!data.user_email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.user_email)) {
+    if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
       errors.email = 'Please enter a valid email address';
     }
 
@@ -57,31 +57,17 @@ const EmailSection = () => {
       return;
     }
 
-    // Get values directly from form elements
-    const data = {
-      user_name: form.current.name.value,
-      user_email: form.current.email.value,
-      subject: form.current.subject.value,
-      message: form.current.message.value,
-    };
-
-    console.log('Form data:', data);
-
-    // Validate form data
-    const validation = validateFields(data);
-    if (!validation.isValid) {
-      setError(Object.values(validation.errors)[0]); // Show first error
-      setIsLoading(false);
-      return;
-    }
-
     try {
       console.log('Attempting to send email...');
-      console.log('EmailJS configuration:', {
-        serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
-      });
+      
+      const templateParams = {
+        name: form.current.name.value,
+        email: form.current.email.value,
+        subject: form.current.subject.value,
+        message: form.current.message.value,
+      };
+
+      console.log('Template params:', templateParams);
 
       const response = await emailjs.sendForm(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
@@ -92,15 +78,19 @@ const EmailSection = () => {
 
       console.log('Email sent successfully:', response);
 
-      setEmailSubmitted(true);
-      form.current.reset();
-      setIsVerified(false);
-      if (window.grecaptcha) {
-        window.grecaptcha.reset();
+      if (response.status === 200) {
+        setEmailSubmitted(true);
+        form.current.reset();
+        setIsVerified(false);
+        if (window.grecaptcha) {
+          window.grecaptcha.reset();
+        }
+      } else {
+        throw new Error('Failed to send email. Please try again.');
       }
     } catch (error) {
       console.error('Failed to send email:', error);
-      setError(error.message || "Failed to send message. Please check your information and try again");
+      setError(error.message || "Failed to send message. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -145,7 +135,7 @@ const EmailSection = () => {
                 Your Email
               </label>
               <input
-                name="user_email"
+                name="email"
                 type="email"
                 id="email"
                 required
@@ -167,7 +157,7 @@ const EmailSection = () => {
                 Your Name
               </label>
               <input
-                name="user_name"
+                name="name"
                 type="text"
                 id="name"
                 placeholder="Your Name"
