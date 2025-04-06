@@ -1,6 +1,6 @@
 "use client";
 import "react-vertical-timeline-component/style.min.css";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -17,7 +17,6 @@ function TimelineDynamics() {
   const timelineRefs = useRef([]);
   const observerRef = useRef(null);
 
-  // 检查元素是否在视口中的函数
   const checkElementInViewport = (element) => {
     if (!element) return false;
     const rect = element.getBoundingClientRect();
@@ -30,13 +29,11 @@ function TimelineDynamics() {
   useEffect(() => {
     setMounted(true);
 
-    // 初始化可见性状态
     const initialVisibility = {};
     TIMELINE_ITEMS.forEach((_, index) => {
       initialVisibility[index] = false;
     });
 
-    // 配置 IntersectionObserver
     observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -48,12 +45,11 @@ function TimelineDynamics() {
       },
       {
         root: null,
-        rootMargin: '50px 0px', // 增加上下检测范围
-        threshold: [0, 0.1, 0.2], // 添加多个触发阈值
+        rootMargin: '50px 0px',
+        threshold: [0, 0.1, 0.2],
       }
     );
 
-    // 初始化时检查已在视口中的元素
     const initializeVisibility = () => {
       timelineRefs.current.forEach((ref, index) => {
         if (ref && checkElementInViewport(ref)) {
@@ -62,7 +58,6 @@ function TimelineDynamics() {
       });
       setVisibleElements(initialVisibility);
 
-      // 开始观察所有元素
       timelineRefs.current.forEach((ref) => {
         if (ref) {
           observerRef.current.observe(ref);
@@ -70,12 +65,8 @@ function TimelineDynamics() {
       });
     };
 
-    // 使用 requestAnimationFrame 确保 DOM 已更新
-    requestAnimationFrame(() => {
-      initializeVisibility();
-    });
+    requestAnimationFrame(initializeVisibility);
 
-    // 添加滚动事件监听器作为备份
     const handleScroll = () => {
       timelineRefs.current.forEach((ref, index) => {
         if (ref && checkElementInViewport(ref)) {
@@ -94,7 +85,6 @@ function TimelineDynamics() {
     };
   }, []);
 
-  // 防止页面自动滚动
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.history.scrollRestoration = 'manual';
@@ -106,17 +96,7 @@ function TimelineDynamics() {
     };
   }, []);
 
-  const handleMilestoneClick = (milestone) => {
-    setSelectedMilestone(milestone);
-  };
-
-  const closeModal = () => {
-    setSelectedMilestone(null);
-  };
-
-  if (!mounted) {
-    return null;
-  }
+  if (!mounted) return null;
 
   return (
     <div className="relative w-full overflow-visible px-4 sm:px-6 lg:px-8">
@@ -140,7 +120,7 @@ function TimelineDynamics() {
               <TimelineItem
                 item={item}
                 index={index}
-                onClick={handleMilestoneClick}
+                onClick={setSelectedMilestone}
                 isDarkMode={isDarkMode}
                 visible={visibleElements[index]}
               />
@@ -152,7 +132,7 @@ function TimelineDynamics() {
       {selectedMilestone && (
         <div
           className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 px-4 sm:px-0"
-          onClick={closeModal}
+          onClick={() => setSelectedMilestone(null)}
         >
           <div
             className={`relative top-20 mx-auto p-5 border w-full max-w-sm sm:max-w-md md:max-w-lg shadow-lg rounded-md ${
@@ -182,7 +162,7 @@ function TimelineDynamics() {
               </p>
               <div className="items-center px-4 py-3">
                 <button
-                  onClick={closeModal}
+                  onClick={() => setSelectedMilestone(null)}
                   className={`px-4 py-2 text-base font-medium rounded-md w-full shadow-sm focus:outline-none focus:ring-2 ${
                     isDarkMode
                       ? 'bg-[#268bd2] text-[#fdf6e3] hover:bg-[#2aa198] focus:ring-[#2aa198]'
@@ -200,7 +180,7 @@ function TimelineDynamics() {
   );
 }
 
-const TimelineItem = ({ item, index, onClick, isDarkMode, visible }) => {
+const TimelineItem = memo(({ item, index, onClick, isDarkMode, visible }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -211,7 +191,7 @@ const TimelineItem = ({ item, index, onClick, isDarkMode, visible }) => {
         visible={visible}
         position={index % 2 === 0 ? "left" : "right"}
         date={item.date}
-        dateClassName={`${isDarkMode ? 'text-[#93a1a1]' : 'text-[#002b36]'}
+        dateClassName={`${isDarkMode ? 'text-[#93a1a1]' : 'text-[#002b36]'} 
           transition-all duration-300 ease-in-out text-sm sm:text-base
           ${isHovered ? 'scale-105 font-semibold' : ''}`}
         contentStyle={{
@@ -262,6 +242,9 @@ const TimelineItem = ({ item, index, onClick, isDarkMode, visible }) => {
             />
           </div>
         }
+        onClick={() => onClick(item)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <div
           className={`transition-all duration-300
@@ -294,6 +277,8 @@ const TimelineItem = ({ item, index, onClick, isDarkMode, visible }) => {
       </VerticalTimelineElement>
     </div>
   );
-};
+});
+
+TimelineItem.displayName = 'TimelineItem';
 
 export default TimelineDynamics;

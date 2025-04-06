@@ -164,12 +164,27 @@ const EmailSection = () => {
 
             {/* reCAPTCHA */}
             <div className="flex justify-center items-center transform scale-90 sm:scale-100">
-              <ReCAPTCHA
-                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                onChange={handleRecaptchaChange}
-                className="g-recaptcha"
-                theme={isDarkMode ? "dark" : "light"}
-              />
+              {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
+                <ReCAPTCHA
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                  onChange={handleRecaptchaChange}
+                  className="g-recaptcha"
+                  theme={isDarkMode ? "dark" : "light"}
+                  hl="en"
+                  asyncScriptOnLoad={() => {
+                    console.log('reCAPTCHA script loaded');
+                  }}
+                  onErrored={() => {
+                    console.error('reCAPTCHA failed to load');
+                  }}
+                  onExpired={() => {
+                    console.log('reCAPTCHA expired');
+                    setIsVerified(false);
+                  }}
+                />
+              ) : (
+                <div className="text-red-500">reCAPTCHA site key is missing</div>
+              )}
             </div>
 
             {/* 发送按钮 */}

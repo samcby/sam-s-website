@@ -2,8 +2,8 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import DraggableWindow from "@/components/layout/DraggableWindow";
 import { useTheme } from '@/context/ThemeContext';
-import WindowContent from './components/WindowContent';
-import { getInitialPosition, getWindowTitle } from './utils/windowUtils';
+import WindowContent from './WindowContent';
+import { getInitialPosition, getWindowTitle } from './windowUtils';
 
 const Interests = ({ containerRef }) => {
   const { isDarkMode } = useTheme();

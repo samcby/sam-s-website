@@ -8,7 +8,7 @@
 }
 
 .vertical-timeline-element {
-  margin: 1.5em 0;
+  margin: 3rem 0;
   transition: all 0.3s ease-in-out;
 }
 
@@ -45,29 +45,34 @@
     float: none !important;
     margin-top: 0.75rem;
     margin-bottom: 0.5rem;
-  }
-
-  .vertical-timeline-element-content {
-    padding: 1rem !important;
-    margin-left: 45px !important;
+    opacity: 0.8;
+    font-size: 0.875rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: left !important;
   }
 
   .vertical-timeline::before {
     left: 18px !important;
   }
 
+  .vertical-timeline-element {
+    margin: 3rem 0;
+  }
+
   .vertical-timeline-element-icon {
     width: 40px !important;
     height: 40px !important;
-    left: -2px !important;
+    left: 0 !important;
     margin-left: 0 !important;
     top: 0 !important;
-    position: absolute !important;
+    margin-top: 0 !important;
+    transform: none !important;
   }
 
-  .vertical-timeline-element {
-    margin: 2rem 0;
-    padding-left: 0 !important;
+  .vertical-timeline-element-content {
+    margin-left: 60px !important;
+    padding: 1em !important;
   }
 }
 
@@ -81,26 +86,7 @@
 }
 
 .vertical-timeline-custom .vertical-timeline-element {
-  margin: 2rem 0;
-}
-
-@media screen and (max-width: 768px) {
-  .vertical-timeline-custom .vertical-timeline-element {
-    margin: 1.5rem 0;
-  }
-
-  .vertical-timeline-element-content {
-    margin-left: 45px !important;
-  }
-
-  .vertical-timeline-element-icon {
-    left: -2px !important;
-    margin-left: 0 !important;
-  }
-
-  .vertical-timeline::before {
-    left: 18px !important;
-  }
+  margin: 3rem 0;
 }
 
 /* Three.js canvas styles */
