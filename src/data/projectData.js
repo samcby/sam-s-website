@@ -3,7 +3,7 @@ const PROJECT_DATA = [
     id: 1,
     title: "React Portfolio Website",
     description:
-      "Using Next.js and Tailwind CSS, with Framer Motion animations, my personal portfolio website showcases my projects, skills, and achievements.",
+      "Using Next.js and Tailwind CSS, with Framer Motion animations, my personal portfolio website showcases my projects, skills, and achievements. Features include:\n• Interactive 3D bunny model that follows cursor movement\n• Custom music player with playlist and playback controls\n• Dynamic dark/light theme switching\n• Responsive timeline with hover effects\n• Draggable windows for hobby showcase\n• Animated page transitions and UI elements",
     image: "/images/projects/portfolio.webp",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/Rickyoung221/my-portfolio",

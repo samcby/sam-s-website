@@ -11,6 +11,41 @@ canvas {
   height: 100% !important;
 }
 
+/* Custom Scrollbar Styles */
+.scrollbar-dark::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-dark::-webkit-scrollbar-track {
+  background: #073642;
+}
+
+.scrollbar-dark::-webkit-scrollbar-thumb {
+  background: #586e75;
+  border-radius: 3px;
+}
+
+.scrollbar-dark::-webkit-scrollbar-thumb:hover {
+  background: #93a1a1;
+}
+
+.scrollbar-light::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-light::-webkit-scrollbar-track {
+  background: #eee8d5;
+}
+
+.scrollbar-light::-webkit-scrollbar-thumb {
+  background: #93a1a1;
+  border-radius: 3px;
+}
+
+.scrollbar-light::-webkit-scrollbar-thumb:hover {
+  background: #586e75;
+}
+
 /* 确保 Three.js 画布填充其容器 */
 .three-container {
   width: 100%;

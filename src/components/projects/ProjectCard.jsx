@@ -44,13 +44,15 @@ const ProjectCard = memo(({ imgUrl, title, description, gitUrl }) => {
           </Link>
         </div>
       </div>
-      <div className="p-4">
-        <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-[#002b36]'}`}>
+      <div className="flex flex-col h-[calc(400px-13rem)]">
+        <h3 className={`text-xl font-semibold mb-2 p-4 pb-2 ${isDarkMode ? 'text-white' : 'text-[#002b36]'}`}>
           {title}
         </h3>
-        <p className={`text-sm ${isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'}`}>
-          {description}
-        </p>
+        <div className={`flex-1 overflow-y-auto px-4 pb-4 ${isDarkMode ? 'scrollbar-dark' : 'scrollbar-light'}`}>
+          <p className={`text-sm whitespace-pre-line ${isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'}`}>
+            {description}
+          </p>
+        </div>
       </div>
     </div>
   );
