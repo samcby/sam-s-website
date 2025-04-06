@@ -74,6 +74,9 @@ const nextConfig = {
     maxInactiveAge: 25 * 1000,
     pagesBufferLength: 2,
   },
+  env: {
+    PORT: 3000,
+  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
