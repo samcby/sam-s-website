@@ -3,12 +3,6 @@ import React, { useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useTheme } from '@/context/ThemeContext';
 
-const EMAILJS_CONFIG = {
-  PUBLIC_KEY: "qlrGWyjsdHevNChv6",
-  TEMPLATE_ID: "template_d540mj5",
-  SERVICE_ID: "service_z6qunbl",
-};
-
 const EmailSection = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState("");
@@ -171,7 +165,7 @@ const EmailSection = () => {
             {/* reCAPTCHA */}
             <div className="flex justify-center items-center transform scale-90 sm:scale-100">
               <ReCAPTCHA
-                sitekey="6LeszpwqAAAAAP9WPzNdwRxPP3Xj2BFtgq3zjeq2"
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                 onChange={handleRecaptchaChange}
                 className="g-recaptcha"
                 theme={isDarkMode ? "dark" : "light"}
@@ -181,7 +175,7 @@ const EmailSection = () => {
             {/* 发送按钮 */}
             <button
               type="submit"
-              disabled={!isVerified} // 按钮禁用逻辑
+              disabled={!isVerified}
               className={`w-full font-medium py-2 sm:py-2.5 px-4 sm:px-5 rounded-lg text-sm sm:text-base transition-colors
                        ${isVerified
                          ? isDarkMode

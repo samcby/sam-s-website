@@ -2,6 +2,107 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Timeline overrides */
+.vertical-timeline::before {
+  width: 3px;
+}
+
+.vertical-timeline-element {
+  margin: 1.5em 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.vertical-timeline-element-content {
+  box-shadow: 0 3px 0 #ddd;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Timeline hover effects */
+.timeline-item-wrapper {
+  position: relative;
+}
+
+.timeline-hovered .vertical-timeline-element-content {
+  transform: translateY(-2px);
+}
+
+.vertical-timeline-element-date {
+  transition: all 0.3s ease-in-out;
+}
+
+.vertical-timeline-element-icon {
+  transition: all 0.3s ease-in-out;
+}
+
+.vertical-timeline-element-content-arrow {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Mobile Timeline Adjustments */
+@media screen and (max-width: 1169px) {
+  .vertical-timeline-element-date {
+    display: block !important;
+    float: none !important;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .vertical-timeline-element-content {
+    padding: 1rem !important;
+    margin-left: 45px !important;
+  }
+
+  .vertical-timeline::before {
+    left: 18px !important;
+  }
+
+  .vertical-timeline-element-icon {
+    width: 40px !important;
+    height: 40px !important;
+    left: -2px !important;
+    margin-left: 0 !important;
+    top: 0 !important;
+    position: absolute !important;
+  }
+
+  .vertical-timeline-element {
+    margin: 2rem 0;
+    padding-left: 0 !important;
+  }
+}
+
+/* Custom Timeline Spacing */
+.vertical-timeline-custom {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+  position: relative;
+  padding: 1.5rem 0;
+}
+
+.vertical-timeline-custom .vertical-timeline-element {
+  margin: 2rem 0;
+}
+
+@media screen and (max-width: 768px) {
+  .vertical-timeline-custom .vertical-timeline-element {
+    margin: 1.5rem 0;
+  }
+
+  .vertical-timeline-element-content {
+    margin-left: 45px !important;
+  }
+
+  .vertical-timeline-element-icon {
+    left: -2px !important;
+    margin-left: 0 !important;
+  }
+
+  .vertical-timeline::before {
+    left: 18px !important;
+  }
+}
+
 /* Three.js canvas styles */
 canvas {
   touch-action: none;

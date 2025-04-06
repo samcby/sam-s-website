@@ -1,12 +1,6 @@
 import { NextResponse } from 'next/server';
 import emailjs from '@emailjs/browser';
 
-const EMAILJS_CONFIG = {
-  PUBLIC_KEY: "qlrGWyjsdHevNChv6",
-  TEMPLATE_ID: "template_d540mj5",
-  SERVICE_ID: "service_z6qunbl",
-};
-
 export async function POST(req) {
   try {
     const body = await req.json();
@@ -14,15 +8,15 @@ export async function POST(req) {
 
     // 使用 EmailJS 发送邮件
     const response = await emailjs.send(
-      EMAILJS_CONFIG.SERVICE_ID,
-      EMAILJS_CONFIG.TEMPLATE_ID,
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
       {
         from_name: name,
         from_email: email,
         subject: subject,
         message: message,
       },
-      EMAILJS_CONFIG.PUBLIC_KEY
+      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
     );
 
     if (response.status !== 200) {

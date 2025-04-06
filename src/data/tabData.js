@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Timeline from "@/components/experience/Timeline";
 import TimelineDynamics from "@/components/experience/TimelineDynamics";
 import { useTheme } from '@/context/ThemeContext';
 
@@ -12,7 +11,7 @@ const TabDataContent = () => {
       title: "Experience",
       id: "experience",
       content: (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center w-full overflow-visible min-h-[500px]">
           <TimelineDynamics />
         </div>
       ),

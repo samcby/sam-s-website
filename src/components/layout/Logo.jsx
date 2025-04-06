@@ -18,6 +18,10 @@ const Logo = ({ isFooter = false }) => {
           src="/images/RICK_logo_vaporwave.png"
           alt="Logo"
           fill
+          sizes={isFooter 
+            ? "(max-width: 768px) 96px, 112px"  // 24rem/28rem for footer
+            : "(max-width: 768px) 64px, 80px"   // 16rem/20rem for header
+          }
           style={{ objectFit: "contain" }}
           className={`transition-opacity duration-300 ${isDarkMode ? 'opacity-100' : 'opacity-90'}`}
           priority
