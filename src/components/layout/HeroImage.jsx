@@ -17,7 +17,7 @@ const HeroImage = () => {
       <div className={`rounded-full w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] lg:w-[400px] lg:h-[400px] relative
                       ${isDarkMode ? 'bg-[#073642]' : 'bg-[#eee8d5]'}`}>
         <Image
-          src="/images/usagi-image.png"
+          src="/images/usagi-image.webp"
           alt="usagi image"
           className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           width={300}

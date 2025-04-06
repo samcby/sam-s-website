@@ -45,7 +45,7 @@ const WindowContent = ({ id }) => {
             {'I love cat and dog. I have 2 cats named "DoiYuk" (white) and "WongChoi" (black).'}
           </p>
           <Image 
-            src="/images/cats.jpg" 
+            src="/images/cats.webp" 
             width={300} 
             height={200} 
             alt="myCat"

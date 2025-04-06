@@ -4,7 +4,7 @@ const PROJECT_DATA = [
     title: "React Portfolio Website",
     description:
       "Using Next.js and Tailwind CSS, with Framer Motion animations, my personal portfolio website showcases my projects, skills, and achievements.",
-    image: "/images/projects/portfolio.png",
+    image: "/images/projects/portfolio.webp",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/Rickyoung221/my-portfolio",
     previewUrl: "/",
