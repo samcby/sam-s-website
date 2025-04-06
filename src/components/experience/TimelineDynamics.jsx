@@ -1,5 +1,4 @@
 "use client";
-import "react-vertical-timeline-component/style.min.css";
 import React, { useState, useEffect, useRef, memo } from "react";
 import {
   VerticalTimeline,
@@ -8,6 +7,8 @@ import {
 import TIMELINE_ITEMS from "@/data/timelineItems";
 import Image from "next/image";
 import { useTheme } from '@/context/ThemeContext';
+import "react-vertical-timeline-component/style.min.css";
+import '../../styles/timeline.css';
 
 function TimelineDynamics() {
   const [selectedMilestone, setSelectedMilestone] = useState(null);
@@ -192,8 +193,7 @@ const TimelineItem = memo(({ item, index, onClick, isDarkMode, visible }) => {
         position={index % 2 === 0 ? "left" : "right"}
         date={item.date}
         dateClassName={`${isDarkMode ? 'text-[#93a1a1]' : 'text-[#002b36]'} 
-          transition-all duration-300 ease-in-out text-sm sm:text-base
-          ${isHovered ? 'scale-105 font-semibold' : ''}`}
+          transition-all duration-300 ease-in-out text-sm sm:text-base`}
         contentStyle={{
           background: isDarkMode ? '#073642' : '#fdf6e3',
           color: isDarkMode ? '#93a1a1' : '#002b36',
@@ -258,7 +258,7 @@ const TimelineItem = memo(({ item, index, onClick, isDarkMode, visible }) => {
           }`}>
             {item.title}
           </h3>
-          <h4 className={`text-xs sm:text-sm ${
+          <h4 className={`text-xs sm:text-sm italic ${
             isDarkMode ? 'text-[#839496]' : 'text-[#586e75]'
           }`}>
             {item.location}

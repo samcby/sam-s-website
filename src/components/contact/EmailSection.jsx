@@ -2,97 +2,52 @@
 import React, { useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useTheme } from '@/context/ThemeContext';
-import emailjs from '@emailjs/browser';
 
 const EmailSection = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState("");
   const [isVerified, setIsVerified] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const form = useRef();
   const { isDarkMode } = useTheme();
 
   const handleRecaptchaChange = (token) => {
     setRecaptchaToken(token);
     setIsVerified(true);
-    setError(""); // 清除之前的错误
-  };
-
-  const validateFields = (data) => {
-    const errors = {};
-    
-    if (!data.name || data.name.trim().length < 2) {
-      errors.name = 'Name must be at least 2 characters';
-    }
-
-    if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-      errors.email = 'Please enter a valid email address';
-    }
-
-    if (!data.subject || data.subject.trim().length < 3) {
-      errors.subject = 'Subject must be at least 3 characters';
-    }
-
-    if (!data.message || data.message.trim().length < 10) {
-      errors.message = 'Message must be at least 10 characters';
-    }
-
-    return {
-      isValid: Object.keys(errors).length === 0,
-      errors
-    };
   };
 
   const sendEmail = async (e) => {
     e.preventDefault();
-    console.log('Form submission started');
-
-    setIsLoading(true);
-    setError(""); // Clear previous errors
 
     if (!isVerified) {
-      setError("Please complete the reCAPTCHA verification");
-      setIsLoading(false);
+      alert("Please verify the reCAPTCHA first.");
       return;
     }
 
+    const formData = new FormData(form.current);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      message: formData.get('message'),
+    };
+
     try {
-      console.log('Attempting to send email...');
-      
-      const templateParams = {
-        name: form.current.name.value,
-        email: form.current.email.value,
-        subject: form.current.subject.value,
-        message: form.current.message.value,
-      };
+      const response = await fetch('/api/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-      console.log('Template params:', templateParams);
-
-      const response = await emailjs.sendForm(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        form.current,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
-      );
-
-      console.log('Email sent successfully:', response);
-
-      if (response.status === 200) {
-        setEmailSubmitted(true);
-        form.current.reset();
-        setIsVerified(false);
-        if (window.grecaptcha) {
-          window.grecaptcha.reset();
-        }
-      } else {
-        throw new Error('Failed to send email. Please try again.');
+      if (!response.ok) {
+        throw new Error('Failed to send email');
       }
+
+      setEmailSubmitted(true);
     } catch (error) {
       console.error('Failed to send email:', error);
-      setError(error.message || "Failed to send message. Please try again later.");
-    } finally {
-      setIsLoading(false);
+      alert("Failed to send message. Please check your information.");
     }
   };
 
@@ -101,7 +56,7 @@ const EmailSection = () => {
       id="contact"
       className="flex flex-col items-center"
     >
-      {/* Description text */}
+      {/* 上方文本描述 */}
       <div className="w-full max-w-lg text-center">
         <p className={`text-sm sm:text-base mb-8 px-4 sm:px-0 transition-colors duration-300
                     ${isDarkMode ? 'text-[#839496]' : 'text-[#586e75]'}`}>
@@ -111,7 +66,7 @@ const EmailSection = () => {
         </p>
       </div>
 
-      {/* Form section */}
+      {/* 下方表单 */}
       <div className="w-full max-w-lg">
         {emailSubmitted ? (
           <p className="text-green-500 text-center text-sm mt-4">
@@ -119,13 +74,7 @@ const EmailSection = () => {
           </p>
         ) : (
           <form ref={form} onSubmit={sendEmail} className="flex flex-col space-y-4 sm:space-y-6">
-            {error && (
-              <div className="text-red-500 text-sm text-center bg-red-100 p-2 rounded">
-                {error}
-              </div>
-            )}
-            
-            {/* Email field */}
+            {/* Email */}
             <div>
               <label
                 htmlFor="email"
@@ -147,7 +96,7 @@ const EmailSection = () => {
               />
             </div>
 
-            {/* Name field */}
+            {/* Name */}
             <div>
               <label
                 htmlFor="name"
@@ -169,7 +118,7 @@ const EmailSection = () => {
               />
             </div>
 
-            {/* Subject field */}
+            {/* Subject */}
             <div>
               <label
                 htmlFor="subject"
@@ -191,7 +140,7 @@ const EmailSection = () => {
               />
             </div>
 
-            {/* Message field */}
+            {/* Message */}
             <div>
               <label
                 htmlFor="message"
@@ -215,31 +164,41 @@ const EmailSection = () => {
 
             {/* reCAPTCHA */}
             <div className="flex justify-center items-center transform scale-90 sm:scale-100">
-              <ReCAPTCHA
-                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                onChange={handleRecaptchaChange}
-                className="g-recaptcha"
-                theme={isDarkMode ? "dark" : "light"}
-                hl="en"
-                onExpired={() => {
-                  setIsVerified(false);
-                  setError("reCAPTCHA expired. Please verify again.");
-                }}
-              />
+              {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
+                <ReCAPTCHA
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                  onChange={handleRecaptchaChange}
+                  className="g-recaptcha"
+                  theme={isDarkMode ? "dark" : "light"}
+                  hl="en"
+                  asyncScriptOnLoad={() => {
+                    console.log('reCAPTCHA script loaded');
+                  }}
+                  onErrored={() => {
+                    console.error('reCAPTCHA failed to load');
+                  }}
+                  onExpired={() => {
+                    console.log('reCAPTCHA expired');
+                    setIsVerified(false);
+                  }}
+                />
+              ) : (
+                <div className="text-red-500">reCAPTCHA site key is missing</div>
+              )}
             </div>
 
-            {/* Submit button */}
+            {/* 发送按钮 */}
             <button
               type="submit"
-              disabled={!isVerified || isLoading}
+              disabled={!isVerified}
               className={`w-full font-medium py-2 sm:py-2.5 px-4 sm:px-5 rounded-lg text-sm sm:text-base transition-colors
-                       ${isVerified && !isLoading
+                       ${isVerified
                          ? isDarkMode
                            ? 'bg-[#268bd2] text-[#fdf6e3] hover:bg-[#2aa198]'
                            : 'bg-[#268bd2] text-[#fdf6e3] hover:bg-[#2aa198]'
                          : 'bg-gray-500 cursor-not-allowed text-[#fdf6e3]'}`}
             >
-              {isLoading ? 'Sending...' : 'Send Message'}
+              Send Message
             </button>
           </form>
         )}

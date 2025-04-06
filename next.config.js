@@ -60,18 +60,11 @@ const nextConfig = {
     formats: ['image/webp'],
     minimumCacheTTL: 60,
   },
-  // 添加网络配置
   experimental: {
     serverActions: {
       allowedOrigins: ['localhost:3000', 'fonts.googleapis.com', 'www.google.com', 'www.gstatic.com', 'www.recaptcha.net', 'recaptcha.net'],
     },
   },
-  // 增加超时时间
-  httpAgentOptions: {
-    keepAlive: true,
-    timeout: 30000,
-  },
-  // 添加重试配置
   async rewrites() {
     return [
       {
@@ -85,7 +78,6 @@ const nextConfig = {
     ];
   },
   webpack: (config, { isServer }) => {
-    // 优化构建配置
     config.optimization = {
       ...config.optimization,
       moduleIds: 'deterministic',
@@ -93,7 +85,6 @@ const nextConfig = {
       minimizer: [...(config.optimization.minimizer || [])],
     };
     
-    // 减少包大小
     if (!isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
@@ -125,14 +116,6 @@ const nextConfig = {
   compress: true,
   reactStrictMode: true,
   generateEtags: true,
-  // 优化缓存策略
-  onDemandEntries: {
-    maxInactiveAge: 25 * 1000,
-    pagesBufferLength: 2,
-  },
-  env: {
-    PORT: 3000,
-  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
