@@ -100,7 +100,7 @@ const TabDataContent = () => {
       id: "awards",
       content: (
         <div className="flex flex-col justify-center items-center">
-          <Image src="/images/sce.png" alt="sce" width={150} height={150} />
+          <Image src="/images/sce.webp" alt="sce" width={150} height={150} />
           <ul className={`list-disc pl-4 text-center mt-4
                          ${isDarkMode ? 'text-[#ADB7BE]' : 'text-[#586e75]'}`}>
             <li>Southern California Edison Scholar</li>

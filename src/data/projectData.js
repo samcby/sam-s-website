@@ -4,7 +4,7 @@ const PROJECT_DATA = [
     title: "React Portfolio Website",
     description:
       "Using Next.js and Tailwind CSS, with Framer Motion animations, my personal portfolio website showcases my projects, skills, and achievements.",
-    image: "/images/projects/1.png",
+    image: "/images/projects/portfolio.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/Rickyoung221/my-portfolio",
     previewUrl: "/",
@@ -14,7 +14,7 @@ const PROJECT_DATA = [
     title: "Chrome-Extension-HMR Template",
     description:
       "A modern Chrome Extension template using Manifest V3, React, TypeScript, and Webpack with Hot Module Replacement (HMR) for instant updates during development, enabling fast and efficient creation of scalable and maintainable extensions.",
-    image: "/images/projects/chrome-extension.png",
+    image: "/images/projects/chrome-extension.avif",
     tag: ["All", "Web"],
     gitUrl:
       "https://github.com/Rickyoung221/chrome-extension-mv3-react-ts-hotReload-template",
@@ -35,7 +35,7 @@ const PROJECT_DATA = [
     title: "Swift Link Web App",
     description:
       "A web-based ride-sharing platform with a modern, responsive design and scalable architecture for seamless booking and management of rides.",
-    image: "/images/projects/swift-link.png",
+    image: "/images/projects/swift-link.jpeg",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/Rickyoung221/Ride-Share-Web",
     previewUrl: "/",
@@ -56,7 +56,7 @@ const PROJECT_DATA = [
     title: "SafeGrocer: COVID-19 Risk",
     description:
       "A web app from LA Hacks that assesses COVID-19 risks and recommends low-risk grocery stores based on user location, integrating real-time data for personalized safety guidance.",
-    image: "/images/projects/la-hackathon.png",
+    image: "/images/projects/la-hackathon.jpeg",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/Rickyoung221/LAHackCoronaVirus",
     previewUrl: "/",
