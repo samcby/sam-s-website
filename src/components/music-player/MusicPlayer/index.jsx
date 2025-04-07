@@ -21,6 +21,18 @@ const MusicPlayer = () => {
   const { isDarkMode } = useTheme();
   const { playlist, isLoading, loadMetadata, getAudioUrl } = useMusicSource();
 
+  // 设置默认歌曲为 "just the two of us"
+  useEffect(() => {
+    if (!isLoading && playlist.length > 0) {
+      const defaultTrackIndex = playlist.findIndex(track => 
+        track.title.toLowerCase().includes('just the two of us')
+      );
+      if (defaultTrackIndex !== -1) {
+        setCurrentTrackIndex(defaultTrackIndex);
+      }
+    }
+  }, [playlist, isLoading]);
+
   // 提取MP3文件的元数据（包括封面）
   const extractMetadata = async (trackIndex) => {
     try {
