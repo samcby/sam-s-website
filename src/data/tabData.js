@@ -2,6 +2,7 @@
 import Image from "next/image";
 import TimelineDynamics from "@/components/experience/TimelineDynamics";
 import { useTheme } from '@/context/ThemeContext';
+import SkillCircle from "@/components/skills/SkillCircle";
 
 const TabDataContent = () => {
   const { isDarkMode } = useTheme();
@@ -20,27 +21,8 @@ const TabDataContent = () => {
       title: "Skills",
       id: "skills",
       content: (
-        <div className="flex justify-center items-center">
-          <ul className={`text-left list-disc grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2 pl-4 leading-tight
-                         ${isDarkMode ? 'text-[#ADB7BE]' : 'text-[#586e75]'}`}>
-            <li>Node.js</li>
-            <li>Express</li>
-            <li>MongoDB</li>
-            <li>PostgreSQL</li>
-            <li>React</li>
-            <li>Redux</li>
-            <li>JavaScript</li>
-            <li>TypeScript</li>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>Python</li>
-            <li>Java</li>
-            <li>Git</li>
-            <li>Docker</li>
-            <li>Machine Learning</li>
-            <li>RESTful APIs</li>
-            <li>CI/CD Pipelines</li>
-          </ul>
+        <div className="flex justify-center items-center w-full">
+          <SkillCircle />
         </div>
       ),
     },
