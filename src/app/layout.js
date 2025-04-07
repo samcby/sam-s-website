@@ -10,13 +10,58 @@ export const metadata = {
   description: "Welcome to my portfolio",
 };
 
-// 主题脚本
+// 防闪烁样式
+const noFlashStyle = `
+  .no-flash {
+    visibility: hidden;
+  }
+  html.dark {
+    background: #002b36;
+    color-scheme: dark;
+  }
+  html.light {
+    background: #fdf6e3;
+    color-scheme: light;
+  }
+`;
+
+// 优化的主题脚本
 const themeScript = `
   (function() {
-    const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-    document.documentElement.classList.toggle('dark', theme === 'dark');
+    let html = document.documentElement;
+    
+    // 先隐藏内容防止闪烁
+    html.classList.add('no-flash');
+    
+    function setTheme(theme) {
+      html.classList.remove('light', 'dark');
+      html.classList.add(theme);
+      localStorage.setItem('theme', theme);
+    }
+
+    // 获取用户之前选择的主题
+    let savedTheme = localStorage.getItem('theme');
+    
+    // 如果没有保存的主题，则使用系统主题
+    if (!savedTheme) {
+      savedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      localStorage.setItem('theme', savedTheme);
+    }
+    
+    // 设置主题
+    setTheme(savedTheme);
+    
+    // 添加系统主题变化监听
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+    
+    // 移除防闪烁类
+    requestAnimationFrame(() => {
+      html.classList.remove('no-flash');
+    });
   })();
 `;
 
@@ -24,6 +69,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <style dangerouslySetInnerHTML={{ __html: noFlashStyle }} />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-screen transition-all duration-300 font-sans">
