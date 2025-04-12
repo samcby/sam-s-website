@@ -123,3 +123,10 @@ body {
 .animate-marquee:hover {
   animation-play-state: running;
 }
+
+/* 在文件顶部添加主题过渡样式 */
+.theme-transition * {
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+}
