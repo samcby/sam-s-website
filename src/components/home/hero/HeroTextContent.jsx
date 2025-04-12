@@ -40,7 +40,7 @@ const HeroTextContent = () => {
       <p className={`text-sm sm:text-base lg:text-lg mb-6 max-w-[600px] mx-auto sm:mx-0 ${isDarkMode ? 'text-[#ADB7BE]' : 'text-[#586e75]'}`}>
         Welcome to see my Portfolio
       </p>
-      <div className="flex justify-center sm:justify-start">
+      <div className="flex flex-col items-center sm:items-start">
         <Link
           href="https://drive.google.com/file/d/1EylGF1FCQxpzEh8GCx9TBZQUYpvgcCeF/view?usp=sharing"
           target="_blank"
@@ -65,6 +65,9 @@ const HeroTextContent = () => {
             />
           </svg>
         </Link>
+        <p className={`text-xs sm:text-sm mt-4 italic max-w-[400px] ${isDarkMode ? 'text-[#8b949e]' : 'text-[#657b83]'}`}>
+          ✨ The character model is <Link href="https://chiikawa.fandom.com/wiki/Usagi" target="_blank" rel="noopener noreferrer" className={`font-medium ${isDarkMode ? 'text-[#58a6ff] hover:underline' : 'text-[#2075c7] hover:underline'}`}>Usagi</Link>, a decisive and fearless yellow rabbit from the Chiikawa series. &quot;Usagi&quot; means rabbit in Japanese 🐰
+        </p>
       </div>
     </motion.div>
   );

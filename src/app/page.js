@@ -26,7 +26,7 @@ export default function Home() {
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 mt-16 sm:mt-20 md:mt-24">
         <HeroSection />
         <div className="mt-16 sm:mt-20">
-          <SectionTitle title="About Me" />
+          <SectionTitle title=" " />
           <AboutSection />
         </div>
         <div className="mt-16 sm:mt-20">

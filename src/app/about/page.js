@@ -6,7 +6,7 @@ import PageContainer from "@/components/layout/PageContainer";
 export default function AboutPage() {
   return (
     <PageContainer>
-      <PageTitle title="About Me" />
+      <PageTitle title=" " />
       <div className="container mx-auto px-4">
         <AboutSection />
       </div>
