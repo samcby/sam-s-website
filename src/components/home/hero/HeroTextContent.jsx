@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -7,6 +7,7 @@ import { useTheme } from '@/context/ThemeContext';
 
 const HeroTextContent = () => {
   const { isDarkMode } = useTheme();
+  const [showTooltip, setShowTooltip] = useState(false);
 
   return (
     <motion.div
@@ -65,9 +66,26 @@ const HeroTextContent = () => {
             />
           </svg>
         </Link>
-        <p className={`text-xs sm:text-sm mt-4 italic max-w-[400px] ${isDarkMode ? 'text-[#8b949e]' : 'text-[#657b83]'}`}>
-          ✨ The character model is <Link href="https://chiikawa.fandom.com/wiki/Usagi" target="_blank" rel="noopener noreferrer" className={`font-medium ${isDarkMode ? 'text-[#58a6ff] hover:underline' : 'text-[#2075c7] hover:underline'}`}>Usagi</Link>, a decisive and fearless yellow rabbit from the Chiikawa series. &quot;Usagi&quot; means rabbit in Japanese 🐰
-        </p>
+        
+        <div 
+          className="mt-4 inline-block relative"
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
+        >
+          <span className={`text-xs font-medium ${isDarkMode ? 'text-[#79c0ff]' : 'text-[#2075c7]'}`}>
+            <span className="animate-pulse">✨</span> 
+            The 3D model is <Link href="https://chiikawa.fandom.com/wiki/Usagi" target="_blank" rel="noopener noreferrer" className="font-bold hover:underline">Usagi</Link> 
+            <span className="animate-bounce inline-block">🐰</span>
+          </span>
+          
+          <div className={`absolute top-full mt-2 left-0 z-10 transition-opacity duration-300 rounded-md py-1.5 px-3 text-xs max-w-[250px] ${
+            showTooltip ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          } ${
+            isDarkMode ? 'bg-[#161b22] text-[#8b949e] border border-[#30363d]' : 'bg-[#eee8d5] text-[#657b83] border border-[#d0d7de]'
+          }`}>
+            My favorite character and personal avatar from Chiikawa series. &quot;Usagi&quot; means rabbit in Japanese
+          </div>
+        </div>
       </div>
     </motion.div>
   );

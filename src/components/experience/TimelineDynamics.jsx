@@ -132,47 +132,57 @@ function TimelineDynamics() {
 
       {selectedMilestone && (
         <div
-          className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 px-4 sm:px-0"
+          className="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 z-50 p-4 overflow-y-auto"
           onClick={() => setSelectedMilestone(null)}
         >
           <div
-            className={`relative top-20 mx-auto p-5 border w-full max-w-sm sm:max-w-md md:max-w-lg shadow-lg rounded-md ${
-              isDarkMode ? 'bg-[#002b36] text-[#93a1a1]' : 'bg-white text-[#002b36]'
+            className={`relative w-full max-w-sm sm:max-w-md md:max-w-lg rounded-lg shadow-xl border overflow-hidden transform transition-all duration-300 ${
+              isDarkMode ? 'bg-[#002b36] border-[#30363d]' : 'bg-white border-[#d0d7de]'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="mt-3">
+            {/* 标题区域 */}
+            <div className={`p-5 flex flex-col items-center ${isDarkMode ? 'text-[#e6edf3]' : 'text-[#24292f]'}`}>
               <Image
                 height={80}
                 width={80}
                 src={selectedMilestone.logo}
                 alt={`${selectedMilestone.title} logo`}
-                className="mx-auto w-20 h-20 rounded-full object-contain"
+                className="w-20 h-20 rounded-full object-contain mb-4 bg-white p-1"
                 priority={true}
               />
-              <h3 className={`text-lg leading-6 font-medium mt-4 ${
-                isDarkMode ? 'text-[#93a1a1]' : 'text-[#002b36]'
+              <h3 className={`text-xl font-bold text-center ${
+                isDarkMode ? 'text-[#e6edf3]' : 'text-[#24292f]'
               }`}>
                 {selectedMilestone.title}
               </h3>
-              <h4 className="text-sm text-gray-600">
+              <h4 className={`text-sm mt-1 text-center ${isDarkMode ? 'text-[#8b949e]' : 'text-[#57606a]'}`}>
                 {selectedMilestone.date}
               </h4>
-              <p className="text-sm mt-4 text-gray-400">
-                {selectedMilestone.details}
-              </p>
-              <div className="items-center px-4 py-3">
-                <button
-                  onClick={() => setSelectedMilestone(null)}
-                  className={`px-4 py-2 text-base font-medium rounded-md w-full shadow-sm focus:outline-none focus:ring-2 ${
-                    isDarkMode
-                      ? 'bg-[#268bd2] text-[#fdf6e3] hover:bg-[#2aa198] focus:ring-[#2aa198]'
-                      : 'bg-[#268bd2] text-[#fdf6e3] hover:bg-[#2aa198] focus:ring-[#2aa198]'
-                  }`}
-                >
-                  Close
-                </button>
+              
+              {/* 分隔线 */}
+              <div className={`w-full h-px my-4 ${isDarkMode ? 'bg-[#30363d]' : 'bg-[#d8dee4]'}`}></div>
+              
+              {/* 详情文本区域 */}
+              <div className="w-full">
+                <p className={`text-sm ${isDarkMode ? 'text-[#8b949e]' : 'text-[#57606a]'} whitespace-pre-line`}>
+                  {selectedMilestone.details || "No additional details available."}
+                </p>
               </div>
+            </div>
+            
+            {/* 按钮区域 */}
+            <div className={`p-4 ${isDarkMode ? 'bg-[#073642]' : 'bg-[#f6f8fa]'} border-t ${isDarkMode ? 'border-[#30363d]' : 'border-[#d0d7de]'}`}>
+              <button
+                onClick={() => setSelectedMilestone(null)}
+                className={`px-4 py-2 text-base font-medium rounded-md w-full shadow-sm focus:outline-none focus:ring-2 transition-all duration-300 ${
+                  isDarkMode
+                    ? 'bg-[#268bd2] text-[#fdf6e3] hover:bg-[#2aa198] focus:ring-[#2aa198]'
+                    : 'bg-[#268bd2] text-[#fdf6e3] hover:bg-[#2aa198] focus:ring-[#2aa198]'
+                }`}
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
