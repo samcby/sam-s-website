@@ -8,8 +8,13 @@ import { BACKEND_SKILLS } from "@/data/skillsData";
 
 export function BackendQuadrant({ isDarkMode }) {
   const [positions, setPositions] = useState([]);
-  const MAX_RADIUS = 180;
-  const MIN_RADIUS = 60;
+  
+  // 响应式调整尺寸
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 480;
+  const isTablet = typeof window !== 'undefined' && window.innerWidth >= 480 && window.innerWidth < 768;
+  
+  const MAX_RADIUS = isMobile ? 120 : isTablet ? 150 : 180;
+  const MIN_RADIUS = isMobile ? 40 : isTablet ? 50 : 60;
   const MIN_ANGLE = -70;
   const MAX_ANGLE = -20;
 
@@ -100,21 +105,22 @@ export function BackendQuadrant({ isDarkMode }) {
 }
 
 function SkillItem({ skill, isDarkMode, position, index }) {
-  const { radius, rotation } = position;
-  const x = Math.cos((rotation * Math.PI) / 180) * radius;
-  const y = Math.sin((rotation * Math.PI) / 180) * radius;
   const Icon = skill.Icon;
+  const x = Math.cos((position.rotation * Math.PI) / 180) * position.radius;
+  const y = Math.sin((position.rotation * Math.PI) / 180) * position.radius;
 
-  if (!Icon) return null;
+  // 使用响应式类名调整大小
+  const itemSize = typeof window !== 'undefined' && window.innerWidth < 480 ? 50 : 60;
+  const iconSize = typeof window !== 'undefined' && window.innerWidth < 480 ? 20 : 24;
 
   return (
     <motion.div
       className="absolute flex flex-col items-center justify-center"
       style={{
-        width: 60,
-        height: 60,
-        x: x - 30,
-        y: y - 30,
+        width: itemSize,
+        height: itemSize,
+        x: x - itemSize/2,
+        y: y - itemSize/2,
       }}
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
@@ -128,7 +134,7 @@ function SkillItem({ skill, isDarkMode, position, index }) {
       whileHover={{ scale: 1.1 }}
     >
       <motion.div
-        className="flex items-center justify-center w-8 h-8 mb-0.5 rounded-md bg-opacity-10 dark:bg-opacity-10"
+        className="flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 mb-0.5 rounded-md bg-opacity-10 dark:bg-opacity-10"
         whileHover={{
           scale: 1.2,
           rotate: [0, -10, 10, -10, 0],
@@ -136,7 +142,7 @@ function SkillItem({ skill, isDarkMode, position, index }) {
         }}
       >
         <Icon
-          size={24}
+          size={iconSize}
           color={isDarkMode ? skill.darkColor : skill.lightColor}
           style={{
             filter: isDarkMode ? "brightness(1)" : "brightness(0.85)",
@@ -146,7 +152,7 @@ function SkillItem({ skill, isDarkMode, position, index }) {
       </motion.div>
 
       <motion.div
-        className={`text-[10px] font-medium text-center ${
+        className={`text-[8px] xs:text-[9px] sm:text-[10px] font-medium text-center line-clamp-1 w-full ${
           isDarkMode ? "text-[#93a1a1]" : "text-[#586e75]"
         }`}
         initial={{ opacity: 0, y: 5 }}

@@ -12,6 +12,7 @@ const Interests = ({ containerRef }) => {
     width: 0,
     height: 0
   });
+  const [isMobile, setIsMobile] = useState(false);
   const isInitializedRef = useRef(false);
   const previousDimensionsRef = useRef({ width: 0, height: 0 });
   
@@ -26,6 +27,17 @@ const Interests = ({ containerRef }) => {
       clearTimeout(timeout);
       timeout = setTimeout(later, wait);
     };
+  }, []);
+
+  // 检测是否为移动设备
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // 更新容器尺寸
@@ -64,13 +76,17 @@ const Interests = ({ containerRef }) => {
     if (prevWidth !== containerDimensions.width || prevHeight !== containerDimensions.height) {
       const scaleX = containerDimensions.width / prevWidth;
       const scaleY = containerDimensions.height / prevHeight;
+      
+      // 窗口大小 - 移动端280px，桌面端300px
+      const windowWidth = window.innerWidth < 480 ? 280 : 300;
+      const windowHeight = 300;
 
       setWindows(prevWindows => 
         prevWindows.map(win => ({
           ...win,
           position: {
-            x: Math.min(Math.floor(win.position.x * scaleX), containerDimensions.width - 300),
-            y: Math.min(Math.floor(win.position.y * scaleY), containerDimensions.height - 300)
+            x: Math.min(Math.floor(win.position.x * scaleX), containerDimensions.width - windowWidth),
+            y: Math.min(Math.floor(win.position.y * scaleY), containerDimensions.height - windowHeight)
           }
         }))
       );
@@ -83,35 +99,49 @@ const Interests = ({ containerRef }) => {
   useEffect(() => {
     if (isInitializedRef.current || !containerDimensions.width || !containerDimensions.height) return;
 
+    // 显示所有窗口，不再只在移动端显示部分窗口
     const windowIds = ['photography', 'music', 'pet', 'travel', 'fitness', 'anime', 'art', 'volunteer'];
+    
     setWindows(
       windowIds.map((id, index) => ({
         ...getInitialPosition(index, windowIds.length, containerDimensions),
-        id
+        id,
+        // 移动端设置较小的初始速度，减少窗口移动
+        velocity: {
+          x: (Math.random() - 0.5) * (isMobile ? 0.2 : 0.5),
+          y: (Math.random() - 0.5) * (isMobile ? 0.2 : 0.5)
+        }
       }))
     );
     
     isInitializedRef.current = true;
     previousDimensionsRef.current = containerDimensions;
-  }, [containerDimensions]);
+  }, [containerDimensions, isMobile]);
 
   // 处理窗口移动和碰撞
   useEffect(() => {
     if (!windows || !containerDimensions.width || !containerDimensions.height) return;
 
     let animationFrameId;
-    const windowWidth = 300;
+    const windowWidth = window.innerWidth < 480 ? 280 : 300;
     const windowHeight = 300;
 
     const updatePositions = () => {
+      // 在移动设备上减慢动画
+      const speedFactor = isMobile ? 0.6 : 1;
+      
       setWindows(prevWindows => 
         prevWindows.map(win => {
           if (win.isDragging || !win.isVisible) return win;
 
+          // 应用速度因子
+          const adjustedVelocityX = win.velocity.x * speedFactor;
+          const adjustedVelocityY = win.velocity.y * speedFactor;
+
           // 计算窗口的新位置（四个边界）
-          const newLeft = win.position.x + win.velocity.x;
+          const newLeft = win.position.x + adjustedVelocityX;
           const newRight = newLeft + windowWidth;
-          const newTop = win.position.y + win.velocity.y;
+          const newTop = win.position.y + adjustedVelocityY;
           const newBottom = newTop + windowHeight;
 
           let newVelocityX = win.velocity.x;
@@ -153,7 +183,7 @@ const Interests = ({ containerRef }) => {
 
     animationFrameId = requestAnimationFrame(updatePositions);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [windows, containerDimensions]);
+  }, [windows, containerDimensions, isMobile]);
 
   const handleDragStart = useCallback((id) => {
     setWindows(prevWindows =>
@@ -172,8 +202,12 @@ const Interests = ({ containerRef }) => {
   }, []);
 
   const handleDrag = useCallback((id, data) => {
-    const windowWidth = 300;
+    // 根据屏幕尺寸确定窗口大小
+    const isVerySmall = typeof window !== 'undefined' && window.innerWidth < 480;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const windowWidth = isVerySmall ? 200 : isMobile ? 240 : 300;
     const windowHeight = 300;
+    
     const maxBottom = containerDimensions.height - 16; // 减去footer padding
     
     setWindows(prevWindows =>
@@ -199,6 +233,12 @@ const Interests = ({ containerRef }) => {
     );
   }, []);
 
+  // 添加重置功能，让所有窗口重新显示
+  const handleReset = useCallback(() => {
+    isInitializedRef.current = false;
+    setWindows(null);
+  }, []);
+
   if (!windows) return null;
 
   return (
@@ -216,6 +256,26 @@ const Interests = ({ containerRef }) => {
         height: `${containerDimensions.height}px`,
       }}
     >
+      {/* 移动端添加重置按钮 */}
+      {isMobile && (
+        <button 
+          onClick={handleReset}
+          className={`
+            absolute top-2 right-2 z-50
+            px-3 py-1 
+            text-xs
+            rounded-md
+            ${isDarkMode 
+              ? 'bg-[#073642] text-[#93a1a1] hover:bg-[#114454]' 
+              : 'bg-[#eee8d5] text-[#586e75] hover:bg-[#e0d6bc]'
+            }
+            transition-colors duration-200
+          `}
+        >
+          Reset Windows
+        </button>
+      )}
+      
       {windows.map((window) => (
         window.isVisible && (
           <DraggableWindow

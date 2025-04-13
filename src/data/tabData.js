@@ -88,15 +88,15 @@ const TabDataContent = () => {
                   </h3>
                 </div>
 
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center gap-2 xs:gap-0 mb-4">
                   <div className="flex items-center gap-2">
                     <FaCalendarAlt
-                      className={`text-sm ${
+                      className={`text-xs sm:text-sm ${
                         isDarkMode ? "text-gray-400" : "text-[#93a1a1]"
                       }`}
                     />
                     <span
-                      className={`text-sm ${
+                      className={`text-xs sm:text-sm ${
                         isDarkMode ? "text-gray-400" : "text-[#93a1a1]"
                       }`}
                       aria-label="Study period"
@@ -106,12 +106,12 @@ const TabDataContent = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <GiAchievement
-                      className={`text-base ${
+                      className={`text-xs sm:text-base ${
                         isDarkMode ? "text-[#58a6ff]" : "text-[#2075c7]"
                       }`}
                     />
                     <span
-                      className={`text-sm font-medium
+                      className={`text-xs sm:text-sm font-medium
                       ${isDarkMode ? "text-[#58a6ff]" : "text-[#2075c7]"}`}
                       aria-label="Grade Point Average"
                     >
@@ -162,10 +162,10 @@ const TabDataContent = () => {
                           course
                         ) : (
                           <div>
-                            <div className="flex justify-between items-center">
-                              <span>{course.name}</span>
+                            <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center gap-2 xs:gap-0">
+                              <span className="text-xs sm:text-sm">{course.name}</span>
                               <span
-                                className={`text-xs font-medium ml-2 px-2 py-0.5 rounded flex items-center gap-1
+                                className={`text-xs font-medium px-2 py-0.5 rounded flex items-center gap-1 self-start
                                 ${
                                   isDarkMode
                                     ? "bg-[#58a6ff]/20 text-[#58a6ff]"
@@ -173,8 +173,8 @@ const TabDataContent = () => {
                                 }`}
                                 aria-label="Course achievement"
                               >
-                                <GiAchievement className="text-xs" />
-                                {course.achievement}
+                                <GiAchievement className="text-xs flex-shrink-0" />
+                                <span className="line-clamp-2 text-xs">{course.achievement}</span>
                               </span>
                             </div>
                           </div>
@@ -223,10 +223,10 @@ const TabDataContent = () => {
                             }`}
                           role="listitem"
                         >
-                          <div className="flex justify-between items-center">
-                            <span>{exp.course}</span>
+                          <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center gap-2 xs:gap-0">
+                            <span className="text-xs sm:text-sm break-words max-w-full xs:max-w-[60%]">{exp.course}</span>
                             <span
-                              className={`text-xs font-medium ml-2 px-2 py-0.5 rounded
+                              className={`text-xs font-medium px-2 py-0.5 rounded self-start
                               ${
                                 isDarkMode
                                   ? "bg-[#58a6ff]/20 text-[#58a6ff]"
@@ -287,10 +287,10 @@ const TabDataContent = () => {
                             }`}
                           role="listitem"
                         >
-                          <div className="flex justify-between items-center">
-                            <span className="font-medium">{exp.title}</span>
+                          <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center gap-2 xs:gap-0">
+                            <span className="font-medium text-xs sm:text-sm break-words max-w-full xs:max-w-[60%]">{exp.title}</span>
                             <span
-                              className={`text-xs font-medium ml-2 px-2 py-0.5 rounded
+                              className={`text-xs font-medium px-2 py-0.5 rounded self-start
                               ${
                                 isDarkMode
                                   ? "bg-[#58a6ff]/20 text-[#58a6ff]"

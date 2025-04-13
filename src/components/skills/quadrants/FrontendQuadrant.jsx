@@ -29,14 +29,18 @@ const SkillItem = ({ skill, isDarkMode, position, index }) => {
         : skill.lightColor
       : skill.color;
 
+  // 使用响应式类名调整大小
+  const itemSize = typeof window !== 'undefined' && window.innerWidth < 480 ? 50 : 60;
+  const iconSize = typeof window !== 'undefined' && window.innerWidth < 480 ? 20 : 24;
+
   return (
     <motion.div
       className="absolute flex flex-col items-center justify-center"
       style={{
-        width: 60,
-        height: 60,
-        x: x - 30,
-        y: y - 30,
+        width: itemSize,
+        height: itemSize,
+        x: x - itemSize/2,
+        y: y - itemSize/2,
       }}
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
@@ -50,7 +54,7 @@ const SkillItem = ({ skill, isDarkMode, position, index }) => {
       whileHover={{ scale: 1.1 }}
     >
       <motion.div
-        className="flex items-center justify-center w-8 h-8 mb-0.5 rounded-md bg-opacity-10 dark:bg-opacity-10"
+        className="flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 mb-0.5 rounded-md bg-opacity-10 dark:bg-opacity-10"
         whileHover={{
           scale: 1.2,
           rotate: [0, -10, 10, -10, 0],
@@ -58,7 +62,7 @@ const SkillItem = ({ skill, isDarkMode, position, index }) => {
         }}
       >
         <Icon
-          size={24}
+          size={iconSize}
           color={iconColor}
           style={{
             filter: isDarkMode ? "brightness(0.9)" : "brightness(0.8)",
@@ -67,7 +71,7 @@ const SkillItem = ({ skill, isDarkMode, position, index }) => {
       </motion.div>
 
       <motion.div
-        className={`text-[10px] font-medium text-center ${
+        className={`text-[8px] xs:text-[9px] sm:text-[10px] font-medium text-center line-clamp-1 w-full ${
           isDarkMode ? "text-[#93a1a1]" : "text-[#586e75]"
         }`}
         initial={{ opacity: 0, y: 5 }}
@@ -142,8 +146,12 @@ const MIN_DISTANCE = 65;
 
 export function FrontendQuadrant({ isDarkMode }) {
   const [positions, setPositions] = useState([]);
-  const MAX_RADIUS = 180;
-  const MIN_RADIUS = 60;
+  // 响应式调整尺寸
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 480;
+  const isTablet = typeof window !== 'undefined' && window.innerWidth >= 480 && window.innerWidth < 768;
+  
+  const MAX_RADIUS = isMobile ? 120 : isTablet ? 150 : 180;
+  const MIN_RADIUS = isMobile ? 40 : isTablet ? 50 : 60;
   const MIN_ANGLE = -160;
   const MAX_ANGLE = -110;
 
