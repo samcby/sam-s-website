@@ -1,7 +1,7 @@
 "use client";
-import { motion } from 'framer-motion';
-import * as SiIcons from 'react-icons/si';
-import { useEffect, useState } from 'react';
+import { motion } from "framer-motion";
+import * as SiIcons from "react-icons/si";
+import { useEffect, useState } from "react";
 
 // 计算两点之间的距离
 function calculateDistance(x1, y1, x2, y2) {
@@ -22,9 +22,12 @@ const SkillItem = ({ skill, isDarkMode, position, index }) => {
 
   if (!Icon) return null;
 
-  const iconColor = skill.lightColor && skill.darkColor 
-    ? (isDarkMode ? skill.darkColor : skill.lightColor)
-    : skill.color;
+  const iconColor =
+    skill.lightColor && skill.darkColor
+      ? isDarkMode
+        ? skill.darkColor
+        : skill.lightColor
+      : skill.color;
 
   return (
     <motion.div
@@ -48,23 +51,25 @@ const SkillItem = ({ skill, isDarkMode, position, index }) => {
     >
       <motion.div
         className="flex items-center justify-center w-8 h-8 mb-0.5 rounded-md bg-opacity-10 dark:bg-opacity-10"
-        whileHover={{ 
+        whileHover={{
           scale: 1.2,
           rotate: [0, -10, 10, -10, 0],
-          transition: { duration: 0.5 }
+          transition: { duration: 0.5 },
         }}
       >
         <Icon
           size={24}
           color={iconColor}
           style={{
-            filter: isDarkMode ? 'brightness(0.9)' : 'brightness(0.8)',
+            filter: isDarkMode ? "brightness(0.9)" : "brightness(0.8)",
           }}
         />
       </motion.div>
-      
+
       <motion.div
-        className={`text-[10px] font-medium text-center ${isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'}`}
+        className={`text-[10px] font-medium text-center ${
+          isDarkMode ? "text-[#93a1a1]" : "text-[#586e75]"
+        }`}
         initial={{ opacity: 0, y: 5 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: index * 0.1 + 0.3 }}
@@ -76,76 +81,76 @@ const SkillItem = ({ skill, isDarkMode, position, index }) => {
 };
 
 const FRONTEND_SKILLS = [
-  { 
-    name: 'HTML', 
-    iconName: 'SiHtml5', 
+  {
+    name: "HTML",
+    iconName: "SiHtml5",
     minRadius: 60,
     maxRadius: 180,
     minAngle: -175,
     maxAngle: -155,
-    color: '#E34F26' 
+    color: "#E34F26",
   },
-  { 
-    name: 'CSS', 
-    iconName: 'SiCss3', 
+  {
+    name: "CSS",
+    iconName: "SiCss3",
     minRadius: 80,
     maxRadius: 200,
     minAngle: -150,
     maxAngle: -90,
-    color: '#1572B6' 
+    color: "#1572B6",
   },
-  { 
-    name: 'JavaScript', 
-    iconName: 'SiJavascript', 
+  {
+    name: "JavaScript",
+    iconName: "SiJavascript",
     minRadius: 120,
     maxRadius: 240,
     minAngle: -170,
     maxAngle: -110,
-    color: '#F7DF1E' 
+    color: "#F7DF1E",
   },
-  { 
-    name: 'TypeScript', 
-    iconName: 'SiTypescript', 
+  {
+    name: "TypeScript",
+    iconName: "SiTypescript",
     minRadius: 180,
     maxRadius: 300,
     minAngle: -145,
     maxAngle: -125,
-    color: '#3178C6' 
+    color: "#3178C6",
   },
-  { 
-    name: 'React', 
-    iconName: 'SiReact', 
+  {
+    name: "React",
+    iconName: "SiReact",
     minRadius: 140,
     maxRadius: 260,
     minAngle: -130,
     maxAngle: -110,
-    color: '#61DAFB' 
+    color: "#61DAFB",
   },
-  { 
-    name: 'Next.js', 
-    iconName: 'SiNextdotjs', 
+  {
+    name: "Next.js",
+    iconName: "SiNextdotjs",
     minRadius: 200,
     maxRadius: 320,
     minAngle: -140,
     maxAngle: -100,
-    lightColor: '#000000',
-    darkColor: '#FFFFFF' 
-  }
+    lightColor: "#000000",
+    darkColor: "#FFFFFF",
+  },
 ];
 
 const MIN_DISTANCE = 65;
 
 export function FrontendQuadrant({ isDarkMode }) {
   const [positions, setPositions] = useState([]);
-  const MAX_RADIUS = 300;
-  const MIN_RADIUS = 80;
-  const MIN_ANGLE = -170;  // 左上象限最小角度（略微收缩避免触及顶部）
-  const MAX_ANGLE = -100;  // 左上象限最大角度（避免与左侧重叠）
+  const MAX_RADIUS = 180;
+  const MIN_RADIUS = 60;
+  const MIN_ANGLE = -160;
+  const MAX_ANGLE = -110;
 
   useEffect(() => {
     const calculatePositions = () => {
       const calculatedPositions = [];
-      
+
       for (let i = 0; i < FRONTEND_SKILLS.length; i++) {
         const skill = FRONTEND_SKILLS[i];
         let attempts = 0;
@@ -156,7 +161,8 @@ export function FrontendQuadrant({ isDarkMode }) {
           // 生成随机角度（严格在左上象限内）
           let newAngle = MIN_ANGLE + Math.random() * (MAX_ANGLE - MIN_ANGLE);
           // 生成随机半径（在最小和最大半径之间）
-          let newRadius = MIN_RADIUS + Math.random() * (MAX_RADIUS - MIN_RADIUS);
+          let newRadius =
+            MIN_RADIUS + Math.random() * (MAX_RADIUS - MIN_RADIUS);
 
           // 检查是否与已使用的位置太接近
           let tooClose = false;
@@ -172,7 +178,7 @@ export function FrontendQuadrant({ isDarkMode }) {
           if (!tooClose) {
             position = {
               radius: newRadius,
-              rotation: newAngle
+              rotation: newAngle,
             };
             break;
           }
@@ -183,14 +189,17 @@ export function FrontendQuadrant({ isDarkMode }) {
         // 如果找不到合适的位置，使用基础位置（确保在象限内）
         if (!position) {
           position = {
-            radius: Math.min(Math.max(skill.baseRadius, MIN_RADIUS), MAX_RADIUS),
-            rotation: Math.min(Math.max(skill.baseAngle, MIN_ANGLE), MAX_ANGLE)
+            radius: Math.min(
+              Math.max(skill.baseRadius, MIN_RADIUS),
+              MAX_RADIUS
+            ),
+            rotation: Math.min(Math.max(skill.baseAngle, MIN_ANGLE), MAX_ANGLE),
           };
         }
 
         calculatedPositions.push(position);
       }
-      
+
       return calculatedPositions;
     };
 
@@ -205,13 +214,10 @@ export function FrontendQuadrant({ isDarkMode }) {
           key={skill.name}
           skill={skill}
           isDarkMode={isDarkMode}
-          position={positions[index] || { 
-            radius: Math.min(Math.max(skill.baseRadius, MIN_RADIUS), MAX_RADIUS), 
-            rotation: Math.min(Math.max(skill.baseAngle, MIN_ANGLE), MAX_ANGLE)
-          }}
+          position={positions[index] || { radius: 0, rotation: 0 }}
           index={index}
         />
       ))}
     </>
   );
-} 
+}

@@ -1,11 +1,22 @@
 "use client";
-import { motion } from 'framer-motion';
-import * as Si from 'react-icons/si';
-import { TbBrandVscode } from 'react-icons/tb';
-import { BiLogoPostman } from 'react-icons/bi';
-import { SiJest, SiPuppeteer, SiIterm2, SiVercel, SiKubernetes, SiDocker, SiWebpack, SiTailwindcss, SiGithub } from 'react-icons/si';
-import { FaAws } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+import { motion } from "framer-motion";
+import {
+  SiDocker,
+  SiGit,
+  SiGithub,
+  SiGitlab,
+  SiIterm2,
+  SiJest,
+  SiKubernetes,
+  SiPostman,
+  SiPuppeteer,
+  SiTailwindcss,
+  SiVercel,
+  SiWebpack,
+} from "react-icons/si";
+import { BiLogoVisualStudio } from "react-icons/bi";
+import { FaAws } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 // 计算两点之间的距离
 function calculateDistance(x1, y1, x2, y2) {
@@ -48,24 +59,26 @@ const SkillItem = ({ skill, isDarkMode, position, index }) => {
     >
       <motion.div
         className="flex items-center justify-center w-8 h-8 mb-0.5 rounded-md bg-opacity-10 dark:bg-opacity-10"
-        whileHover={{ 
+        whileHover={{
           scale: 1.2,
           rotate: [0, -10, 10, -10, 0],
-          transition: { duration: 0.5 }
+          transition: { duration: 0.5 },
         }}
       >
         <Icon
           size={24}
           color={isDarkMode ? skill.darkColor : skill.lightColor}
           style={{
-            filter: isDarkMode ? 'brightness(1)' : 'brightness(0.85)',
-            opacity: isDarkMode ? 0.9 : 1
+            filter: isDarkMode ? "brightness(1)" : "brightness(0.85)",
+            opacity: isDarkMode ? 0.9 : 1,
           }}
         />
       </motion.div>
-      
+
       <motion.div
-        className={`text-[10px] font-medium text-center ${isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'}`}
+        className={`text-[10px] font-medium text-center ${
+          isDarkMode ? "text-[#93a1a1]" : "text-[#586e75]"
+        }`}
         initial={{ opacity: 0, y: 5 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: index * 0.1 + 0.3 }}
@@ -77,161 +90,141 @@ const SkillItem = ({ skill, isDarkMode, position, index }) => {
 };
 
 const DEVOPS_SKILLS = [
-  { 
-    name: 'Git', 
-    Icon: Si.SiGit,
+  {
+    name: "Git",
+    Icon: SiGit,
     baseRadius: 120,
     baseAngle: 5,
     radiusOffset: 20,
     angleOffset: 20,
-    lightColor: '#F05032',
-    darkColor: '#F05032'
+    lightColor: "#F05032",
+    darkColor: "#F05032",
   },
-  { 
-    name: 'GitHub', 
+  {
+    name: "GitHub",
     Icon: SiGithub,
     baseRadius: 200,
     baseAngle: 30,
     radiusOffset: 20,
     angleOffset: 20,
-    lightColor: '#181717',
-    darkColor: '#FFFFFF'
+    lightColor: "#181717",
+    darkColor: "#FFFFFF",
   },
-  { 
-    name: 'GitLab', 
-    Icon: Si.SiGitlab,
+  {
+    name: "GitLab",
+    Icon: SiGitlab,
     baseRadius: 160,
     baseAngle: 15,
     radiusOffset: 20,
     angleOffset: 10,
-    lightColor: '#FC6D26',
-    darkColor: '#FC6D26'
+    lightColor: "#FC6D26",
+    darkColor: "#FC6D26",
   },
-  { 
-    name: 'VS Code', 
-    Icon: TbBrandVscode,
+  {
+    name: "VS Code",
+    Icon: BiLogoVisualStudio,
     baseRadius: 280,
     baseAngle: 40,
     radiusOffset: 20,
     angleOffset: 20,
-    lightColor: '#007ACC',
-    darkColor: '#0098FF'
+    lightColor: "#007ACC",
+    darkColor: "#0098FF",
   },
-  { 
-    name: 'Postman', 
-    Icon: BiLogoPostman,
-    baseRadius: 100,
-    baseAngle: 25,
-    radiusOffset: 20,
-    angleOffset: 20,
-    lightColor: '#FF6C37',
-    darkColor: '#FF8F66'
-  },
-  { 
-    name: 'Jest', 
+  {
+    name: "Jest",
     Icon: SiJest,
     baseRadius: 200,
     baseAngle: 50,
     radiusOffset: 20,
     angleOffset: 20,
-    lightColor: '#C21325',
-    darkColor: '#E91E32'
+    lightColor: "#C21325",
+    darkColor: "#E91E32",
   },
-  { 
-    name: 'Puppeteer', 
+  {
+    name: "Puppeteer",
     Icon: SiPuppeteer,
     baseRadius: 120,
     baseAngle: 35,
     radiusOffset: 20,
     angleOffset: 20,
-    lightColor: '#40B5A4',
-    darkColor: '#50D6C2'
+    lightColor: "#40B5A4",
+    darkColor: "#50D6C2",
   },
-  { 
-    name: 'iTerm', 
+  {
+    name: "iTerm",
     Icon: SiIterm2,
     baseRadius: 80,
     baseAngle: 10,
     radiusOffset: 20,
     angleOffset: 20,
-    lightColor: '#666666',
-    darkColor: '#A9ABAC'
+    lightColor: "#666666",
+    darkColor: "#A9ABAC",
   },
-  { 
-    name: 'Vercel', 
+  {
+    name: "Vercel",
     Icon: SiVercel,
     baseRadius: 140,
     baseAngle: 45,
     radiusOffset: 20,
     angleOffset: 20,
-    lightColor: '#171717',
-    darkColor: '#CCCCCC'
+    lightColor: "#171717",
+    darkColor: "#CCCCCC",
   },
-  { 
-    name: 'Kubernetes', 
+  {
+    name: "Kubernetes",
     Icon: SiKubernetes,
     baseRadius: 240,
     baseAngle: 60,
     radiusOffset: 20,
     angleOffset: 20,
-    lightColor: '#326CE5',
-    darkColor: '#4D7EE8'
+    lightColor: "#326CE5",
+    darkColor: "#4D7EE8",
   },
-  { 
-    name: 'Docker', 
+  {
+    name: "Docker",
     Icon: SiDocker,
     baseRadius: 200,
     baseAngle: 35,
     radiusOffset: 20,
     angleOffset: 10,
-    lightColor: '#2496ED',
-    darkColor: '#40A6EF'
+    lightColor: "#2496ED",
+    darkColor: "#40A6EF",
   },
-  { 
-    name: 'Webpack', 
-    Icon: SiWebpack,
-    baseRadius: 180,
-    baseAngle: 35,
-    radiusOffset: 20,
-    angleOffset: 20,
-    lightColor: '#8DD6F9',
-    darkColor: '#A5DEFA'
-  },
-  { 
-    name: 'Tailwind', 
-    Icon: SiTailwindcss,
+  {
+    name: "Postman",
+    Icon: SiPostman,
     baseRadius: 160,
-    baseAngle: 5,
+    baseAngle: 25,
     radiusOffset: 20,
-    angleOffset: 20,
-    lightColor: '#06B6D4',
-    darkColor: '#22C5E0'
+    angleOffset: 15,
+    lightColor: "#FF6C37",
+    darkColor: "#FF8F66",
   },
-  { 
-    name: 'AWS', 
+  {
+    name: "AWS",
     Icon: FaAws,
     baseRadius: 240,
-    baseAngle: 75,
+    baseAngle: 20,
     radiusOffset: 20,
-    angleOffset: 10,
-    lightColor: '#FF9900',
-    darkColor: '#FFAD33'
-  }
+    angleOffset: 15,
+    lightColor: "#FF9900",
+    darkColor: "#FFA826",
+  },
 ];
 
 const MIN_DISTANCE = 65;
 
 export function DevopsQuadrant({ isDarkMode }) {
   const [positions, setPositions] = useState([]);
-  const MAX_RADIUS = 300;
+  const MAX_RADIUS = 240;
   const MIN_RADIUS = 80;
-  const MIN_ANGLE = 0;   // 右下象限最小角度
-  const MAX_ANGLE = 90;  // 右下象限最大角度
+  const MIN_ANGLE = 15;
+  const MAX_ANGLE = 85;
 
   useEffect(() => {
     const calculatePositions = () => {
       const calculatedPositions = [];
-      
+
       for (let i = 0; i < DEVOPS_SKILLS.length; i++) {
         const skill = DEVOPS_SKILLS[i];
         let attempts = 0;
@@ -242,7 +235,8 @@ export function DevopsQuadrant({ isDarkMode }) {
           // 生成随机角度（严格在右下象限内）
           let newAngle = MIN_ANGLE + Math.random() * (MAX_ANGLE - MIN_ANGLE);
           // 生成随机半径（在最小和最大半径之间）
-          let newRadius = MIN_RADIUS + Math.random() * (MAX_RADIUS - MIN_RADIUS);
+          let newRadius =
+            MIN_RADIUS + Math.random() * (MAX_RADIUS - MIN_RADIUS);
 
           // 检查是否与已使用的位置太接近
           let tooClose = false;
@@ -258,7 +252,7 @@ export function DevopsQuadrant({ isDarkMode }) {
           if (!tooClose) {
             position = {
               radius: newRadius,
-              rotation: newAngle
+              rotation: newAngle,
             };
             break;
           }
@@ -269,14 +263,17 @@ export function DevopsQuadrant({ isDarkMode }) {
         // 如果找不到合适的位置，使用基础位置（确保在象限内）
         if (!position) {
           position = {
-            radius: Math.min(Math.max(skill.baseRadius, MIN_RADIUS), MAX_RADIUS),
-            rotation: Math.min(Math.max(skill.baseAngle, MIN_ANGLE), MAX_ANGLE)
+            radius: Math.min(
+              Math.max(skill.baseRadius, MIN_RADIUS),
+              MAX_RADIUS
+            ),
+            rotation: Math.min(Math.max(skill.baseAngle, MIN_ANGLE), MAX_ANGLE),
           };
         }
 
         calculatedPositions.push(position);
       }
-      
+
       return calculatedPositions;
     };
 
@@ -291,13 +288,21 @@ export function DevopsQuadrant({ isDarkMode }) {
           key={skill.name}
           skill={skill}
           isDarkMode={isDarkMode}
-          position={positions[index] || { 
-            radius: Math.min(Math.max(skill.baseRadius, MIN_RADIUS), MAX_RADIUS), 
-            rotation: Math.min(Math.max(skill.baseAngle, MIN_ANGLE), MAX_ANGLE)
-          }}
+          position={
+            positions[index] || {
+              radius: Math.min(
+                Math.max(skill.baseRadius, MIN_RADIUS),
+                MAX_RADIUS
+              ),
+              rotation: Math.min(
+                Math.max(skill.baseAngle, MIN_ANGLE),
+                MAX_ANGLE
+              ),
+            }
+          }
           index={index}
         />
       ))}
     </>
   );
-} 
+}

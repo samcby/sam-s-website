@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import TabButton from "@/components/ui/TabButton";
 import TabDataContent from "@/data/tabData";
-import { useTheme } from '@/context/ThemeContext';
-import { motion } from "framer-motion"; 
+import { useTheme } from "@/context/ThemeContext";
+import { motion } from "framer-motion";
 
 const AboutSection = () => {
   const [tab, setTab] = useState("experience");
@@ -22,7 +22,9 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className={`flex flex-col gap-6 sm:gap-8 relative items-center theme-text ${isDarkMode ? 'dark-theme' : 'light-theme'}`}
+      className={`flex flex-col gap-6 sm:gap-8 relative items-center theme-text ${
+        isDarkMode ? "dark-theme" : "light-theme"
+      }`}
     >
       <div className="flex flex-col items-center justify-center w-full max-w-5xl">
         {/* Content area - Image and text side by side */}
@@ -44,32 +46,52 @@ const AboutSection = () => {
 
           {/* Text area */}
           <div className="md:col-span-8 w-full">
-            <h3 className="text-xl font-bold mb-4 theme-primary">
-              About Me
-            </h3>
-            
+            <h3 className="text-xl font-bold mb-4 theme-primary">About Me</h3>
+
             <div className="space-y-4 text-sm sm:text-base lg:text-lg text-left leading-relaxed">
               <p>
-                I am <span className="font-semibold">Rick Yang</span>, a passionate Full Stack Developer with a strong foundation in Computer Science, holding a B.S. and pursuing an M.S. from UCLA.
-                I came from Canton, 🇨🇳, and I am currently living in Los Angeles, CA, 🇺🇸.
-                I can speak Cantonese, Mandarin, and English, and currently learning Japanese.
+                I am <span className="font-semibold">Rick Yang</span>, a
+                passionate Full Stack Developer with a strong foundation in
+                Computer Science, holding a B.S. and pursuing an M.S. from UCLA.
+                I came from Canton, 🇨🇳, and I am currently living in Los
+                Angeles, CA, 🇺🇸. I can speak Cantonese, Mandarin, and English,
+                and currently learning Japanese.
               </p>
-              
+
               <p>
-                I specialize in creating dynamic, scalable, and user-focused web and mobile applications using technologies such as <span className="font-medium theme-primary">React, Vue, Angular, Redux, Node.js, Express, Spring Boot, PostgreSQL, and MongoDB</span>, etc.. 
-                My expertise spans front-end and back-end development, complemented by a solid understanding of software architecture and machine learning.
+                I specialize in creating dynamic, scalable, and user-focused web
+                and mobile applications using technologies such as{" "}
+                <span className="font-medium theme-primary">
+                  React, Vue, Angular, Redux, Node.js, Express, Spring Boot,
+                  PostgreSQL, and MongoDB
+                </span>
+                , etc.. My expertise spans front-end and back-end development,
+                complemented by a solid understanding of software architecture
+                and machine learning.
               </p>
-              
+
               <p>
-                I have multiple hands-on internship experience in different <span className="font-semibold theme-secondary">BIG TECH</span> companies like 
-                <span className="font-semibold theme-accent"> Alibaba, ByteDance, and Nvidia</span>.
+                I have multiple hands-on internship experience in different{" "}
+                <span className="font-semibold theme-secondary">BIG TECH</span>{" "}
+                companies like
+                <span className="font-semibold theme-accent">
+                  {" "}
+                  Alibaba, ByteDance, and Nvidia
+                </span>
+                .
               </p>
-              
+
               <p>
-                Beyond coding, I&apos;m a DJ🎵, an avid traveler 🌠 (10+ countries this year), a furry lover 🐱🐶, a designer 🎨, and a strategic gamer 🎮. I balance my technical pursuits with fitness and outdoor activities.
+                Beyond coding, I&apos;m a DJ🎵, an avid traveler 🌠 (10+
+                countries this year), a furry lover 🐱🐶, a designer 🎨, and a
+                strategic gamer 🎮. I balance my technical pursuits with fitness
+                and outdoor activities.
               </p>
               <p className="mt-3 text-sm italic theme-primary">
-                <Link href="/hobbies" className="cursor-pointer hover:underline">
+                <Link
+                  href="/hobbies"
+                  className="cursor-pointer hover:underline"
+                >
                   Know more about my hobbies →
                 </Link>
               </p>
@@ -115,9 +137,9 @@ const AboutSection = () => {
         </div>
 
         {/* Tab content with card style */}
-        <motion.div 
+        <motion.div
           className="mt-6 sm:mt-8 w-full p-4 sm:p-6 rounded-xl theme-card theme-shadow theme-border border"
-          key={tab} 
+          key={tab}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
@@ -139,9 +161,9 @@ const AboutSection = () => {
           --color-card-bg: #eee8d5;
           --color-border: #d0d7de;
           --color-divider: #d8dee4;
-          --shadow: 0 3px 12px rgba(0,0,0,0.1);
+          --shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
         }
-        
+
         /* 深色主题 */
         .dark-theme {
           --color-primary: #58a6ff;
@@ -153,20 +175,40 @@ const AboutSection = () => {
           --color-card-bg: #161b22;
           --color-border: #30363d;
           --color-divider: #30363d;
-          --shadow: 0 3px 12px rgba(0,0,0,0.3);
+          --shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
         }
-        
+
         /* 应用CSS变量的工具类 */
-        .theme-text { color: var(--color-text); }
-        .theme-primary { color: var(--color-primary); }
-        .theme-secondary { color: var(--color-secondary); }
-        .theme-accent { color: var(--color-accent); }
-        .theme-muted { color: var(--color-muted); }
-        .theme-bg { background-color: var(--color-bg); }
-        .theme-card { background-color: var(--color-card-bg); }
-        .theme-border { border-color: var(--color-border); }
-        .theme-divider { background-color: var(--color-divider); }
-        .theme-shadow { box-shadow: var(--shadow); }
+        .theme-text {
+          color: var(--color-text);
+        }
+        .theme-primary {
+          color: var(--color-primary);
+        }
+        .theme-secondary {
+          color: var(--color-secondary);
+        }
+        .theme-accent {
+          color: var(--color-accent);
+        }
+        .theme-muted {
+          color: var(--color-muted);
+        }
+        .theme-bg {
+          background-color: var(--color-bg);
+        }
+        .theme-card {
+          background-color: var(--color-card-bg);
+        }
+        .theme-border {
+          border-color: var(--color-border);
+        }
+        .theme-divider {
+          background-color: var(--color-divider);
+        }
+        .theme-shadow {
+          box-shadow: var(--shadow);
+        }
       `}</style>
     </section>
   );

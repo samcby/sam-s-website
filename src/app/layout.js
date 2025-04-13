@@ -3,7 +3,7 @@ import "react-resizable/css/styles.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import MusicPlayer from "@/components/music-player/MusicPlayer";
-import { ThemeProvider } from '@/context/ThemeContext';
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata = {
   title: "Rick's Portfolio",
@@ -72,7 +72,12 @@ export default function RootLayout({ children }) {
         <style dangerouslySetInnerHTML={{ __html: noFlashStyle }} />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-screen transition-all duration-300 font-sans">
+      <body
+        suppressHydrationWarning
+        data-new-gr-c-s-check-loaded="14.1157.0"
+        data-gr-ext-installed=""
+        className="min-h-screen transition-all duration-300 font-sans"
+      >
         <ThemeProvider>
           <div className="flex flex-col min-h-screen relative bg-[#fdf6e3] dark:bg-[#002b36] transition-colors duration-300">
             <Navbar />
