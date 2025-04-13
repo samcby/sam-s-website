@@ -4,7 +4,7 @@ import TimelineDynamics from "@/components/experience/TimelineDynamics";
 import { useTheme } from "@/context/ThemeContext";
 import SkillCircle from "@/components/skills/SkillCircle";
 import { educationData } from "@/data/educationData";
-import { FaGraduationCap, FaCalendarAlt, FaBook, FaChalkboardTeacher } from "react-icons/fa";
+import { FaGraduationCap, FaCalendarAlt, FaBook } from "react-icons/fa";
 import { BsAward, BsSearch } from "react-icons/bs";
 import { GiAchievement } from "react-icons/gi";
 
@@ -64,7 +64,7 @@ const TabDataContent = () => {
             />
           </div>
 
-          <div className="w-full space-y-2 sm:space-y-3" role="list">
+          <div className="w-full space-y-4 sm:space-y-6" role="list">
             {educationData.map((edu, index) => (
               <div
                 key={index}
@@ -88,15 +88,15 @@ const TabDataContent = () => {
                   </h3>
                 </div>
 
-                <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center gap-2 xs:gap-0 mb-4">
+                <div className="flex justify-between items-center mb-4">
                   <div className="flex items-center gap-2">
                     <FaCalendarAlt
-                      className={`text-xs sm:text-sm ${
+                      className={`text-sm ${
                         isDarkMode ? "text-gray-400" : "text-[#93a1a1]"
                       }`}
                     />
                     <span
-                      className={`text-xs sm:text-sm ${
+                      className={`text-sm ${
                         isDarkMode ? "text-gray-400" : "text-[#93a1a1]"
                       }`}
                       aria-label="Study period"
@@ -106,12 +106,12 @@ const TabDataContent = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <GiAchievement
-                      className={`text-xs sm:text-base ${
+                      className={`text-base ${
                         isDarkMode ? "text-[#58a6ff]" : "text-[#2075c7]"
                       }`}
                     />
                     <span
-                      className={`text-xs sm:text-sm font-medium
+                      className={`text-sm font-medium
                       ${isDarkMode ? "text-[#58a6ff]" : "text-[#2075c7]"}`}
                       aria-label="Grade Point Average"
                     >
@@ -161,11 +161,11 @@ const TabDataContent = () => {
                         {typeof course === "string" ? (
                           course
                         ) : (
-                          <div className="w-full">
-                            <div className="flex flex-row justify-between items-center gap-2">
-                              <span className="text-xs sm:text-sm">{course.name}</span>
+                          <div>
+                            <div className="flex justify-between items-center">
+                              <span>{course.name}</span>
                               <span
-                                className={`text-xs font-medium px-2 py-0.5 rounded flex items-center gap-1 shrink-0 ml-auto
+                                className={`text-xs font-medium ml-2 px-2 py-0.5 rounded flex items-center gap-1
                                 ${
                                   isDarkMode
                                     ? "bg-[#58a6ff]/20 text-[#58a6ff]"
@@ -173,8 +173,8 @@ const TabDataContent = () => {
                                 }`}
                                 aria-label="Course achievement"
                               >
-                                <GiAchievement className="text-xs flex-shrink-0" />
-                                <span className="text-xs max-w-[150px] truncate">{course.achievement}</span>
+                                <GiAchievement className="text-xs" />
+                                {course.achievement}
                               </span>
                             </div>
                           </div>
@@ -187,7 +187,7 @@ const TabDataContent = () => {
                 {edu.teachingExperience && (
                   <div className="mt-6">
                     <div className="flex items-center gap-2 mb-2">
-                      <FaChalkboardTeacher
+                      <GiAchievement
                         className={`text-sm ${
                           isDarkMode ? "text-gray-300" : "text-[#586e75]"
                         }`}
@@ -223,31 +223,24 @@ const TabDataContent = () => {
                             }`}
                           role="listitem"
                         >
-                          <div className="flex flex-col space-y-2">
-                            <div className="font-medium text-xs sm:text-sm break-words">
-                              {exp.course}
-                            </div>
-                            
-                            <div className="flex flex-wrap justify-between items-center gap-2">
-                              <span
-                                className={`text-xs font-medium px-2 py-0.5 rounded
-                                ${
-                                  isDarkMode
-                                    ? "bg-[#58a6ff]/20 text-[#58a6ff]"
-                                    : "bg-[#2075c7]/20 text-[#2075c7]"
-                                }`}
-                              >
-                                {exp.role}
-                              </span>
-                              
-                              <span
-                                className={`text-xs flex items-center gap-1
-                                ${isDarkMode ? "text-gray-400" : "text-[#93a1a1]"}`}
-                              >
-                                <FaCalendarAlt className="text-xs" />
-                                {exp.period}
-                              </span>
-                            </div>
+                          <div className="flex justify-between items-center">
+                            <span>{exp.course}</span>
+                            <span
+                              className={`text-xs font-medium ml-2 px-2 py-0.5 rounded
+                              ${
+                                isDarkMode
+                                  ? "bg-[#58a6ff]/20 text-[#58a6ff]"
+                                  : "bg-[#2075c7]/20 text-[#2075c7]"
+                              }`}
+                            >
+                              {exp.role}
+                            </span>
+                          </div>
+                          <div
+                            className={`text-xs mt-1
+                            ${isDarkMode ? "text-gray-400" : "text-[#93a1a1]"}`}
+                          >
+                            {exp.period}
                           </div>
                         </div>
                       ))}
@@ -294,10 +287,10 @@ const TabDataContent = () => {
                             }`}
                           role="listitem"
                         >
-                          <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center gap-2 xs:gap-0">
-                            <span className="font-medium text-xs sm:text-sm break-words max-w-full xs:max-w-[60%]">{exp.title}</span>
+                          <div className="flex justify-between items-center">
+                            <span className="font-medium">{exp.title}</span>
                             <span
-                              className={`text-xs font-medium px-2 py-0.5 rounded self-start
+                              className={`text-xs font-medium ml-2 px-2 py-0.5 rounded
                               ${
                                 isDarkMode
                                   ? "bg-[#58a6ff]/20 text-[#58a6ff]"
@@ -382,13 +375,7 @@ const TabDataContent = () => {
       id: "awards",
       content: (
         <div className="flex flex-col justify-center items-center">
-          <Image 
-            src="/images/sce.webp" 
-            alt="sce" 
-            width={150} 
-            height={150}
-            className="w-auto h-auto object-contain" 
-          />
+          <Image src="/images/sce.webp" alt="sce" width={150} height={150} />
           <ul
             className={`list-disc pl-4 text-center mt-4
                          ${isDarkMode ? "text-[#ADB7BE]" : "text-[#586e75]"}`}

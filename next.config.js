@@ -65,6 +65,7 @@ const nextConfig = {
       allowedOrigins: ['localhost:3000', '127.0.0.1:3000', 'localhost', '127.0.0.1', 'fonts.googleapis.com', 'www.google.com', 'www.gstatic.com', 'www.recaptcha.net', 'recaptcha.net'],
     },
     serverComponentsExternalPackages: [],
+    webpackBuildWorker: false,
   },
   async rewrites() {
     return [
@@ -114,10 +115,21 @@ const nextConfig = {
         ...config.watchOptions,
         poll: 1000,
         aggregateTimeout: 300,
+        ignored: ['**/node_modules', '**/.git', '**/.next'],
+      };
+
+      config.experiments = {
+        ...config.experiments,
+        topLevelAwait: true,
+        layers: true,
       };
     }
     
     return config;
+  },
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 5,
   },
   productionBrowserSourceMaps: false,
   swcMinify: true,

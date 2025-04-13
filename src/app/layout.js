@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import MusicPlayer from "@/components/music-player/MusicPlayer";
 import { ThemeProvider } from "@/context/ThemeContext";
+import CustomCursor from "@/components/CustomCursor";
 
 export const metadata = {
   title: "Rick's Portfolio",
@@ -89,6 +90,7 @@ export default function RootLayout({ children }) {
             </main>
             <Footer />
             <MusicPlayer />
+            <CustomCursor />
           </div>
         </ThemeProvider>
       </body>
