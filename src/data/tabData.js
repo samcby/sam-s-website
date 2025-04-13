@@ -161,11 +161,11 @@ const TabDataContent = () => {
                         {typeof course === "string" ? (
                           course
                         ) : (
-                          <div>
-                            <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center gap-2 xs:gap-0">
+                          <div className="w-full">
+                            <div className="flex flex-row justify-between items-center gap-2">
                               <span className="text-xs sm:text-sm">{course.name}</span>
                               <span
-                                className={`text-xs font-medium px-2 py-0.5 rounded flex items-center gap-1 self-start
+                                className={`text-xs font-medium px-2 py-0.5 rounded flex items-center gap-1 shrink-0 ml-auto
                                 ${
                                   isDarkMode
                                     ? "bg-[#58a6ff]/20 text-[#58a6ff]"
@@ -174,7 +174,7 @@ const TabDataContent = () => {
                                 aria-label="Course achievement"
                               >
                                 <GiAchievement className="text-xs flex-shrink-0" />
-                                <span className="line-clamp-2 text-xs">{course.achievement}</span>
+                                <span className="text-xs max-w-[150px] truncate">{course.achievement}</span>
                               </span>
                             </div>
                           </div>
@@ -223,24 +223,31 @@ const TabDataContent = () => {
                             }`}
                           role="listitem"
                         >
-                          <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center gap-2 xs:gap-0">
-                            <span className="text-xs sm:text-sm break-words max-w-full xs:max-w-[60%]">{exp.course}</span>
-                            <span
-                              className={`text-xs font-medium px-2 py-0.5 rounded self-start
-                              ${
-                                isDarkMode
-                                  ? "bg-[#58a6ff]/20 text-[#58a6ff]"
-                                  : "bg-[#2075c7]/20 text-[#2075c7]"
-                              }`}
-                            >
-                              {exp.role}
-                            </span>
-                          </div>
-                          <div
-                            className={`text-xs mt-1
-                            ${isDarkMode ? "text-gray-400" : "text-[#93a1a1]"}`}
-                          >
-                            {exp.period}
+                          <div className="flex flex-col space-y-2">
+                            <div className="font-medium text-xs sm:text-sm break-words">
+                              {exp.course}
+                            </div>
+                            
+                            <div className="flex flex-wrap justify-between items-center gap-2">
+                              <span
+                                className={`text-xs font-medium px-2 py-0.5 rounded
+                                ${
+                                  isDarkMode
+                                    ? "bg-[#58a6ff]/20 text-[#58a6ff]"
+                                    : "bg-[#2075c7]/20 text-[#2075c7]"
+                                }`}
+                              >
+                                {exp.role}
+                              </span>
+                              
+                              <span
+                                className={`text-xs flex items-center gap-1
+                                ${isDarkMode ? "text-gray-400" : "text-[#93a1a1]"}`}
+                              >
+                                <FaCalendarAlt className="text-xs" />
+                                {exp.period}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -375,7 +382,13 @@ const TabDataContent = () => {
       id: "awards",
       content: (
         <div className="flex flex-col justify-center items-center">
-          <Image src="/images/sce.webp" alt="sce" width={150} height={150} />
+          <Image 
+            src="/images/sce.webp" 
+            alt="sce" 
+            width={150} 
+            height={150}
+            className="w-auto h-auto object-contain" 
+          />
           <ul
             className={`list-disc pl-4 text-center mt-4
                          ${isDarkMode ? "text-[#ADB7BE]" : "text-[#586e75]"}`}

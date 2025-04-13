@@ -6,6 +6,9 @@ import TabButton from "@/components/ui/TabButton";
 import TabDataContent from "@/data/tabData";
 import { useTheme } from "@/context/ThemeContext";
 import { motion } from "framer-motion";
+import { MdWork } from "react-icons/md";
+import { GiSkills } from "react-icons/gi";
+import { FaGraduationCap, FaCertificate, FaTrophy } from "react-icons/fa";
 
 const AboutSection = () => {
   const [tab, setTab] = useState("experience");
@@ -108,31 +111,46 @@ const AboutSection = () => {
             selectTab={() => handleTabChange("experience")}
             active={tab === "experience"}
           >
-            Experience
+            <span className="flex items-center gap-1.5">
+              <MdWork className="text-lg" />
+              <span>Experience</span>
+            </span>
           </TabButton>
           <TabButton
             selectTab={() => handleTabChange("skills")}
             active={tab === "skills"}
           >
-            Skills
+            <span className="flex items-center gap-1.5">
+              <GiSkills className="text-lg" />
+              <span>Skills</span>
+            </span>
           </TabButton>
           <TabButton
             selectTab={() => handleTabChange("education")}
             active={tab === "education"}
           >
-            Education
+            <span className="flex items-center gap-1.5">
+              <FaGraduationCap className="text-lg" />
+              <span>Education</span>
+            </span>
           </TabButton>
           <TabButton
             selectTab={() => handleTabChange("certifications")}
             active={tab === "certifications"}
           >
-            Certifications
+            <span className="flex items-center gap-1.5">
+              <FaCertificate className="text-lg" />
+              <span>Certifications</span>
+            </span>
           </TabButton>
           <TabButton
             selectTab={() => handleTabChange("awards")}
             active={tab === "awards"}
           >
-            Awards
+            <span className="flex items-center gap-1.5">
+              <FaTrophy className="text-lg" />
+              <span>Awards</span>
+            </span>
           </TabButton>
         </div>
 
