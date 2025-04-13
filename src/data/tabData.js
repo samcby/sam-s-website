@@ -4,7 +4,7 @@ import TimelineDynamics from "@/components/experience/TimelineDynamics";
 import { useTheme } from "@/context/ThemeContext";
 import SkillCircle from "@/components/skills/SkillCircle";
 import { educationData } from "@/data/educationData";
-import { FaGraduationCap, FaCalendarAlt, FaBook } from "react-icons/fa";
+import { FaGraduationCap, FaCalendarAlt, FaBook, FaChalkboardTeacher } from "react-icons/fa";
 import { BsAward, BsSearch } from "react-icons/bs";
 import { GiAchievement } from "react-icons/gi";
 
@@ -64,7 +64,7 @@ const TabDataContent = () => {
             />
           </div>
 
-          <div className="w-full space-y-4 sm:space-y-6" role="list">
+          <div className="w-full space-y-2 sm:space-y-3" role="list">
             {educationData.map((edu, index) => (
               <div
                 key={index}
@@ -187,7 +187,7 @@ const TabDataContent = () => {
                 {edu.teachingExperience && (
                   <div className="mt-6">
                     <div className="flex items-center gap-2 mb-2">
-                      <GiAchievement
+                      <FaChalkboardTeacher
                         className={`text-sm ${
                           isDarkMode ? "text-gray-300" : "text-[#586e75]"
                         }`}

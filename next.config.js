@@ -62,8 +62,9 @@ const nextConfig = {
   },
   experimental: {
     serverActions: {
-      allowedOrigins: ['localhost:3000', 'fonts.googleapis.com', 'www.google.com', 'www.gstatic.com', 'www.recaptcha.net', 'recaptcha.net'],
+      allowedOrigins: ['localhost:3000', '127.0.0.1:3000', 'localhost', '127.0.0.1', 'fonts.googleapis.com', 'www.google.com', 'www.gstatic.com', 'www.recaptcha.net', 'recaptcha.net'],
     },
+    serverComponentsExternalPackages: [],
   },
   async rewrites() {
     return [
@@ -77,11 +78,11 @@ const nextConfig = {
       },
     ];
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev }) => {
     config.optimization = {
       ...config.optimization,
       moduleIds: 'deterministic',
-      minimize: true,
+      minimize: !dev,
       minimizer: [...(config.optimization.minimizer || [])],
     };
     
@@ -108,6 +109,14 @@ const nextConfig = {
       };
     }
     
+    if (dev) {
+      config.watchOptions = {
+        ...config.watchOptions,
+        poll: 1000,
+        aggregateTimeout: 300,
+      };
+    }
+    
     return config;
   },
   productionBrowserSourceMaps: false,
@@ -116,6 +125,7 @@ const nextConfig = {
   compress: true,
   reactStrictMode: true,
   generateEtags: true,
+  cacheMaxMemorySize: 50,
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

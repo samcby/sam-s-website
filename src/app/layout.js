@@ -36,24 +36,27 @@ const themeScript = `
     function setTheme(theme) {
       html.classList.remove('light', 'dark');
       html.classList.add(theme);
-      localStorage.setItem('theme', theme);
     }
 
     // 获取用户之前选择的主题
     let savedTheme = localStorage.getItem('theme');
+    let userChoice = localStorage.getItem('userThemeChoice');
     
-    // 如果没有保存的主题，则使用系统主题
-    if (!savedTheme) {
-      savedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      localStorage.setItem('theme', savedTheme);
+    // 如果用户明确选择了主题
+    if (savedTheme && userChoice === 'true') {
+      setTheme(savedTheme);
+    } else {
+      // 否则使用系统主题，但不保存到localStorage
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      setTheme(systemTheme);
+      // 清除任何可能残留的主题设置
+      localStorage.removeItem('theme');
+      localStorage.removeItem('userThemeChoice');
     }
-    
-    // 设置主题
-    setTheme(savedTheme);
     
     // 添加系统主题变化监听
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (!localStorage.getItem('theme')) {
+      if (localStorage.getItem('userThemeChoice') !== 'true') {
         setTheme(e.matches ? 'dark' : 'light');
       }
     });

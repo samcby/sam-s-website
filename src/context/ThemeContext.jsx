@@ -55,15 +55,17 @@ export function ThemeProvider({ children }) {
     const userChoice = safeLocalStorage.getItem("userThemeChoice");
     const systemDarkMode = getSystemTheme();
 
-    //log(`初始化主题 - 保存的主题: ${savedTheme}, 用户选择: ${userChoice}, 系统暗黑模式: ${systemDarkMode}`);
+    log(`初始化主题 - 保存的主题: ${savedTheme}, 用户选择: ${userChoice}, 系统暗黑模式: ${systemDarkMode}`);
 
     if (savedTheme && userChoice === "true") {
       // 用户手动选择的主题优先
-      //log(`使用用户选择的主题: ${savedTheme}`);
+      log(`使用用户选择的主题: ${savedTheme}`);
       setIsDarkMode(savedTheme === "dark");
     } else {
-      // 否则跟随系统主题
+      // 否则跟随系统主题，并删除任何可能残留的主题设置
       log(`跟随系统主题: ${systemDarkMode ? "暗黑" : "光亮"}`);
+      safeLocalStorage.removeItem("theme");
+      safeLocalStorage.removeItem("userThemeChoice");
       setIsDarkMode(systemDarkMode);
     }
     setMounted(true);
@@ -81,6 +83,8 @@ export function ThemeProvider({ children }) {
         const handleChange = (e) => {
           log(`系统主题变化为: ${e.matches ? "暗黑" : "光亮"}`);
           setIsDarkMode(e.matches);
+          // 清除任何可能残留的localStorage设置
+          safeLocalStorage.removeItem("theme");
         };
 
         mediaQuery.addEventListener("change", handleChange);
