@@ -69,7 +69,10 @@ const AlbumCover = ({ currentCover, isDarkMode, isPlaying }) => {
               src={currentCover}
               alt="Album Cover"
               fill
+              sizes="(max-width: 640px) 16vw, (max-width: 768px) 20vw, 24vw"
               className="object-cover rounded-full"
+              priority
+              loading="eager"
             />
           </motion.div>
         ) : (

@@ -117,11 +117,44 @@ body {
 }
 
 .animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
   animation: marquee 15s linear infinite;
+  will-change: transform;
+  padding-right: 50px; /* Add space between the repeated text */
 }
 
+/* Add hover state to pause animation */
 .animate-marquee:hover {
-  animation-play-state: running;
+  animation-play-state: paused;
+}
+
+/* Add a custom style for progress bar */
+input[type="range"] {
+  appearance: none;
+  height: 8px;
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: currentColor;
+  cursor: pointer;
+  border: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: currentColor;
+  cursor: pointer;
+  border: none;
 }
 
 /* 在文件顶部添加主题过渡样式 */

@@ -15,9 +15,11 @@ export const useMusicSource = () => {
       setIsLoading(true);
       const source = musicSourceManager.getCurrentSource();
       const newPlaylist = await source.getPlaylist();
+      console.log('加载播放列表成功:', newPlaylist.length, '首歌曲');
       setPlaylist(newPlaylist);
       setError(null);
     } catch (err) {
+      console.error('加载播放列表失败:', err);
       setError(err.message);
       setPlaylist([]);
     } finally {
@@ -38,18 +40,25 @@ export const useMusicSource = () => {
   const getAudioUrl = async (trackId) => {
     try {
       const source = musicSourceManager.getCurrentSource();
-      return await source.getAudioUrl(trackId);
+      const url = await source.getAudioUrl(trackId);
+      console.log('获取音频URL成功:', url);
+      return url;
     } catch (err) {
       console.error('Error getting audio URL:', err);
-      return null;
+      // 尝试使用备选URL格式 - 适用于网易云
+      const backupUrl = `https://music.163.com/song/media/outer/url?id=${trackId}.mp3`;
+      console.log('使用备选URL:', backupUrl);
+      return backupUrl;
     }
   };
 
   const switchSource = async (sourceName) => {
     try {
+      console.log('切换音乐源:', sourceName);
       musicSourceManager.switchSource(sourceName);
       await loadPlaylist();
     } catch (err) {
+      console.error('切换音乐源失败:', err);
       setError(err.message);
     }
   };
@@ -66,6 +75,7 @@ export const useMusicSource = () => {
     loadMetadata,
     getAudioUrl,
     switchSource,
-    registerSource: musicSourceManager.registerSource.bind(musicSourceManager)
+    registerSource: musicSourceManager.registerSource.bind(musicSourceManager),
+    reloadPlaylist: loadPlaylist
   };
 }; 

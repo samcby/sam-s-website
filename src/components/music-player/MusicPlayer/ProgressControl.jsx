@@ -8,6 +8,7 @@ const ProgressControl = ({
   duration,
   volume,
   title,
+  artist,
   onTimeChange,
   onVolumeChange,
   formatTime,
@@ -18,7 +19,7 @@ const ProgressControl = ({
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const timeoutRef = useRef(null);
 
-  // 检测文本是否溢出
+  // Check if text overflows
   useEffect(() => {
     const checkOverflow = () => {
       const element = titleRef.current;
@@ -26,12 +27,12 @@ const ProgressControl = ({
         const isTextOverflow = element.scrollWidth > element.clientWidth;
         setIsOverflow(isTextOverflow);
         
-        // 清除之前的定时器
+        // Clear previous timeout
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
         }
         
-        // 如果文本溢出，3秒后开始动画
+        // If text overflows, start animation after 3 seconds
         if (isTextOverflow) {
           timeoutRef.current = setTimeout(() => {
             setShouldAnimate(true);
@@ -42,68 +43,102 @@ const ProgressControl = ({
       }
     };
 
-    checkOverflow();
-    // 添加窗口大小变化监听
+    // Initial check
+    setTimeout(checkOverflow, 100); // Small delay to ensure component is fully rendered
+    
+    // Add window resize listener
     window.addEventListener('resize', checkOverflow);
     
     return () => {
       window.removeEventListener('resize', checkOverflow);
-      // 清除定时器
+      // Clear timeout
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [title]); // 当标题改变时重新检测
+  }, [title, artist]); // Re-check when title or artist changes
+
+  // Calculate slider thumb position for proper styling
+  const getThumbPosition = () => {
+    if (duration === 0) return '0%';
+    const percentage = (currentTime / duration) * 100;
+    return `${percentage}%`;
+  };
 
   return (
     <div className="flex-1 min-w-0 w-full md:min-w-[200px] order-2 md:order-none">
+      {/* Title with marquee animation */}
       <div 
-        ref={titleRef}
-        className={`text-sm md:text-sm font-medium mb-1 text-center md:text-left whitespace-nowrap overflow-hidden ${
+        className={`text-sm md:text-sm font-medium mb-0.5 text-center md:text-left relative overflow-hidden ${
           isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'
         }`}
       >
         <div
-          className={`inline-block ${
-            shouldAnimate ? 'animate-marquee' : ''
-          }`}
+          ref={titleRef}
+          className={`whitespace-nowrap inline-block ${shouldAnimate ? 'animate-marquee' : ''}`}
           style={{
-            animation: shouldAnimate ? 'marquee 15s linear infinite' : 'none',
-            paddingRight: isOverflow ? '50px' : '0'
+            paddingRight: isOverflow ? '50px' : '0',
+            // Force hardware acceleration
+            transform: 'translateZ(0)',
+            // Add additional padding only if animating
+            ...(shouldAnimate && {
+              paddingRight: '50px',
+              animation: 'marquee 15s linear infinite'
+            })
           }}
-          onAnimationEnd={() => setShouldAnimate(false)}
         >
-          {title}
+          {title || 'No Track Selected'}
         </div>
       </div>
+      
+      {/* Artist information */}
+      <div 
+        className={`text-xs mb-1 text-center md:text-left whitespace-nowrap overflow-hidden ${
+          isDarkMode ? 'text-[#839496]' : 'text-[#657b83]'
+        }`}
+      >
+        {artist || 'Unknown Artist'}
+      </div>
+      
+      {/* Time control slider */}
       <div className="flex items-center space-x-1 md:space-x-2">
         <span className={`text-[10px] md:text-xs ${
           isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'
         }`}>
           {formatTime(currentTime)}
         </span>
-        <input
-          type="range"
-          min="0"
-          max={duration}
-          value={currentTime}
-          onChange={onTimeChange}
-          className={`w-full h-1.5 md:h-2 rounded-lg appearance-none cursor-pointer
-                     ${isDarkMode 
-                       ? 'bg-[#586e75] accent-[#93a1a1]' 
-                       : 'bg-[#93a1a1] accent-[#586e75]'}`}
-        />
+        <div className="relative w-full">
+          <input
+            type="range"
+            min="0"
+            max={duration || 100}
+            value={currentTime || 0}
+            onChange={onTimeChange}
+            className={`w-full h-1.5 md:h-2 rounded-lg appearance-none cursor-pointer
+                      ${isDarkMode 
+                        ? 'bg-[#586e75] accent-[#93a1a1]' 
+                        : 'bg-[#93a1a1] accent-[#586e75]'}`}
+            style={{
+              background: isDarkMode 
+                ? `linear-gradient(to right, #93a1a1 ${getThumbPosition()}, #586e75 ${getThumbPosition()})`
+                : `linear-gradient(to right, #586e75 ${getThumbPosition()}, #93a1a1 ${getThumbPosition()})`
+            }}
+          />
+        </div>
         <span className={`text-[10px] md:text-xs ${
           isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'
         }`}>
-          {formatTime(duration)}
+          {formatTime(duration || 0)}
         </span>
       </div>
-      {/* 音量控制 */}
+      
+      {/* Volume control */}
       <div className="hidden md:flex items-center justify-center space-x-1.5 mt-1.5">
         <button
           onClick={() => onVolumeChange({ target: { value: volume === 0 ? 1 : 0 } })}
-          className={`p-2 rounded-full hover:bg-[${isDarkMode ? '#586e75' : '#93a1a1'}]/20 transition-colors duration-300`}
+          className={`p-1 rounded-full hover:bg-opacity-20 transition-colors duration-300 ${
+            isDarkMode ? 'hover:bg-[#586e75]' : 'hover:bg-[#93a1a1]'
+          }`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -124,13 +159,15 @@ const ProgressControl = ({
           step="0.01"
           value={volume}
           onChange={onVolumeChange}
-          className={`w-16 h-0.5 rounded-lg appearance-none cursor-pointer
-                   [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2
-                   [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full
-                   [&::-webkit-slider-thumb]:cursor-pointer
+          className={`w-16 h-1 rounded-lg appearance-none cursor-pointer
                    ${isDarkMode 
-                     ? 'bg-[#586e75] accent-[#93a1a1] [&::-webkit-slider-thumb]:bg-[#93a1a1]' 
-                     : 'bg-[#93a1a1] accent-[#586e75] [&::-webkit-slider-thumb]:bg-[#586e75]'}`}
+                     ? 'bg-[#586e75]' 
+                     : 'bg-[#93a1a1]'}`}
+          style={{
+            background: isDarkMode 
+              ? `linear-gradient(to right, #93a1a1 ${volume * 100}%, #586e75 ${volume * 100}%)`
+              : `linear-gradient(to right, #586e75 ${volume * 100}%, #93a1a1 ${volume * 100}%)`
+          }}
         />
       </div>
     </div>
