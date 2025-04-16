@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 const ProgressControl = ({
   isDarkMode,
@@ -12,7 +12,7 @@ const ProgressControl = ({
   onTimeChange,
   onVolumeChange,
   formatTime,
-  getVolumeIcon
+  getVolumeIcon,
 }) => {
   const titleRef = useRef(null);
   const [isOverflow, setIsOverflow] = useState(false);
@@ -26,12 +26,12 @@ const ProgressControl = ({
       if (element) {
         const isTextOverflow = element.scrollWidth > element.clientWidth;
         setIsOverflow(isTextOverflow);
-        
+
         // Clear previous timeout
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
         }
-        
+
         // If text overflows, start animation after 3 seconds
         if (isTextOverflow) {
           timeoutRef.current = setTimeout(() => {
@@ -45,12 +45,12 @@ const ProgressControl = ({
 
     // Initial check
     setTimeout(checkOverflow, 100); // Small delay to ensure component is fully rendered
-    
+
     // Add window resize listener
-    window.addEventListener('resize', checkOverflow);
-    
+    window.addEventListener("resize", checkOverflow);
+
     return () => {
-      window.removeEventListener('resize', checkOverflow);
+      window.removeEventListener("resize", checkOverflow);
       // Clear timeout
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -60,7 +60,7 @@ const ProgressControl = ({
 
   // Calculate slider thumb position for proper styling
   const getThumbPosition = () => {
-    if (duration === 0) return '0%';
+    if (duration === 0) return "0%";
     const percentage = (currentTime / duration) * 100;
     return `${percentage}%`;
   };
@@ -68,43 +68,47 @@ const ProgressControl = ({
   return (
     <div className="flex-1 min-w-0 w-full md:min-w-[200px] order-2 md:order-none">
       {/* Title with marquee animation */}
-      <div 
+      <div
         className={`text-sm md:text-sm font-medium mb-0.5 text-center md:text-left relative overflow-hidden ${
-          isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'
+          isDarkMode ? "text-[#93a1a1]" : "text-[#586e75]"
         }`}
       >
         <div
           ref={titleRef}
-          className={`whitespace-nowrap inline-block ${shouldAnimate ? 'animate-marquee' : ''}`}
+          className={`whitespace-nowrap inline-block ${
+            shouldAnimate ? "animate-marquee" : ""
+          }`}
           style={{
-            paddingRight: isOverflow ? '50px' : '0',
+            paddingRight: isOverflow ? "50px" : "0",
             // Force hardware acceleration
-            transform: 'translateZ(0)',
+            transform: "translateZ(0)",
             // Add additional padding only if animating
             ...(shouldAnimate && {
-              paddingRight: '50px',
-              animation: 'marquee 15s linear infinite'
-            })
+              paddingRight: "50px",
+              animation: "marquee 15s linear infinite",
+            }),
           }}
         >
-          {title || 'No Track Selected'}
+          {title || "No Track Selected"}
         </div>
       </div>
-      
+
       {/* Artist information */}
-      <div 
+      <div
         className={`text-xs mb-1 text-center md:text-left whitespace-nowrap overflow-hidden ${
-          isDarkMode ? 'text-[#839496]' : 'text-[#657b83]'
+          isDarkMode ? "text-[#839496]" : "text-[#657b83]"
         }`}
       >
-        {artist || 'Unknown Artist'}
+        {artist || "Unknown Artist"}
       </div>
-      
+
       {/* Time control slider */}
       <div className="flex items-center space-x-1 md:space-x-2">
-        <span className={`text-[10px] md:text-xs ${
-          isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'
-        }`}>
+        <span
+          className={`text-[10px] md:text-xs ${
+            isDarkMode ? "text-[#93a1a1]" : "text-[#586e75]"
+          }`}
+        >
           {formatTime(currentTime)}
         </span>
         <div className="relative w-full">
@@ -115,35 +119,41 @@ const ProgressControl = ({
             value={currentTime || 0}
             onChange={onTimeChange}
             className={`w-full h-1.5 md:h-2 rounded-lg appearance-none cursor-pointer
-                      ${isDarkMode 
-                        ? 'bg-[#586e75] accent-[#93a1a1]' 
-                        : 'bg-[#93a1a1] accent-[#586e75]'}`}
+                      ${
+                        isDarkMode
+                          ? "bg-[#586e75] accent-[#93a1a1]"
+                          : "bg-[#93a1a1] accent-[#586e75]"
+                      }`}
             style={{
-              background: isDarkMode 
+              background: isDarkMode
                 ? `linear-gradient(to right, #93a1a1 ${getThumbPosition()}, #586e75 ${getThumbPosition()})`
-                : `linear-gradient(to right, #586e75 ${getThumbPosition()}, #93a1a1 ${getThumbPosition()})`
+                : `linear-gradient(to right, #586e75 ${getThumbPosition()}, #93a1a1 ${getThumbPosition()})`,
             }}
           />
         </div>
-        <span className={`text-[10px] md:text-xs ${
-          isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'
-        }`}>
+        <span
+          className={`text-[10px] md:text-xs ${
+            isDarkMode ? "text-[#93a1a1]" : "text-[#586e75]"
+          }`}
+        >
           {formatTime(duration || 0)}
         </span>
       </div>
-      
+
       {/* Volume control */}
       <div className="hidden md:flex items-center justify-center space-x-1.5 mt-1.5">
         <button
-          onClick={() => onVolumeChange({ target: { value: volume === 0 ? 1 : 0 } })}
+          onClick={() =>
+            onVolumeChange({ target: { value: volume === 0 ? 1 : 0 } })
+          }
           className={`p-1 rounded-full hover:bg-opacity-20 transition-colors duration-300 ${
-            isDarkMode ? 'hover:bg-[#586e75]' : 'hover:bg-[#93a1a1]'
+            isDarkMode ? "hover:bg-[#586e75]" : "hover:bg-[#93a1a1]"
           }`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className={`h-4 w-4 ${
-              isDarkMode ? 'text-[#93a1a1]' : 'text-[#586e75]'
+              isDarkMode ? "text-[#93a1a1]" : "text-[#586e75]"
             }`}
             fill="none"
             viewBox="0 0 24 24"
@@ -159,14 +169,18 @@ const ProgressControl = ({
           step="0.01"
           value={volume}
           onChange={onVolumeChange}
-          className={`w-16 h-1 rounded-lg appearance-none cursor-pointer
-                   ${isDarkMode 
-                     ? 'bg-[#586e75]' 
-                     : 'bg-[#93a1a1]'}`}
+          className="w-16 volume-slider"
           style={{
-            background: isDarkMode 
-              ? `linear-gradient(to right, #93a1a1 ${volume * 100}%, #586e75 ${volume * 100}%)`
-              : `linear-gradient(to right, #586e75 ${volume * 100}%, #93a1a1 ${volume * 100}%)`
+            "--thumb-color": isDarkMode ? "#93a1a1" : "#586e75",
+            "--track-color": isDarkMode ? "#586e75" : "#93a1a1",
+            "--track-fill-color": isDarkMode ? "#93a1a1" : "#586e75",
+            background: isDarkMode
+              ? `linear-gradient(to right, #93a1a1 ${volume * 100}%, #586e75 ${
+                  volume * 100
+                }%)`
+              : `linear-gradient(to right, #586e75 ${volume * 100}%, #93a1a1 ${
+                  volume * 100
+                }%)`,
           }}
         />
       </div>
@@ -174,4 +188,4 @@ const ProgressControl = ({
   );
 };
 
-export default ProgressControl; 
+export default ProgressControl;
