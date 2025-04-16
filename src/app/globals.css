@@ -117,16 +117,89 @@ body {
 }
 
 .animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
   animation: marquee 15s linear infinite;
+  will-change: transform;
+  padding-right: 50px; /* Add space between the repeated text */
 }
 
+/* Add hover state to pause animation */
 .animate-marquee:hover {
-  animation-play-state: running;
+  animation-play-state: paused;
+}
+
+/* Custom range input styles */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+/* Webkit (Chrome, Safari) styles */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--thumb-color, #586e75);
+  cursor: pointer;
+  margin-top: -3px; /* Offset to center the thumb */
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  background: var(--track-color, #93a1a1);
+  border-radius: 2px;
+}
+
+/* Firefox styles */
+input[type="range"]::-moz-range-thumb {
+  width: 8px;
+  height: 8px;
+  border: none;
+  border-radius: 50%;
+  background: var(--thumb-color, #586e75);
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 2px;
+  background: var(--track-color, #93a1a1);
+  border-radius: 2px;
 }
 
 /* 在文件顶部添加主题过渡样式 */
 .theme-transition * {
-  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, fill, stroke,
+    opacity, box-shadow, transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 500ms;
+}
+
+/* Volume slider specific styles */
+.volume-slider {
+  height: 2px !important;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  width: 8px !important;
+  height: 8px !important;
+  margin-top: -3px !important;
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.volume-slider::-webkit-slider-runnable-track {
+  height: 2px !important;
+}
+
+.volume-slider::-moz-range-track {
+  height: 2px !important;
 }

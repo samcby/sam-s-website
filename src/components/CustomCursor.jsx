@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import '../styles/cursor.css';
 
 const CustomCursor = () => {
@@ -7,17 +7,17 @@ const CustomCursor = () => {
   const [cursorType, setCursorType] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   
-  // 使用useCallback优化事件处理函数
+  // Use useCallback to optimize event handler
   const updatePosition = useCallback((e) => {
-    // 使用requestAnimationFrame优化渲染性能
+    // Use requestAnimationFrame to optimize rendering performance
     requestAnimationFrame(() => {
       const { clientX, clientY } = e;
       setPosition({ x: clientX, y: clientY });
       
-      // 检查鼠标指针下的元素类型并设置相应的鼠标指针样式
+      // Check element type under cursor and set appropriate cursor style
       const target = e.target;
       
-      // 优化条件判断，使用更简洁的方式
+      // Optimize condition checks with more concise approach
       if (target.matches('a, button, [role="button"]') || 
           target.closest('a, button, [role="button"]')) {
         setCursorType('link');
@@ -33,17 +33,19 @@ const CustomCursor = () => {
     });
   }, []);
   
+  // Handle mouse visibility
+  const handleMouseEnter = useCallback(() => setIsVisible(true), []);
+  const handleMouseLeave = useCallback(() => setIsVisible(false), []);
+  
   useEffect(() => {
-    // 添加鼠标进入/离开页面的处理
-    const handleMouseEnter = () => setIsVisible(true);
-    const handleMouseLeave = () => setIsVisible(false);
+    // Add mouse enter/leave handling
     
-    // 优化性能：只在用户移动鼠标时更新位置
-    window.addEventListener('mousemove', updatePosition);
+    // Performance optimization: only update position when mouse moves
+    window.addEventListener('mousemove', updatePosition, { passive: true });
     document.addEventListener('mouseenter', handleMouseEnter);
     document.addEventListener('mouseleave', handleMouseLeave);
     
-    // 确保初始状态可见（如果鼠标已在页面上）
+    // Ensure initial visibility if mouse is already on page
     if (typeof document !== 'undefined' && document.hasFocus()) {
       setIsVisible(true);
     }
@@ -53,21 +55,23 @@ const CustomCursor = () => {
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [updatePosition]);
+  }, [updatePosition, handleMouseEnter, handleMouseLeave]);
   
-  // 如果不可见则不渲染
+  // Don't render if not visible
   if (!isVisible) return null;
   
   return (
     <div 
       className={`custom-cursor ${cursorType}`}
       style={{
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-        opacity: isVisible ? 1 : 0
+        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
+        opacity: isVisible ? 1 : 0,
+        willChange: 'transform'
       }}
+      aria-hidden="true"
     />
   );
 };
 
-export default CustomCursor; 
+// Memoize component to prevent unnecessary re-renders
+export default memo(CustomCursor); 

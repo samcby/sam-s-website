@@ -24,7 +24,7 @@ const cardStyle = (isDarkMode) => `
 
 const TabDataContent = () => {
   const { isDarkMode } = useTheme();
-
+  
   const TAB_DATA = [
     {
       title: "Experience",
@@ -50,15 +50,15 @@ const TabDataContent = () => {
       content: (
         <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto px-4 sm:px-6">
           <div className="relative group w-full flex justify-center mb-8">
-            <Image
+          <Image
               src={
                 isDarkMode
                   ? "/images/UCLA_Samueli_CS_block_cmyk_rev.svg"
                   : "/images/UCLA_Samueli_CS_block_cmyk.svg"
               }
               alt="UCLA School of Engineering"
-              width={300}
-              height={300}
+            width={300}
+            height={300}
               className="rounded-lg w-full max-w-[250px] sm:max-w-[300px] transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl"
               priority
             />
@@ -343,15 +343,15 @@ const TabDataContent = () => {
                                 </span>
                               </div>
                             </div>
-                          </div>
-                        </div>
+              </div>
+              </div>
                       ))}
-                    </div>
-                  </div>
+              </div>
+              </div>
                 )}
               </div>
             ))}
-          </div>
+              </div>
         </div>
       ),
     },

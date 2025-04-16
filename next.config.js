@@ -53,6 +53,22 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "google.com",
+      },
+      {
+        protocol: "https",
+        hostname: "p1.music.126.net",
+      },
+      {
+        protocol: "https",
+        hostname: "p2.music.126.net",
+      },
+      {
+        protocol: "http",
+        hostname: "p1.music.126.net",
+      },
+      {
+        protocol: "http",
+        hostname: "p2.music.126.net",
       }
     ],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

@@ -1,50 +1,52 @@
 "use client";
 
-import Image from 'next/image';
-import { motion, useAnimation } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import Image from "next/image";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 const AlbumCover = ({ currentCover, isDarkMode, isPlaying }) => {
   const controls = useAnimation();
   const rotationRef = useRef(0);
   const startTimeRef = useRef(null);
+  const isMountedRef = useRef(false);
 
   // 重置旋转状态
-  const resetRotation = () => {
-    rotationRef.current = 0;
-    startTimeRef.current = null;
-    controls.set({ rotate: 0 });
-  };
-
-  // 监听歌曲切换
-  useEffect(() => {
-    resetRotation();
+  const resetRotation = useEffect(() => {
+    if (isMountedRef.current) {
+      rotationRef.current = 0;
+      startTimeRef.current = null;
+      controls.set({ rotate: 0 });
+    }
   }, [currentCover]);
 
   useEffect(() => {
+    isMountedRef.current = true;
     let animationFrameId;
 
     const animate = (timestamp) => {
       if (!startTimeRef.current) startTimeRef.current = timestamp;
       const elapsed = timestamp - startTimeRef.current;
-      
+
       // 每4秒转360度
       rotationRef.current = (elapsed / 4000) * 360;
-      
-      controls.set({
-        rotate: rotationRef.current
-      });
 
-      if (isPlaying) {
+      if (isMountedRef.current) {
+        controls.set({
+          rotate: rotationRef.current,
+        });
+      }
+
+      if (isPlaying && isMountedRef.current) {
         animationFrameId = requestAnimationFrame(animate);
       }
     };
 
-    if (isPlaying) {
+    if (isPlaying && isMountedRef.current) {
       animationFrameId = requestAnimationFrame(animate);
     }
 
     return () => {
+      isMountedRef.current = false;
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
@@ -58,31 +60,38 @@ const AlbumCover = ({ currentCover, isDarkMode, isPlaying }) => {
         {currentCover ? (
           <motion.div
             className="w-full h-full rounded-full overflow-hidden relative"
-            initial={{ rotate: 0 }}
             animate={controls}
+            initial={{ rotate: 0 }}
             transition={{
               type: "tween",
-              duration: 0
+              duration: 0,
             }}
           >
             <Image
               src={currentCover}
               alt="Album Cover"
               fill
+              sizes="(max-width: 640px) 16vw, (max-width: 768px) 20vw, 24vw"
               className="object-cover rounded-full"
+              priority
+              loading="eager"
             />
           </motion.div>
         ) : (
-          <div className={`w-full h-full flex items-center justify-center rounded-full ${
-            isDarkMode ? 'bg-[#586e75]' : 'bg-[#93a1a1]'
-          }`}>
-            <div className={`w-[60%] h-[60%] rounded-full flex items-center justify-center ${
-              isDarkMode ? 'bg-[#073642]' : 'bg-[#002b36]'
-            }`}>
+          <div
+            className={`w-full h-full flex items-center justify-center rounded-full ${
+              isDarkMode ? "bg-[#586e75]" : "bg-[#93a1a1]"
+            }`}
+          >
+            <div
+              className={`w-[60%] h-[60%] rounded-full flex items-center justify-center ${
+                isDarkMode ? "bg-[#073642]" : "bg-[#002b36]"
+              }`}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className={`h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 ${
-                  isDarkMode ? 'text-[#93a1a1]' : 'text-[#93a1a1]'
+                  isDarkMode ? "text-[#93a1a1]" : "text-[#93a1a1]"
                 }`}
                 fill="none"
                 viewBox="0 0 24 24"
@@ -103,4 +112,4 @@ const AlbumCover = ({ currentCover, isDarkMode, isPlaying }) => {
   );
 };
 
-export default AlbumCover; 
+export default AlbumCover;
