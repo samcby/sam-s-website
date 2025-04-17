@@ -4,7 +4,7 @@ const TIMELINE_ITEMS = [
     title: "Software Engineer Intern",
     location: "Nvidia ",
     description: "CUDA Development",
-    logo: "https://p.ipic.vip/t7fbmt.png",
+    logo: "/images/experience/nvidia_logo.jpeg",
     details: "Incoming",
   },
   {
