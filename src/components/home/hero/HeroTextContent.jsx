@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useTheme } from '@/context/ThemeContext';
+import { useTheme } from "@/context/ThemeContext";
 
 const HeroTextContent = () => {
   const { isDarkMode } = useTheme();
@@ -16,7 +16,11 @@ const HeroTextContent = () => {
       transition={{ duration: 0.5 }}
       className="w-full col-span-12 sm:col-span-6 lg:col-span-7 text-center sm:text-left"
     >
-      <h1 className={`mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight ${isDarkMode ? 'text-white' : 'text-[#002b36]'}`}>
+      <h1
+        className={`mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight ${
+          isDarkMode ? "text-white" : "text-[#002b36]"
+        }`}
+      >
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-primary-400 to-secondary-500">
           Hello, I&apos;m{" "}
         </span>
@@ -38,12 +42,16 @@ const HeroTextContent = () => {
           repeat={Infinity}
         />
       </h1>
-      <p className={`text-sm sm:text-base lg:text-lg mb-6 max-w-[600px] mx-auto sm:mx-0 ${isDarkMode ? 'text-[#ADB7BE]' : 'text-[#586e75]'}`}>
+      <p
+        className={`text-sm sm:text-base lg:text-lg mb-6 max-w-[600px] mx-auto sm:mx-0 ${
+          isDarkMode ? "text-[#ADB7BE]" : "text-[#586e75]"
+        }`}
+      >
         Welcome to see my Portfolio
       </p>
       <div className="flex flex-col items-center sm:items-start">
         <Link
-          href="https://drive.google.com/file/d/1EylGF1FCQxpzEh8GCx9TBZQUYpvgcCeF/view?usp=sharing"
+          href="https://drive.google.com/file/d/1M9ZOixqmEizBYVbsR6rsMwETaKILRIX1/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
           className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-base sm:text-lg font-semibold
@@ -66,24 +74,41 @@ const HeroTextContent = () => {
             />
           </svg>
         </Link>
-        
-        <div 
+
+        <div
           className="mt-4 inline-block relative"
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         >
-          <span className={`text-xs font-medium ${isDarkMode ? 'text-[#79c0ff]' : 'text-[#2075c7]'}`}>
-            <span className="animate-pulse">✨</span> 
-            The 3D model is <Link href="https://chiikawa.fandom.com/wiki/Usagi" target="_blank" rel="noopener noreferrer" className="font-bold hover:underline">Usagi</Link> 
+          <span
+            className={`text-xs font-medium ${
+              isDarkMode ? "text-[#79c0ff]" : "text-[#2075c7]"
+            }`}
+          >
+            <span className="animate-pulse">✨</span>
+            The 3D model is{" "}
+            <Link
+              href="https://chiikawa.fandom.com/wiki/Usagi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold hover:underline"
+            >
+              Usagi
+            </Link>
             <span className="animate-bounce inline-block">🐰</span>
           </span>
-          
-          <div className={`absolute top-full mt-2 left-0 z-10 transition-opacity duration-300 rounded-md py-1.5 px-3 text-xs max-w-[250px] ${
-            showTooltip ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          } ${
-            isDarkMode ? 'bg-[#161b22] text-[#8b949e] border border-[#30363d]' : 'bg-[#eee8d5] text-[#657b83] border border-[#d0d7de]'
-          }`}>
-            My favorite character and personal avatar from Chiikawa series. &quot;Usagi&quot; means rabbit in Japanese
+
+          <div
+            className={`absolute top-full mt-2 left-0 z-10 transition-opacity duration-300 rounded-md py-1.5 px-3 text-xs max-w-[250px] ${
+              showTooltip ? "opacity-100" : "opacity-0 pointer-events-none"
+            } ${
+              isDarkMode
+                ? "bg-[#161b22] text-[#8b949e] border border-[#30363d]"
+                : "bg-[#eee8d5] text-[#657b83] border border-[#d0d7de]"
+            }`}
+          >
+            My favorite character and personal avatar from Chiikawa series.
+            &quot;Usagi&quot; means rabbit in Japanese
           </div>
         </div>
       </div>
@@ -91,4 +116,4 @@ const HeroTextContent = () => {
   );
 };
 
-export default HeroTextContent; 
+export default HeroTextContent;
