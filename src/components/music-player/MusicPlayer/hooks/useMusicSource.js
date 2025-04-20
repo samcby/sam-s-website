@@ -103,8 +103,8 @@ export const useMusicSource = () => {
       const url = await source.getAudioUrl(trackId);
       return url;
     } catch (err) {
-      // Try fallback URL format for Netease
-      return `/api/netease/song/url?id=${trackId}`;
+      // 发生错误时直接返回直连URL
+      return `https://music.163.com/song/media/outer/url?id=${trackId}.mp3`;
     }
   };
 

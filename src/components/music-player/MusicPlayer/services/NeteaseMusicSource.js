@@ -77,51 +77,33 @@ export class NeteaseMusicSource extends MusicSourceInterface {
   async getMetadata(trackId) {
     try {
       const response = await fetch(
-        `${this.apiBaseUrl}/song/detail?ids=${trackId}`
+        `https://music.163.com/api/song/detail?id=${trackId}`,
+        {
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
+            Referer: "https://music.163.com/",
+          },
+        }
       );
       if (!response.ok) throw new Error("获取歌曲详情失败");
       const data = await response.json();
 
-      // 打印完整的返回数据，便于调试
-      console.log("歌曲详情返回数据:", JSON.stringify(data));
-
-      // 检查不同可能的数据结构
-      let song = null;
-
-      // 尝试标准格式
-      if (data.songs && data.songs[0]) {
-        song = data.songs[0];
-      }
-      // 尝试result格式
-      else if (data.result && data.result.songs && data.result.songs[0]) {
-        song = data.result.songs[0];
-      }
-      // 直接使用歌单中的歌曲数据
-      else if (data.result && data.result.tracks && data.result.tracks[0]) {
-        // 如果是playlist/detail的数据，尝试查找匹配的歌曲
-        const tracks = data.result.tracks;
-        song =
-          tracks.find((t) => t.id.toString() === trackId.toString()) ||
-          tracks[0];
-      }
-
-      if (!song) {
-        console.error("未找到歌曲详情,返回数据结构:", data);
+      if (!data.songs || !data.songs[0]) {
         throw new Error("获取的歌曲详情格式不正确");
       }
 
-      // 适应不同的字段命名
+      const song = data.songs[0];
       return {
         title: song.name,
         artist:
           (song.artists || song.ar)?.map((a) => a.name).join("/") || "未知歌手",
         album: (song.album || song.al)?.name || "未知专辑",
         cover: (song.album || song.al)?.picUrl || null,
-        duration: song.duration || (song.dt ? song.dt / 1000 : 0), // 将毫秒转换为秒
+        duration: song.duration || (song.dt ? song.dt / 1000 : 0),
       };
     } catch (error) {
       console.error("获取歌曲详情失败:", error);
-      // 返回基本信息，不中断播放
       return {
         title: `歌曲 ID: ${trackId}`,
         artist: "未知歌手",
@@ -133,17 +115,29 @@ export class NeteaseMusicSource extends MusicSourceInterface {
   }
 
   async getAudioUrl(trackId) {
+    // 优先使用直连API
+    const directUrl = `https://music.163.com/song/media/outer/url?id=${trackId}.mp3`;
+
     try {
+      // 尝试直连API
+      const directResponse = await fetch(directUrl, {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          Referer: "https://music.163.com/",
+        },
+      });
+
+      if (directResponse.ok) {
+        return directUrl;
+      }
+
+      // 如果直连失败，尝试代理API
       const response = await fetch(`${this.apiBaseUrl}/song/url?id=${trackId}`);
       if (!response.ok) throw new Error("获取歌曲URL失败");
       const data = await response.json();
 
-      // 打印完整的返回数据，便于调试
-      console.log("歌曲URL返回数据:", JSON.stringify(data));
-
-      // 尝试不同的数据结构
       let url = null;
-
       if (data.data && data.data[0] && data.data[0].url) {
         url = data.data[0].url;
       } else if (
@@ -156,16 +150,15 @@ export class NeteaseMusicSource extends MusicSourceInterface {
       }
 
       if (!url) {
-        console.error("未找到歌曲URL,返回数据结构:", data);
-        // 备选方案：尝试使用固定URL格式
-        return `https://music.163.com/song/media/outer/url?id=${trackId}.mp3`;
+        // 如果代理API也失败，返回直连URL作为最后尝试
+        return directUrl;
       }
 
       return url;
     } catch (error) {
       console.error("获取歌曲URL失败:", error);
-      // 备选方案：尝试使用固定URL格式
-      return `https://music.163.com/song/media/outer/url?id=${trackId}.mp3`;
+      // 发生错误时返回直连URL作为最后尝试
+      return directUrl;
     }
   }
 }
