@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
 import { parseBlob } from "music-metadata";
 import { SiNeteasecloudmusic } from "react-icons/si";
-import { MdQueueMusic } from "react-icons/md";
+import { MdQueueMusic, MdLyrics } from "react-icons/md";
 import Controls from "./Controls";
 import AlbumCover from "./AlbumCover";
 import ProgressControl from "./ProgressControl";
@@ -16,6 +16,8 @@ import { usePlaylistCache } from "./hooks/usePlaylistCache";
 import { NeteaseMusicSource } from "./services/NeteaseMusicSource";
 import PlaylistView from "./PlaylistView";
 import { useAudioPreload } from "./hooks/useAudioPreload";
+import LyricView from "./LyricView";
+import { useLyricCache } from "./hooks/useLyricCache";
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -32,6 +34,7 @@ const MusicPlayer = () => {
   const [error, setError] = useState(null);
   const [isInitialized, setIsInitialized] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
+  const [showLyrics, setShowLyrics] = useState(false); // 控制歌词显示
   const [preloadedTracks, setPreloadedTracks] = useState(new Set());
 
   const audioRef = useRef(null);
@@ -46,6 +49,7 @@ const MusicPlayer = () => {
   } = useMusicSource();
   const { preloadNextAudio, clearPreload, preloadedTrackId } =
     useAudioPreload();
+  const { preloadLyrics } = useLyricCache();
 
   // Function to safely get current track
   const getCurrentTrack = () => {
@@ -418,6 +422,43 @@ const MusicPlayer = () => {
     clearPreload();
   }, [playlistId]);
 
+  // Toggle lyrics display
+  const toggleLyrics = () => {
+    setShowLyrics(!showLyrics);
+  };
+
+  // Handle lyrics seek
+  const handleLyricSeek = (time) => {
+    if (!audioRef.current) return;
+    audioRef.current.currentTime = time;
+    setCurrentTime(time);
+  };
+
+  // 当歌曲变化时预加载歌词
+  useEffect(() => {
+    if (
+      !isLoading &&
+      playlist &&
+      playlist.length > 0 &&
+      currentTrackIndex >= 0
+    ) {
+      const currentTrack = playlist[currentTrackIndex];
+      if (currentTrack && currentTrack.id) {
+        // 预加载当前歌曲的歌词
+        preloadLyrics(currentTrack.id);
+
+        // 如果有下一首歌曲，也预加载它的歌词
+        if (playlist.length > 1) {
+          const nextIndex = (currentTrackIndex + 1) % playlist.length;
+          const nextTrack = playlist[nextIndex];
+          if (nextTrack && nextTrack.id) {
+            preloadLyrics(nextTrack.id);
+          }
+        }
+      }
+    }
+  }, [currentTrackIndex, playlist, isLoading, preloadLyrics]);
+
   const EmptyPlaylist = ({ isDarkMode }) => (
     <div
       className={`flex flex-col items-center justify-center h-16 space-y-2 ${
@@ -444,188 +485,231 @@ const MusicPlayer = () => {
 
   return (
     <div className="fixed inset-x-0 bottom-0 flex justify-center items-center pb-1 md:pb-8 z-50 pointer-events-none">
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className={`relative pointer-events-auto w-[75%] mx-auto md:mx-4 md:w-[600px] backdrop-blur-md rounded-lg md:rounded-2xl p-1.5 md:p-4 shadow-lg
+      <div className="relative w-[75%] md:w-[600px] max-w-[650px]">
+        {/* LyricView component - positioned above the player */}
+        {!isLoading && playlist && playlist.length > 0 && (
+          <div className="absolute bottom-full left-0 right-0 flex justify-center w-full mb-8 px-2 md:px-0">
+            <div style={{ width: "100%", maxWidth: "750px", margin: "0 auto" }}>
+              <LyricView
+                isDarkMode={isDarkMode}
+                currentTrackId={getCurrentTrack()?.id}
+                currentTime={currentTime}
+                isVisible={showLyrics}
+                onClose={() => setShowLyrics(false)}
+                onSeek={handleLyricSeek}
+                albumCover={currentCover}
+              />
+            </div>
+          </div>
+        )}
+
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className={`relative pointer-events-auto w-full backdrop-blur-md rounded-lg md:rounded-2xl p-1.5 md:p-4 shadow-lg
                    ${
                      isDarkMode
                        ? "bg-[#073642]/80 border-[#586e75]"
                        : "bg-[#eee8d5]/80 border-[#93a1a1]"
                    }
                    border`}
-      >
-        {/* Add playlist view */}
-        {showPlaylist && !isLoading && playlist && playlist.length > 0 && (
-          <PlaylistView
-            isDarkMode={isDarkMode}
-            playlist={playlist}
-            currentTrackIndex={currentTrackIndex}
-            onTrackSelect={handleTrackSelect}
-            onClose={() => setShowPlaylist(false)}
-          />
-        )}
+        >
+          {/* Add playlist view */}
+          {showPlaylist && !isLoading && playlist && playlist.length > 0 && (
+            <PlaylistView
+              isDarkMode={isDarkMode}
+              playlist={playlist}
+              currentTrackIndex={currentTrackIndex}
+              onTrackSelect={handleTrackSelect}
+              onClose={() => setShowPlaylist(false)}
+            />
+          )}
 
-        <div className="flex justify-between items-center mb-2">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setShowSourceSelector(!showSourceSelector)}
-              className={`text-xs px-2 py-1 rounded-md hidden sm:block ${
-                isDarkMode
-                  ? "bg-[#002b36] text-[#839496]"
-                  : "bg-[#fdf6e3] text-[#657b83]"
-              }`}
-            >
-              <div className="flex items-center gap-1">
-                <SiNeteasecloudmusic className="w-3 h-3" />
-                <span>Netease Music</span>
-              </div>
-            </button>
-
-            {/* Display playlist name and track count */}
-            {playlistInfo && (
-              <div
-                className={`text-xs hidden sm:block ${
-                  isDarkMode ? "text-[#93a1a1]" : "text-[#586e75]"
+          <div className="flex justify-between items-center mb-2">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowSourceSelector(!showSourceSelector)}
+                className={`text-xs px-2 py-1 rounded-md hidden sm:block ${
+                  isDarkMode
+                    ? "bg-[#002b36] text-[#839496]"
+                    : "bg-[#fdf6e3] text-[#657b83]"
                 }`}
               >
-                {playlistInfo.name}
+                <div className="flex items-center gap-1">
+                  <SiNeteasecloudmusic className="w-3 h-3" />
+                  <span>Netease Music</span>
+                </div>
+              </button>
+
+              {/* Display playlist name and track count */}
+              {playlistInfo && (
+                <div
+                  className={`text-xs hidden sm:block ${
+                    isDarkMode ? "text-[#93a1a1]" : "text-[#586e75]"
+                  }`}
+                >
+                  {playlistInfo.name}
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              {/* Lyrics button - Updated for better visibility */}
+              {!isLoading && playlist && playlist.length > 0 && (
+                <button
+                  onClick={toggleLyrics}
+                  className={`text-xs px-2 py-1.5 rounded-md flex items-center gap-1 transition-colors ${
+                    isDarkMode
+                      ? showLyrics
+                        ? "bg-[#073642] text-[#93a1a1]"
+                        : "hover:bg-[#073642] text-[#839496] bg-[#002b36]"
+                      : showLyrics
+                      ? "bg-[#eee8d5] text-[#586e75]"
+                      : "hover:bg-[#eee8d5] text-[#657b83] bg-[#fdf6e3]"
+                  }`}
+                  aria-label="Show lyrics"
+                >
+                  <div className="flex items-center gap-1">
+                    <MdLyrics className="w-4 h-4" />
+                    <span className="hidden sm:inline">Lyrics</span>
+                  </div>
+                </button>
+              )}
+
+              {/* Playlist button and track counter combined */}
+              {!isLoading && playlist && playlist.length > 0 && (
+                <button
+                  onClick={() => setShowPlaylist(!showPlaylist)}
+                  className={`text-xs px-3 py-1.5 rounded-md flex items-center gap-2 transition-colors ${
+                    isDarkMode
+                      ? showPlaylist
+                        ? "bg-[#073642] text-[#93a1a1]"
+                        : "hover:bg-[#073642] text-[#839496] bg-[#002b36]"
+                      : showPlaylist
+                      ? "bg-[#eee8d5] text-[#586e75]"
+                      : "hover:bg-[#eee8d5] text-[#657b83] bg-[#fdf6e3]"
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <MdQueueMusic className="w-4 h-4" />
+                    <span className="hidden sm:inline">Playlist</span>
+                  </div>
+                  <span className="opacity-75">
+                    {currentTrackIndex + 1}/{playlist.length}
+                  </span>
+                </button>
+              )}
+            </div>
+
+            {/* Source selector popup */}
+            {showSourceSelector && (
+              <div
+                className={`absolute top-0 transform -translate-y-full mt-[-8px] z-10 rounded-md shadow-lg p-2 hidden sm:block ${
+                  isDarkMode
+                    ? "bg-[#002b36] text-[#839496]"
+                    : "bg-[#fdf6e3] text-[#657b83]"
+                }`}
+              >
+                <div className="flex flex-col">
+                  <div className="mt-2">
+                    <div className="text-xs mb-2 opacity-80">
+                      Enter your Netease Cloud Music playlist ID
+                      <div className="text-[10px] mt-1 opacity-60">
+                        (You can find it in the playlist URL:
+                        music.163.com/playlist?id=...)
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Enter Playlist ID"
+                        defaultValue={playlistId}
+                        onKeyPress={handlePlaylistIdChange}
+                        className={`text-xs flex-1 px-2 py-1.5 rounded-md outline-none border ${
+                          isDarkMode
+                            ? "bg-[#073642] text-[#839496] border-[#586e75] focus:border-[#839496]"
+                            : "bg-[#eee8d5] text-[#657b83] border-[#93a1a1] focus:border-[#657b83]"
+                        }`}
+                      />
+                      <button
+                        onClick={() => {
+                          const input = document.querySelector(
+                            'input[placeholder="Enter Playlist ID"]'
+                          );
+                          if (input && input.value) {
+                            setPlaylistId(input.value);
+                            setShowSourceSelector(false);
+                          }
+                        }}
+                        className={`text-xs px-4 py-1.5 rounded-md transition-colors ${
+                          isDarkMode
+                            ? "bg-[#268bd2] hover:bg-[#2aa198] text-[#fdf6e3]"
+                            : "bg-[#268bd2] hover:bg-[#2aa198] text-[#fdf6e3]"
+                        }`}
+                      >
+                        Confirm
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
 
-          {/* Playlist button and track counter combined */}
-          {!isLoading && playlist && playlist.length > 0 && (
-            <button
-              onClick={() => setShowPlaylist(!showPlaylist)}
-              className={`text-xs px-3 py-1.5 rounded-md flex items-center gap-2 transition-colors ${
-                isDarkMode
-                  ? showPlaylist
-                    ? "bg-[#073642] text-[#93a1a1]"
-                    : "hover:bg-[#073642] text-[#839496] bg-[#002b36]"
-                  : showPlaylist
-                  ? "bg-[#eee8d5] text-[#586e75]"
-                  : "hover:bg-[#eee8d5] text-[#657b83] bg-[#fdf6e3]"
-              }`}
-            >
-              <div className="flex items-center gap-1.5">
-                <MdQueueMusic className="w-4 h-4" />
-                <span className="hidden sm:inline">Playlist</span>
+          {!isInitialized || isLoading ? (
+            <LoadingState isDarkMode={isDarkMode} />
+          ) : error ? (
+            <ErrorState isDarkMode={isDarkMode} message={error} />
+          ) : !playlist || playlist.length === 0 ? (
+            <EmptyPlaylist isDarkMode={isDarkMode} />
+          ) : (
+            <>
+              <audio
+                ref={audioRef}
+                src={currentTrackUrl}
+                preload="auto"
+                crossOrigin="anonymous"
+                onError={() => {
+                  if (playlist && playlist.length > 1) {
+                    setTimeout(playNext, 2000);
+                  }
+                }}
+              />
+
+              <div className="flex flex-col md:flex-row items-center space-y-1 md:space-y-0 md:space-x-4">
+                <AlbumCover
+                  currentCover={currentCover}
+                  isDarkMode={isDarkMode}
+                  isPlaying={isPlaying}
+                />
+
+                <ProgressControl
+                  isDarkMode={isDarkMode}
+                  currentTime={currentTime}
+                  duration={duration}
+                  volume={volume}
+                  title={getCurrentTrack()?.name || "Loading..."}
+                  artist={
+                    getCurrentTrack()?.artists?.[0]?.name || "Unknown Artist"
+                  }
+                  onTimeChange={handleTimeChange}
+                  onVolumeChange={handleVolumeChange}
+                  formatTime={formatTime}
+                  getVolumeIcon={getVolumeIcon}
+                />
+
+                <Controls
+                  isDarkMode={isDarkMode}
+                  isPlaying={isPlaying}
+                  onPlayPrevious={playPrevious}
+                  onTogglePlay={togglePlay}
+                  onPlayNext={playNext}
+                />
               </div>
-              <span className="opacity-75">
-                {currentTrackIndex + 1}/{playlist.length}
-              </span>
-            </button>
+            </>
           )}
-
-          {/* Source selector popup */}
-          {showSourceSelector && (
-            <div
-              className={`absolute top-0 transform -translate-y-full mt-[-8px] z-10 rounded-md shadow-lg p-2 hidden sm:block ${
-                isDarkMode
-                  ? "bg-[#002b36] text-[#839496]"
-                  : "bg-[#fdf6e3] text-[#657b83]"
-              }`}
-            >
-              <div className="flex flex-col">
-                <div className="mt-2">
-                  <div className="text-xs mb-2 opacity-80">
-                    Enter your Netease Cloud Music playlist ID
-                    <div className="text-[10px] mt-1 opacity-60">
-                      (You can find it in the playlist URL:
-                      music.163.com/playlist?id=...)
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="Enter Playlist ID"
-                      defaultValue={playlistId}
-                      onKeyPress={handlePlaylistIdChange}
-                      className={`text-xs flex-1 px-2 py-1.5 rounded-md outline-none border ${
-                        isDarkMode
-                          ? "bg-[#073642] text-[#839496] border-[#586e75] focus:border-[#839496]"
-                          : "bg-[#eee8d5] text-[#657b83] border-[#93a1a1] focus:border-[#657b83]"
-                      }`}
-                    />
-                    <button
-                      onClick={() => {
-                        const input = document.querySelector(
-                          'input[placeholder="Enter Playlist ID"]'
-                        );
-                        if (input && input.value) {
-                          setPlaylistId(input.value);
-                          setShowSourceSelector(false);
-                        }
-                      }}
-                      className={`text-xs px-4 py-1.5 rounded-md transition-colors ${
-                        isDarkMode
-                          ? "bg-[#268bd2] hover:bg-[#2aa198] text-[#fdf6e3]"
-                          : "bg-[#268bd2] hover:bg-[#2aa198] text-[#fdf6e3]"
-                      }`}
-                    >
-                      Confirm
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {!isInitialized || isLoading ? (
-          <LoadingState isDarkMode={isDarkMode} />
-        ) : error ? (
-          <ErrorState isDarkMode={isDarkMode} message={error} />
-        ) : !playlist || playlist.length === 0 ? (
-          <EmptyPlaylist isDarkMode={isDarkMode} />
-        ) : (
-          <>
-            <audio
-              ref={audioRef}
-              src={currentTrackUrl}
-              preload="auto"
-              crossOrigin="anonymous"
-              onError={() => {
-                if (playlist && playlist.length > 1) {
-                  setTimeout(playNext, 2000);
-                }
-              }}
-            />
-
-            <div className="flex flex-col md:flex-row items-center space-y-1 md:space-y-0 md:space-x-4">
-              <AlbumCover
-                currentCover={currentCover}
-                isDarkMode={isDarkMode}
-                isPlaying={isPlaying}
-              />
-
-              <ProgressControl
-                isDarkMode={isDarkMode}
-                currentTime={currentTime}
-                duration={duration}
-                volume={volume}
-                title={getCurrentTrack()?.name || "Loading..."}
-                artist={
-                  getCurrentTrack()?.artists?.[0]?.name || "Unknown Artist"
-                }
-                onTimeChange={handleTimeChange}
-                onVolumeChange={handleVolumeChange}
-                formatTime={formatTime}
-                getVolumeIcon={getVolumeIcon}
-              />
-
-              <Controls
-                isDarkMode={isDarkMode}
-                isPlaying={isPlaying}
-                onPlayPrevious={playPrevious}
-                onTogglePlay={togglePlay}
-                onPlayNext={playNext}
-              />
-            </div>
-          </>
-        )}
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 };

@@ -203,3 +203,50 @@ input[type="range"]::-moz-range-track {
 .volume-slider::-moz-range-track {
   height: 2px !important;
 }
+
+/* 歌词动画效果 */
+@keyframes pulse {
+  0% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.lyric-gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent !important;
+  background-image: linear-gradient(90deg, #268bd2, #2aa198, #268bd2);
+  background-size: 200% auto;
+  animation: gradient-shift 3s linear infinite;
+}
+
+/* 确保歌词容器中的滚动行为受控 */
+.overscroll-behavior-y-contain {
+  overscroll-behavior-y: contain;
+}
+
+.touch-action-pan-y {
+  touch-action: pan-y;
+}
+
+.overscroll-none {
+  overscroll-behavior: none;
+}

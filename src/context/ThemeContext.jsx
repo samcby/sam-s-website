@@ -55,7 +55,9 @@ export function ThemeProvider({ children }) {
     const userChoice = safeLocalStorage.getItem("userThemeChoice");
     const systemDarkMode = getSystemTheme();
 
-    log(`初始化主题 - 保存的主题: ${savedTheme}, 用户选择: ${userChoice}, 系统暗黑模式: ${systemDarkMode}`);
+    log(
+      `初始化主题 - 保存的主题: ${savedTheme}, 用户选择: ${userChoice}, 系统暗黑模式: ${systemDarkMode}`
+    );
 
     if (savedTheme && userChoice === "true") {
       // 用户手动选择的主题优先
