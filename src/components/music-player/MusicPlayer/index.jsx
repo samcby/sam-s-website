@@ -15,6 +15,7 @@ import { useMusicSource } from "./hooks/useMusicSource";
 import { usePlaylistCache } from "./hooks/usePlaylistCache";
 import { NeteaseMusicSource } from "./services/NeteaseMusicSource";
 import PlaylistView from "./PlaylistView";
+import { useAudioPreload } from "./hooks/useAudioPreload";
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -31,6 +32,7 @@ const MusicPlayer = () => {
   const [error, setError] = useState(null);
   const [isInitialized, setIsInitialized] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
+  const [preloadedTracks, setPreloadedTracks] = useState(new Set());
 
   const audioRef = useRef(null);
   const { isDarkMode } = useTheme();
@@ -42,6 +44,8 @@ const MusicPlayer = () => {
     switchSource,
     registerSource,
   } = useMusicSource();
+  const { preloadNextAudio, clearPreload, preloadedTrackId } =
+    useAudioPreload();
 
   // Function to safely get current track
   const getCurrentTrack = () => {
@@ -64,6 +68,8 @@ const MusicPlayer = () => {
         registerSource("netease", neteaseSource);
         await switchSource("netease");
         setIsInitialized(true);
+        // Auto-play after initialization
+        setIsPlaying(true);
       } catch (err) {
         setError("Failed to initialize player");
       }
@@ -99,20 +105,39 @@ const MusicPlayer = () => {
         trackIndex === undefined ||
         !playlist[trackIndex]
       ) {
-        return;
+        return null;
       }
 
-      const metadata = await loadMetadata(playlist[trackIndex].id);
+      const currentTrackId = playlist[trackIndex].id;
+      const metadata = await loadMetadata(currentTrackId);
 
-      if (metadata && metadata.cover) {
-        setCurrentCover(metadata.cover);
-      } else if (playlist[trackIndex].cover) {
-        setCurrentCover(playlist[trackIndex].cover);
+      // 验证返回的元数据是否匹配当前歌曲
+      if (metadata && metadata.id === currentTrackId) {
+        if (metadata.cover) {
+          setCurrentCover(metadata.cover);
+        } else if (playlist[trackIndex].album?.picUrl) {
+          setCurrentCover(playlist[trackIndex].album.picUrl);
+        } else {
+          setCurrentCover(null);
+        }
+        return metadata;
       } else {
-        setCurrentCover(null);
+        console.warn("元数据不匹配当前歌曲，使用播放列表数据");
+        // 使用播放列表中的数据作为备选
+        setCurrentCover(playlist[trackIndex].album?.picUrl || null);
+        return {
+          id: currentTrackId,
+          title: playlist[trackIndex].name,
+          artist: playlist[trackIndex].artists?.[0]?.name || "未知歌手",
+          album: playlist[trackIndex].album?.name || "未知专辑",
+          cover: playlist[trackIndex].album?.picUrl || null,
+          duration: playlist[trackIndex].duration || 0,
+        };
       }
     } catch (error) {
+      console.error("获取元数据失败:", error);
       setCurrentCover(null);
+      return null;
     }
   };
 
@@ -139,10 +164,58 @@ const MusicPlayer = () => {
 
   // Extract new metadata and URL when changing tracks
   useEffect(() => {
-    if (!isLoading && playlist.length > 0) {
-      extractMetadata(currentTrackIndex);
-      loadCurrentTrackUrl(currentTrackIndex);
-    }
+    let retryCount = 0;
+    const maxRetries = 3;
+    const initialDelay = 1000; // 1 second delay for first load
+
+    const loadTrackData = async () => {
+      try {
+        if (
+          !isLoading &&
+          playlist &&
+          playlist.length > 0 &&
+          currentTrackIndex >= 0 &&
+          currentTrackIndex < playlist.length
+        ) {
+          // Add delay for initial load
+          if (!currentTrackUrl && retryCount === 0) {
+            await new Promise((resolve) => setTimeout(resolve, initialDelay));
+          }
+
+          const metadata = await extractMetadata(currentTrackIndex);
+
+          // If metadata failed and we haven't exceeded max retries
+          if (!metadata && retryCount < maxRetries) {
+            retryCount++;
+            console.log(
+              `Retrying metadata load (${retryCount}/${maxRetries})...`
+            );
+            setTimeout(loadTrackData, 1000 * retryCount); // Exponential backoff
+            return;
+          }
+
+          await loadCurrentTrackUrl(currentTrackIndex);
+        }
+      } catch (error) {
+        if (retryCount < maxRetries) {
+          retryCount++;
+          console.log(
+            `Retrying after error (${retryCount}/${maxRetries}):`,
+            error
+          );
+          setTimeout(loadTrackData, 1000 * retryCount);
+        } else {
+          console.warn("Failed to load track data after retries:", error);
+        }
+      }
+    };
+
+    loadTrackData();
+
+    // Cleanup function
+    return () => {
+      retryCount = maxRetries; // Prevent any pending retries
+    };
   }, [currentTrackIndex, playlist, isLoading]);
 
   // Handle music source change
@@ -327,6 +400,23 @@ const MusicPlayer = () => {
     setIsPlaying(true);
     setShowPlaylist(false);
   };
+
+  // 在当前歌曲加载完成后预加载下一首
+  useEffect(() => {
+    if (duration > 0 && playlist?.length > 1) {
+      const nextIndex = (currentTrackIndex + 1) % playlist.length;
+      const nextTrackId = playlist[nextIndex].id;
+
+      if (nextTrackId !== preloadedTrackId) {
+        preloadNextAudio(nextTrackId, audioQuality);
+      }
+    }
+  }, [duration, currentTrackIndex, playlist]);
+
+  // 切换播放列表时清理预加载
+  useEffect(() => {
+    clearPreload();
+  }, [playlistId]);
 
   const EmptyPlaylist = ({ isDarkMode }) => (
     <div
