@@ -72,8 +72,6 @@ const MusicPlayer = () => {
         registerSource("netease", neteaseSource);
         await switchSource("netease");
         setIsInitialized(true);
-        // Auto-play after initialization
-        setIsPlaying(true);
       } catch (err) {
         setError("Failed to initialize player");
       }
@@ -81,6 +79,19 @@ const MusicPlayer = () => {
 
     initializePlayer();
   }, []);
+
+  // 添加新的逻辑在加载完成后自动播放
+  useEffect(() => {
+    // 只有当初始化完成且有音乐地址时才尝试播放
+    if (isInitialized && currentTrackUrl && audioRef.current && !isPlaying) {
+      // 延迟一点再开始播放，确保音频已加载
+      const timer = setTimeout(() => {
+        togglePlay();
+      }, 800);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isInitialized, currentTrackUrl]);
 
   // Update music source when playlist ID changes
   useEffect(() => {

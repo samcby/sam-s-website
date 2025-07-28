@@ -1,30 +1,41 @@
 const TIMELINE_ITEMS = [
   {
-    date: "March 2025 - June 2025",
+    date: "June 2025 - Sept 2025",
     title: "Software Engineer Intern",
-    location: "Nvidia ",
-    description: "CUDA Development",
+    location: "TikTok | San Jose, CA",
+    description: "Ads Infrastructure & Auto-Scaling Platform Development",
+    logo: "/images/experience/tiktok_logo.jpeg",
+    details:
+      "Working in TikTok Ads department, developing automated service resource capacity management using ByteFaaS. Built system to read service capacity utilization and implement auto-scaling strategies for resource optimization.\n\n• Developed ByteFaaS-based auto-scaling platform for TikTok Ads infrastructure\n• Implemented service capacity monitoring and utilization tracking across multiple ad services\n• Created intelligent scaling strategies to automatically adjust resource allocation based on real-time demand\n• Optimized resource efficiency and reduced operational overhead through automated capacity management",
+  },
+  {
+    date: "Feb 2025 - June 2025",
+    title: "Software Engineer Intern",
+    location: "Nvidia | Santa Clara, CA",
+    description: "CUDA Test Automation & AI-Powered Hardware Analysis",
     logo: "/images/experience/nvidia_logo.jpeg",
-    details: "Incoming",
+    details:
+      "Developed 'auto-triage' web tool (full-stack) to help CUDA test engineers automate hardware testing and visualize performance data. Implemented algorithm analysis for testcase failure reasons (rule-based) and deployed large language models for data labeling and hardware recognition model training.\n\n• Collaborated with test engineers to optimize triage workflows and planned AI-based fault strategy auto-generation system\n• Participated in CUDA test data auto-analysis platform development, implementing automatic fault classification, log pattern matching, and performance regression detection, supporting 200GB+ test data processing\n• Built React frontend with Flask backend and PostgreSQL database, achieving efficient data filtering and multi-table pagination queries\n• Developed backend data extraction modules for automated test data processing and analysis",
   },
   {
     date: "Dec 2024 - Feb 2025",
     title: "Software Engineer Intern",
     location: "Mercedes-Benz | Beijing, China",
     description:
-      "Designing and implementing scalable software systems to enhance system performance and reliability. Leading critical projects focused on optimizing workflows and system robustness.",
+      "Autonomous Driving 3D Visualization & Coordinate System Development",
     logo: "https://p.ipic.vip/ru4usl.svg",
     details:
-      "Part of the Autonomous Driving Perception Algorithm Team, focusing on data visualization and system optimization. Developed a simulation GUI tool using Python (PyQt5) to visualize JSON data, creating interactive 3D HD maps for debugging and evaluation",
+      "Developed interactive 3D HD map visualization tool using PyQt5 GUI for autonomous driving sensor data and high-precision map visualization. Implemented JSON format parsing, loading, rendering and coordinate system conversion between vehicle and global coordinates.\n\n• Built coordinate transformation module for sensor annotation alignment, identified and fixed coordinate calculation bugs to significantly improve annotation accuracy\n• Refactored 2000+ lines of legacy PyQt5 code into 1500 lines modular design following SOLID principles, improving maintainability and helping algorithm colleagues integrate more efficiently\n• Created detailed documentation and user manuals for team onboarding, collaborated with perception algorithm and test engineers for continuous product iteration",
   },
   {
-    date: "Sept 2024 - Present",
+    date: "Sept 2024 - March 2026",
     title: "Master of Computer Science",
     location: "UCLA | Los Angeles, CA",
     description:
       "GPA: 4.0/4.0 | Focused on distributed systems, artificial intelligence, and big data analytics.",
     logo: "https://p.ipic.vip/q1ysgx.png",
-    details: "Key Courses: Big Data Analytics (A+)  ",
+    details:
+      "Key Courses: Big Data Analytics (A+) | Expected Graduation: March 2026",
   },
   {
     date: "March 2023 - May 2023",
