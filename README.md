@@ -112,16 +112,3 @@ Also thanks to various open-source libraries used throughout the project.&#x20;
 ## 📄 License
 
 Include a `LICENSE` file in your repository to declare the project license (e.g., MIT). If you want, I can add a standard MIT license text for you.
-
----
-
-## 📬 Contact / Personalize
-
-You can personalize this README by adding:
-
-* Your full name and title (e.g., Sam — Software Engineer)
-* A short “About me” blurb
-* Links to key projects with short descriptions and screenshots/GIFs
-* Contact email and social links (GitHub, LinkedIn, Twitter)
-
-If you want, tell me the exact personal details and links you want included and I’ll generate a fully personalized README ready to paste into your repo.
