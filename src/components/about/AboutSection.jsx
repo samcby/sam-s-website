@@ -36,8 +36,8 @@ const AboutSection = () => {
           <div className="md:col-span-4 flex justify-center">
             <div className="w-full max-w-[300px] relative rounded-xl overflow-hidden theme-shadow">
               <Image
-                src="/images/selfies.jpeg"
-                alt="Rick Yang"
+                src="/images/selfies.jpg"
+                alt="Sam Chen"
                 width={300}
                 height={300}
                 priority
@@ -53,42 +53,44 @@ const AboutSection = () => {
 
             <div className="space-y-4 text-sm sm:text-base lg:text-lg text-left leading-relaxed">
               <p>
-                I am <span className="font-semibold">Rick Yang</span>, a
-                passionate Full Stack Developer with a strong foundation in
-                Computer Science, holding a B.S. and pursuing an M.S. from UCLA.
-                I came from Canton, 🇨🇳, and I am currently living in Los
-                Angeles, CA, 🇺🇸. I can speak Cantonese, Mandarin, and English,
-                and currently learning Japanese.
+                I am <span className="font-semibold">Sam Chen</span>, a 
+                passionate and energetic IC enthusiast with a solid foundation in 
+                microelectronics science. I hold a B.E. in Microelectronics Science 
+                and Engineering and am currently pursuing a M.S. in ECE at UCLA. 
+                I came from Guangzhou, 🇨🇳, and currently live in Los Angeles, California. 
+                I can speak Mandarin and English, and am relatively proficient in Cantonese, 
+                but I still need to improve. 
               </p>
 
               <p>
-                I specialize in creating dynamic, scalable, and user-focused web
-                and mobile applications using technologies such as{" "}
+                I specialize in circuit and circuit board design, including 
+                analog, digital, and PCB design, using tools like{" "}
                 <span className="font-medium theme-primary">
-                  React, Vue, Angular, Redux, Node.js, Express, Spring Boot,
-                  PostgreSQL, and MongoDB
+                  Cadence Virtuoso, Vivado, and Altium Designer
                 </span>
-                , etc.. My expertise spans front-end and back-end development,
-                complemented by a solid understanding of software architecture
-                and machine learning.
+                , etc.. I'm also proficient in software development and writing 
+                using computer programming languages ​​like Python, Matlab, and C. 
+                Currently, my expertise spans multiple IC-related areas, including 
+                front-end circuit design, EDA, hardware acceleration, FPGAs, and devices.
               </p>
 
               <p>
-                I have multiple hands-on internship experience in different{" "}
-                <span className="font-semibold theme-secondary">BIG TECH</span>{" "}
-                companies like
+                I have had relevant research experience in different fields with 
+                different professors at{" "}
+                <span className="font-semibold theme-secondary">UCLA and SYSU</span>{" "}
+                I also have practical internship experience at
                 <span className="font-semibold theme-accent">
                   {" "}
-                  Alibaba, ByteDance, and Nvidia
+                  BTD and the Guangdong Greater Bay Area Institute of 
+                  Integrated Circuit and System 
                 </span>
                 .
               </p>
 
               <p>
-                Beyond coding, I&apos;m a DJ🎵, an avid traveler 🌠 (10+
-                countries this year), a furry lover 🐱🐶, a designer 🎨, and a
-                strategic gamer 🎮. I balance my technical pursuits with fitness
-                and outdoor activities.
+                Besides my professional life, I like playing piano, traveling, 
+                taking photos and videos and playing games🎮. I also love cats🐱, 
+                although I don’t have my own cat yet.
               </p>
               <p className="mt-3 text-sm italic theme-primary">
                 <Link
@@ -116,7 +118,7 @@ const AboutSection = () => {
               <span>Experience</span>
             </span>
           </TabButton>
-          <TabButton
+          {/* <TabButton
             selectTab={() => handleTabChange("skills")}
             active={tab === "skills"}
           >
@@ -124,7 +126,7 @@ const AboutSection = () => {
               <GiSkills className="text-lg" />
               <span>Skills</span>
             </span>
-          </TabButton>
+          </TabButton> */}
           <TabButton
             selectTab={() => handleTabChange("education")}
             active={tab === "education"}
@@ -170,30 +172,30 @@ const AboutSection = () => {
       <style jsx global>{`
         /* 浅色主题 */
         .light-theme {
-          --color-primary: #2075c7;
-          --color-secondary: #6236ff;
-          --color-accent: #e05252;
-          --color-text: #24292f;
-          --color-muted: #57606a;
-          --color-bg: #f6f8fa;
+          --color-primary: #6A9C89;
+          --color-secondary: #C3A68F;
+          --color-accent: #D98363;
+          --color-text: #4d4c4a;
+          --color-muted: #8a8886;
+          --color-bg: #faf8f2;
           --color-card-bg: #eee8d5;
-          --color-border: #d0d7de;
+          --color-border: #e0ddd7;
           --color-divider: #d8dee4;
-          --shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+          --shadow: 0 2px 8px rgba(77, 76, 74, 0.1);
         }
 
         /* 深色主题 */
         .dark-theme {
-          --color-primary: #58a6ff;
-          --color-secondary: #d2a8ff;
-          --color-accent: #ff7b72;
-          --color-text: #e6edf3;
-          --color-muted: #8b949e;
-          --color-bg: #0d1117;
-          --color-card-bg: #161b22;
-          --color-border: #30363d;
-          --color-divider: #30363d;
-          --shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+          --color-primary: #7aa9c7;
+          --color-secondary: #c3b5de;
+          --color-accent: #f0a993;
+          --color-text: #f2f4f7;
+          --color-muted: #98a2b3;
+          --color-bg: #101828;
+          --color-card-bg: #1d2939;
+          --color-border: #344054;
+          --color-divider: #344054;
+          --shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
 
         /* 应用CSS变量的工具类 */

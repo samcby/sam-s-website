@@ -28,13 +28,13 @@ const HeroTextContent = () => {
         <TypeAnimation
           className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
           sequence={[
-            "Rick",
+            "Sam",
             1000,
-            "Fullstack Developer",
+            "IC Designer",
             1000,
-            "Mobile Developer",
+            "Hardware Enthusiasts",
             1000,
-            "UI/UX Designer",
+            "Music Lover",
             1000,
           ]}
           wrapper="span"
@@ -51,7 +51,7 @@ const HeroTextContent = () => {
       </p>
       <div className="flex flex-col items-center sm:items-start">
         <Link
-          href="https://drive.google.com/file/d/1M9ZOixqmEizBYVbsR6rsMwETaKILRIX1/view?usp=sharing"
+          href="https://drive.google.com/file/d/1aMRk6cMOr5sgWcwZOsVDEXbRZ4Pq6Poo/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
           className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-base sm:text-lg font-semibold
@@ -88,14 +88,14 @@ const HeroTextContent = () => {
             <span className="animate-pulse">✨</span>
             The 3D model is{" "}
             <Link
-              href="https://chiikawa.fandom.com/wiki/Usagi"
+              href="https://skfb.ly/prRXD"
               target="_blank"
               rel="noopener noreferrer"
               className="font-bold hover:underline"
             >
-              Usagi
+              Oiiaioooooiai Cat
             </Link>
-            <span className="animate-bounce inline-block">🐰</span>
+            <span className="animate-bounce inline-block">🐱</span>
           </span>
 
           <div
@@ -107,8 +107,7 @@ const HeroTextContent = () => {
                 : "bg-[#eee8d5] text-[#657b83] border border-[#d0d7de]"
             }`}
           >
-            My favorite character and personal avatar from Chiikawa series.
-            &quot;Usagi&quot; means rabbit in Japanese
+            This is very interesting, I put it here for your entertainment.
           </div>
         </div>
       </div>

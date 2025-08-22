@@ -60,13 +60,12 @@ export const getInitialPosition = (index, total, containerDimensions) => {
 
 export const getWindowTitle = (id) => {
   switch(id) {
-    case 'photography': return "Photography";
+    case 'videography': return "Videography";
     case 'music': return "Music";
-    case 'pet': return "Pet";
+    case 'games': return "Games";
     case 'travel': return "Travel";
-    case 'fitness': return "Fitness";
-    case 'anime': return "Anime";
-    case 'art': return "Art";
+    case 'Personal Media': return "Personal Media";
+    case 'movie': return "Movie";
     case 'volunteer': return "Volunteer";
     default: return "";
   }

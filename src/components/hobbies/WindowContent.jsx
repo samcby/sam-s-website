@@ -10,22 +10,20 @@ const WindowContent = ({ id }) => {
   const imageHeight = isVerySmall ? 120 : isMobile ? 150 : 200;
   
   switch(id) {
-    case 'photography':
+    case 'videography':
       return (
         <div data-handle="true">
           <p className="text-xs mb-1 sm:mb-2 line-clamp-2 sm:line-clamp-3">
-            {"I love capturing landscapes and portraits."}
+            {"I like shooting videos and recording life."}
           </p>
           <Image 
-            src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
+            src="/images/videography.jpg"
             width={imageWidth} 
             height={imageHeight} 
-            alt="photography"
-            className="rounded-md object-cover select-none pointer-events-none"
+            alt="videography"
+            className="rounded-md select-none pointer-events-none"
             sizes={`(max-width: 480px) ${isVerySmall ? '180px' : '220px'}, (max-width: 768px) 240px, 300px`}
             quality={75}
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSEkLUEwLi0tLTAtQFBGPzpQQERYYE9QUFJ5WGB3enh+P0BJeXhgY3j/2wBDAR"
           />
         </div>
       );
@@ -33,10 +31,10 @@ const WindowContent = ({ id }) => {
       return (
         <div data-handle="true">
           <p className="text-xs mb-1 sm:mb-2 line-clamp-2 sm:line-clamp-3">
-            {"Listening to jazz and electronic music is my hobby. I also play DJ."}
+            {"I like listening to all kinds of music, and I also love playing the piano."}
           </p>
           <Image 
-            src="/images/DJ.png" 
+            src="/images/music.jpg" 
             width={imageWidth} 
             height={imageHeight} 
             alt="dj"
@@ -46,17 +44,17 @@ const WindowContent = ({ id }) => {
           />
         </div>
       );
-    case 'pet':
+    case 'games':
       return (
         <div data-handle="true">
           <p className="text-xs mb-1 sm:mb-2 line-clamp-2 sm:line-clamp-3">
             {'I love cat and dog. I have 2 cats named "DoiYuk" (white) and "WongChoi" (black).'}
           </p>
           <Image 
-            src="/images/cats.webp" 
+            src="/images/games.jpg" 
             width={imageWidth} 
             height={imageHeight} 
-            alt="myCat"
+            alt="games"
             className="rounded-md select-none pointer-events-none"
             sizes={`(max-width: 480px) ${isVerySmall ? '180px' : '220px'}, (max-width: 768px) 240px, 300px`}
             quality={75}
@@ -67,73 +65,50 @@ const WindowContent = ({ id }) => {
       return (
         <div data-handle="true">
           <p className="text-xs mb-1 sm:mb-2 line-clamp-2 sm:line-clamp-3">
-            {"I love traveling and exploring new places. I've visited 10 countries in 2024."}
+            {"I love traveling and exploring the world."}
           </p>
           <Image 
-            src="https://images.unsplash.com/photo-1488085061387-422e29b40080"
+            src="/images/travel.jpg"
             width={imageWidth} 
             height={imageHeight} 
             alt="travel"
-            className="rounded-md object-cover select-none pointer-events-none"
-            sizes={`(max-width: 480px) ${isVerySmall ? '180px' : '220px'}, (max-width: 768px) 240px, 300px`}
-            quality={75}
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSEkLUEwLi0tLTAtQFBGPzpQQERYYE9QUFJ5WGB3enh+P0BJeXhgY3j/2wBDAR"
-          />
-        </div>
-      );
-    case 'fitness':
-      return (
-        <div data-handle="true">
-          <p className="text-xs mb-1 sm:mb-2 line-clamp-2 sm:line-clamp-3">
-            {"Staying active is important to me. I enjoy working out and maintaining a healthy lifestyle."}
-          </p>
-          <Image 
-            src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438"
-            width={imageWidth} 
-            height={imageHeight} 
-            alt="fitness"
-            className="rounded-md object-cover select-none pointer-events-none"
+            className="rounded-md select-none pointer-events-none"
             sizes={`(max-width: 480px) ${isVerySmall ? '180px' : '220px'}, (max-width: 768px) 240px, 300px`}
             quality={75}
           />
         </div>
       );
-    case 'anime':
+    case 'Personal Media':
       return (
         <div data-handle="true">
-          <p className="text-xs mb-1 sm:mb-2 line-clamp-2 sm:line-clamp-3">
-            {"I'm passionate about anime and manga. I enjoy various genres and collecting manga series."}
+          <p className="text-xs mb-1 sm:mb-2 line-clamp-2 sm:line-clamp-3 sm:line-clamp-4 sm:line-clamp-5 sm:line-clamp-6 sm:line-clamp-7 sm:line-clamp-8 sm:line-clamp-9">
+            {"While I'm not a professional self-media person, I've gradually experimented with publishing videos and text on various platforms. Here's my platform information:Bilibili: https://b23.tv/9rOArHI,RednoteID: 2750967319"}
           </p>
           <Image 
-            src="https://images.unsplash.com/photo-1578632767115-351597cf2477"
+            src="/images/wemedia.png"
             width={imageWidth} 
             height={imageHeight} 
-            alt="anime"
-            className="rounded-md object-cover select-none pointer-events-none"
+            alt="Personal Media"
+            className="rounded-md select-none pointer-events-none"
             sizes={`(max-width: 480px) ${isVerySmall ? '180px' : '220px'}, (max-width: 768px) 240px, 300px`}
             quality={75}
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSEkLUEwLi0tLTAtQFBGPzpQQERYYE9QUFJ5WGB3enh+P0BJeXhgY3j/2wBDAR"
           />
         </div>
       );
-    case 'art':
+    case 'movie':
       return (
         <div data-handle="true">
           <p className="text-xs mb-1 sm:mb-2 line-clamp-2 sm:line-clamp-3">
-            {"I enjoy drawing and painting. It's a great way to relax and explore my artistic side."}
+            {"I love watching movies, and my favorite is Dolby Cinema, which has excellent screen quality, color science, and sound effects."}
           </p>
           <Image 
-            src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b"
+            src="/images/movie.jpg"
             width={imageWidth} 
             height={imageHeight} 
-            alt="art"
+            alt="movie"
             className="rounded-md object-cover select-none pointer-events-none"
             sizes={`(max-width: 480px) ${isVerySmall ? '180px' : '220px'}, (max-width: 768px) 240px, 300px`}
             quality={75}
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSEkLUEwLi0tLTAtQFBGPzpQQERYYE9QUFJ5WGB3enh+P0BJeXhgY3j/2wBDAR"
           />
         </div>
       );
@@ -141,18 +116,16 @@ const WindowContent = ({ id }) => {
       return (
         <div data-handle="true">
           <p className="text-xs mb-1 sm:mb-2 line-clamp-2 sm:line-clamp-3">
-            {"I believe in giving back to the community through volunteer activities and teaching."}
+            {"I actively participate in social practice, especially helping young students."}
           </p>
           <Image 
-            src="https://images.unsplash.com/photo-1559027615-cd4628902d4a"
+            src="/images/volunteer.jpg"
             width={imageWidth} 
             height={imageHeight} 
             alt="volunteer"
             className="rounded-md object-cover select-none pointer-events-none"
             sizes={`(max-width: 480px) ${isVerySmall ? '180px' : '220px'}, (max-width: 768px) 240px, 300px`}
             quality={75}
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSEkLUEwLi0tLTAtQFBGPzpQQERYYE9QUFJ5WGB3enh+P0BJeXhgY3j/2wBDAR"
           />
         </div>
       );

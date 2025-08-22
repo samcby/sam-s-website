@@ -17,108 +17,108 @@ const validateTeachingExperience = (exp) => {
 
 export const educationData = [
   {
-    degree: "M.S. in Computer Science",
-    period: "09/2024 - 01/2026",
-    gpa: "4.0/4.0",
+    degree: "M.S. in Electrical and Computer Engineering",
+    period: "09/2025 - TBD",
+    gpa: "TBD",
     courses: [
-      "CS 214 - Big Data Systems",
-      "CS 219 - Big Data Analytics",
-      "CS 230 - Software Engineering",
-      "CS 269-3 - Deformable Models in Computer Vision",
-      "CS 495 - Teaching Assistant Training Seminar",
-      "ECE 219 - Large-Scale Data Mining: Models and Algorithms",
-      "ECE 232E - Large Scale Social and Complex Networks",
     ],
   },
   {
-    degree: "B.S. in Computer Science",
-    period: "09/2019 - 03/2024",
-    gpa: "3.91/4.0",
+    degree: "B.E. in Microelectronics Science and Engineering",
+    period: "09/2021 - 06/2025",
+    gpa: "3.7/4.0",
     courses: [
-      "CS 35L - Software Construction - Linux and Git",
-      "CS 111 - Operating Systems Principles",
-      "CS 118 - Computer Network Fundamentals",
-      "CS 122 - Computer Security",
+      "MR - Analogue Circuit",
+      "MR - Experiment of Analog Circuit",
+      "MR - Digital Circuit",
       {
-        name: "CS 130 - Software Engineering",
+        name: "MR - Digital Circuit Experiment",
         achievement:
-          "The only student who achieved an A+ grade among 110 students",
+          "Achieved 98/100 overall",
       },
-      "CS 131 - Programming Languages",
-      "CS 134 - Distributed Systems",
-      "CS 143 - Database Systems",
-      "CS 144 - Web Applications",
-      "CS M151B/EE M116C - Computer Systems Architecture",
-      "CS M152A - Introductory Digital Design Laboratory",
-      "CS 161 - Fundamentals of Artificial Intelligence",
-      "CS 174A - Computer Graphics",
-      "CS 180 - Introduction to Algorithms and Complexity",
-      "CS 181 - Introduction to Formal Languages and Automata",
-      "CS 188 - Software Security",
-      "CS 199 - Directed Research",
-      "CSM51A - Logic Design of Digital Systems",
+      "MR - Analog Integrated Circuits Design",
+      {
+        name: "MR -  Experiment of Analog Integrated Circuit Design",
+        achievement:
+          "Achieved 97/100 overall",
+      },      
+      "MR - Hardware Description Language and FPGA Design",
+      "MR - Signals and Systems",
+      "ME -  Data Structures and Algorithm Design",
+      {
+        name: "MR - Semiconductor Physics",
+        achievement:
+          "Ranked No.1 among 87 students",
+      },        
+      "MR -  Design of Digital Integrated Circuits",
+      "MR - Experiment of Digital Integrated Circuits Design",
+      "MR -  Microcomputer Principle and Embedded System",
+      "ME -  Electronic design automation",
+      "ME -  Open Experiment of Artificial Intelligence System Design",
+      "ME -   Hardware Accelerator for Artificial Intelligence",
+      "MR - Advanced Packaging Technology",
+      "MR - Advanced Micro/Nano-electronic Devices",
+      {
+        name: "MR -  Methodology of Integrated Circuit",
+        achievement:
+          "This is a graduate/doctoral level course and there are only 11 undergraduate students in the class taking this course",
+      },
     ],
     researchExperience: [
       {
-        title: "Research Assistant - Software Security Lab",
-        supervisor: "Prof. Yuan Tian",
-        period: "10/2023 - 04/2024",
+        title: "Research Assistant - Research on Optimization of 4-bit Absolute Value Detector",
+        supervisor: "Prof. Shasha Li",
+        period: "10/2022 - 01/2023",
         description: [
-          "Conducted research on binary program analysis and decompilation using machine learning approaches",
-          "Developed models for automated vulnerability detection and binary code analysis",
-          "Created training datasets and implemented binary code similarity analysis",
-          "Delivered monthly paper review presentations on latest advancements in software security and ML",
+          "Read extensive literature about the two-dimensional materials and luminescence",
+          "Gave presentations in the group about influential works",
+          "Independently finished a paper writing based on our findings and has been submitted to Nanomaterials",
         ],
         technologies: {
-          "Reverse Engineering": ["IDA Pro", "Ghidra"],
-          Development: ["LLVM", "Python"],
-          "Machine Learning": ["TensorFlow"],
+         "Design Tools": ["Adobe Illustrator"], 
+        },
+      },
+      {
+        title: "Research Assistant - CNN Hardware Accelerating",
+        supervisor: "Prof. Meiqi Wang",
+        period: "04/2024 - 06/2024",
+        description: [
+          "Used Python and Verilog to implement CNN hardware acceleration on the EGO1 FPGA",
+          "Incorporating hierarchical parallelization of input/output channels and feature maps, along with custom I/O buffer design for efficient deployment",
+        ],
+        technologies: {
+         "Design Tools": ["Pytorch", "Verilog", "Python", "Matlab", "Xilinx Vivado"], 
+        },
+      },
+      {
+        title: "Research Assistant -  Intelligent Control Chip Based on Robei EDA ",
+        supervisor: "Prof. Meiqi Wang",
+        period: "01/2024 - 07/2024",
+        description: [
+          "Implemented a Bluetooth-controlled robotic car and arm system through hardware-software co-design",
+          "Wrote Verilog for FPGA through Robei’s EDA(a tool without any IP cores) and developed a C# host program",
+          "Achieving smooth, precise control via PID algorithms",
+        ],
+        technologies: {
+         "Design Tools": ["Verilog", "Python", "Matlab", "Xilinx Vivado", "Robei EDA"], 
+        },
+      },      
+      {
+        title: "Research Assistant - Research on Accelerating Diffusion Channel Decoder ",
+        supervisor: "Prof. Siyu Liao",
+        period: "01/2025 - 07/2025",
+        description: [
+          "Explored the use of diffusion models and Transformers for channel decoding, enhancing a current framework with progressive distillation and dynamic Transformer compression to reduce model complexity",
+          "Validated the approach on multiple linear codes and channel conditions, achieving competitive or superior FER/BER compared to existing baselines",        
+          "The results were formed into an undergraduate thesis and won the school-level Outstanding Thesis Award",        
+        ],
+        technologies: {
+         "Design Tools": ["Pytorch", "Python", "Overleaf"], 
         },
       },
     ],
     teachingExperience: [
-      {
-        course: "CS 144 - Web Applications",
-        role: "Reader",
-        period: "Spring 2025",
-        responsibilities: RESPONSIBILITIES.READER,
-      },
-      {
-        course: "CS 111 - Operating Systems Principles",
-        role: "Teaching Assistant",
-        period: "Winter 2025",
-        responsibilities: RESPONSIBILITIES.TA,
-      },
-      {
-        course: "CS 131 - Programming Languages",
-        role: "Reader",
-        period: "Fall 2024",
-        responsibilities: RESPONSIBILITIES.READER,
-      },
-      {
-        course: "CS 130 - Software Engineering",
-        role: "Reader",
-        period: "Fall 2024",
-        responsibilities: RESPONSIBILITIES.READER,
-      },
-      {
-        course: "CS 118 - Computer Network Fundamentals",
-        role: "Reader",
-        period: "Winter 2024",
-        responsibilities: RESPONSIBILITIES.READER,
-      },
-      {
-        course: "CS 35L - Software Construction",
-        role: "Test Script Developer",
-        period: "Fall 2023",
-        responsibilities: RESPONSIBILITIES.TEST_SCRIPT_DEV,
-      },
-      {
-        course: "CS 246 - Web Information Management",
-        role: "Web Developer",
-        period: "Spring 2021",
-        responsibilities: RESPONSIBILITIES.WEB_DEV,
-      },
+      {},
     ].map((exp) => {
       if (!validateTeachingExperience(exp)) {
         console.warn(

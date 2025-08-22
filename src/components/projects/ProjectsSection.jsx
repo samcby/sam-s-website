@@ -36,18 +36,23 @@ const ProjectsSection = () => {
         />
         <ProjectTag
           onClick={handleTagChange}
-          name="Web"
-          isSelected={tag === "Web"}
+          name="EDA"
+          isSelected={tag === "EDA"}
         />
         <ProjectTag
           onClick={handleTagChange}
-          name="ML"
-          isSelected={tag === "ML"}
+          name="IC DESIGN"
+          isSelected={tag === "IC DESIGN"}
+        />        
+        <ProjectTag
+          onClick={handleTagChange}
+          name="HARDWARE ACC"
+          isSelected={tag === "HARDWARE ACC"}
         />
         <ProjectTag
           onClick={handleTagChange}
-          name="Mobile"
-          isSelected={tag === "Mobile"}
+          name="EMBEDDED"
+          isSelected={tag === "EMBEDDED"}
         />
       </div>
       <ul ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-12 w-full max-w-[1200px]">

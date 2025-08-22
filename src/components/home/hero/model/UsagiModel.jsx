@@ -4,7 +4,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 export const UsagiModel = () => {
-  const { scene } = useGLTF('/usagi.glb');
+  const { scene } = useGLTF('oiiaioooooiai_cat.glb');
   const modelRef = useRef();
   const { viewport } = useThree();
   const mouse = useRef([0, 0]);
@@ -70,8 +70,8 @@ export const UsagiModel = () => {
     <primitive 
       ref={modelRef}
       object={scene} 
-      scale={2} 
-      position={[0.5, -0.5, 0]}
+      scale={5} 
+      position={[-2, -0.5, 0]}
     />
   );
 }; 

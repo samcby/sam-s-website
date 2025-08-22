@@ -1,17 +1,16 @@
-# Rick's Portfolio Website
+# Sam's Portfolio Website
 
 This is a portfolio website built with Next.js and Tailwind CSS. It showcases your skills, projects, and achievements in an elegant and responsive design.
 
 ## Reference
 
 https://www.youtube.com/watch?v=K-hGb9W6wHc
+https://github.com/Rickyoung221/my-portfolio
 
 ### Features added:
 - Some UI elements and layouts were changed.
 - Dynamic Timelines feature for the experience section, can show the work experience in detail.
 - Drag and drop features: These could be extended to show hobbies and life or share photographs. Anything!
-- Mini Game: Snake Game import. And more will be added in the future. could be used to show a demo. 
-- Music Player: A modern, responsive music player with dynamic playlist loading, metadata extraction, and theme support. [Learn more](docs/MUSIC_PLAYER.md)
 
 ## Todo
 - [ ] Dark mode and light mode switch

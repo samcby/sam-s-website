@@ -2,7 +2,6 @@ import "./globals.css";
 import "react-resizable/css/styles.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import MusicPlayer from "@/components/music-player/MusicPlayer";
 import { ThemeProvider } from "@/context/ThemeContext";
 import CustomCursor from "@/components/CustomCursor";
 
@@ -89,7 +88,6 @@ export default function RootLayout({ children }) {
               {children}
             </main>
             <Footer />
-            <MusicPlayer />
             <CustomCursor />
           </div>
         </ThemeProvider>

@@ -60,9 +60,9 @@ const EmailSection = () => {
       <div className="w-full max-w-lg text-center">
         <p className={`text-sm sm:text-base mb-8 px-4 sm:px-0 transition-colors duration-300
                     ${isDarkMode ? 'text-[#839496]' : 'text-[#586e75]'}`}>
-          I&apos;m currently looking for new opportunities. Whether you have a
-          question or just want to say hi, I&apos;ll try my best to get back to
-          you! 😊
+          I&apos;m always open to challenges and hope to find more opportunities to 
+          learn, improve, and express myself. Of course, if you have any questions, 
+          or just want to make friends, please feel free to contact me!😊
         </p>
       </div>
 

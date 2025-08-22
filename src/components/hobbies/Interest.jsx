@@ -100,7 +100,7 @@ const Interests = ({ containerRef }) => {
     if (isInitializedRef.current || !containerDimensions.width || !containerDimensions.height) return;
 
     // 显示所有窗口，不再只在移动端显示部分窗口
-    const windowIds = ['photography', 'music', 'pet', 'travel', 'fitness', 'anime', 'art', 'volunteer'];
+    const windowIds = ['videography', 'music', 'games', 'travel', 'Personal Media', 'movie', 'volunteer'];
     
     setWindows(
       windowIds.map((id, index) => ({

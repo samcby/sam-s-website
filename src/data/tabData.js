@@ -35,7 +35,7 @@ const TabDataContent = () => {
         </div>
       ),
     },
-    {
+/*     {
       title: "Skills",
       id: "skills",
       content: (
@@ -43,7 +43,7 @@ const TabDataContent = () => {
           <SkillCircle />
         </div>
       ),
-    },
+    }, */
     {
       title: "Education",
       id: "education",
@@ -364,8 +364,7 @@ const TabDataContent = () => {
             className={`list-disc pl-4 flex flex-col items-start leading-tight
                          ${isDarkMode ? "text-[#ADB7BE]" : "text-[#586e75]"}`}
           >
-            <li>AWS Cloud Practitioner</li>
-            <li>Google Professional Cloud Developer</li>
+            <li></li>
           </ul>
         </div>
       ),
@@ -375,12 +374,12 @@ const TabDataContent = () => {
       id: "awards",
       content: (
         <div className="flex flex-col justify-center items-center">
-          <Image src="/images/sce.webp" alt="sce" width={150} height={150} />
+          <Image src="/images/sysu.jpg" alt="sce" width={150} height={150} />
           <ul
             className={`list-disc pl-4 text-center mt-4
                          ${isDarkMode ? "text-[#ADB7BE]" : "text-[#586e75]"}`}
           >
-            <li>Southern California Edison Scholar</li>
+            <li>Second-class Scholarship for Academic Excellence of SYSU</li>
           </ul>
         </div>
       ),

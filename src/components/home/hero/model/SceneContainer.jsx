@@ -10,7 +10,7 @@ export const SceneContainer = () => {
 
   return (
     <Canvas>
-      <color attach="background" args={[isDarkMode ? '#073642' : '#fdf6e3']} />
+      <color attach="background" args={[isDarkMode ? '#101828' : '#faf8f2']} />
       <Suspense fallback={null}>
         <CameraSetup />
         <LightSetup />
