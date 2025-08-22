@@ -1,107 +1,24 @@
 # Sam's Portfolio Website
 
-This is a portfolio website built with Next.js and Tailwind CSS. It showcases your skills, projects, and achievements in an elegant and responsive design.
+A clean, responsive personal portfolio built with **Next.js + Tailwind CSS**. This repository is a lightweight starter for showcasing projects, experience, and contact details with subtle animations and mobile-friendly layout.
 
-## Reference
-
-https://www.youtube.com/watch?v=K-hGb9W6wHc
-https://github.com/Rickyoung221/my-portfolio
-
-### Features added:
-- Some UI elements and layouts were changed.
-- Dynamic Timelines feature for the experience section, can show the work experience in detail.
-- Drag and drop features: These could be extended to show hobbies and life or share photographs. Anything!
-
-## Todo
-- [ ] Dark mode and light mode switch
-- [ ] multiple language switch
-- [ ] Moblie adaptation responsive
-- [ ] Music Player Enhancements
-  - [ ] Advanced UI: Minimized mode, PiP, visualizer effects
-  - [ ] Streaming: NetEase Cloud Music & Spotify integration
-  - [ ] Features: Lyrics display, playlist management
-  - [ ] Performance: Caching, preloading optimization
-  [See detailed roadmap](docs/MUSIC_PLAYER.md#future-enhancements)
-  
----
-
-## Usage
-
-### Development
-
-1. Start the development server:
-   ```bash
-   npm run dev
-   ```
-2. Open your browser and visit `http://localhost:3000` to view the website.
-
-### Build for Production
-
-1. Build the production version:
-   ```bash
-   npm run build
-   ```
-2. Start the production server:
-   ```bash
-   npm start
-   ```
-
-### Analyze Webpack Bundle
-
-This project includes the `@next/bundle-analyzer` plugin to analyze the bundle size of the application.
-
-1. Enable the bundle analyzer:
-   ```bash
-   ANALYZE=true npm run build
-   ```
-2. After the build completes, the bundle analysis report will be generated and opened in your browser. If it doesn't open automatically, locate the report in:
-   ```
-   .next/analyze/client.html
-   ```
+This English README is adapted and condensed from the project’s original README.&#x20;
 
 ---
 
-## Dependencies
+## ✨ Key Features
 
-The following are the main dependencies used in this project along with their versions:
-
-### **Production Dependencies**
-
-This project is using the latest module as it can.
-
-| Package                  | Version    | Description                                                                 |
-| ------------------------ | ---------- | --------------------------------------------------------------------------- |
-| `@emailjs/browser`       | `^4.4.1`   | Email API for sending emails from the browser.                              |
-| `@heroicons/react`       | `^2.0.18`  | Icon set for React projects.                                                |
-| `autoprefixer`           | `^10.4.20` | PostCSS plugin for adding vendor prefixes.                                  |
-| `eslint`                 | `^8.57.1`  | JavaScript linting tool. (!! Don't update to 9.0.0+, dependencies conflict) |
-| `eslint-config-next`     | `13.4.15`  | ESLint configuration for Next.js projects.                                  |
-| `framer-motion`          | `^11.15.0` | Motion library for animations in React.                                     |
-| `next`                   | `^15.1.2`  | React framework for server-side rendering and static site generation.       |
-| `postcss`                | `^8.4.49`  | CSS processing tool.                                                        |
-| `react`                  | `^18.3.1`  | JavaScript library for building user interfaces.                            |
-| `react-dom`              | `^18.3.1`  | Entry point of React to the DOM.                                            |
-| `react-animated-numbers` | `^0.16.0`  | Library for animating numbers in React.                                     |
-| `react-draggable`        | `^4.4.6`   | Draggable component for React.                                              |
-| `react-google-recaptcha` | `^3.1.0`   | Google reCAPTCHA integration for React.                                     |
-| `react-icons`            | `^5.4.0`   | Collection of popular icons for React projects.                             |
-| `react-resizable`        | `^3.0.5`   | Resizable component for React.                                              |
-| `react-router-dom`       | `^7.0.2`   | Declarative routing for React.                                              |
-| `react-type-animation`   | `^3.1.0`   | Typewriter animation library for React.                                     |
-| `resend`                 | `^1.0.0`   | Email API for developers.                                                   |
-| `tailwindcss`            | `^3.4.17`  | CSS framework with utility-first styling.                                   |
-
-### **Development Dependencies**
-
-| Package                 | Version   | Description                                                   |
-| ----------------------- | --------- | ------------------------------------------------------------- |
-| `@next/bundle-analyzer` | `^15.1.2` | Webpack plugin for visualizing the size of your output files. |
+* Responsive layout for desktop and mobile
+* Animated UI bits via Framer Motion (smooth, subtle interactions)
+* Sections for projects, experience/timeline, and contact
+* Example integrations: icon libraries, simple email/contact pattern, and optional bundle analysis for builds
+* Easy to customize: Tailwind + utility classes make style adjustments straightforward
 
 ---
 
-## Installation
+## 📦 Installation & Local Development
 
-Clone this repository and install the dependencies:
+1. Clone the repository and install dependencies:
 
 ```bash
 git clone <your-repo-url>
@@ -109,12 +26,102 @@ cd <project-directory>
 npm install
 ```
 
----
+2. Run the development server:
 
-## Configuration
+```bash
+npm run dev
+```
 
-### Webpack Bundle Analyzer
-
-The `@next/bundle-analyzer` plugin is already integrated into the project. To enable it, ensure the following configuration exists in your `next.config.js`:
+3. Open your browser to:
 
 ```
+http://localhost:3000
+```
+
+---
+
+## 🚀 Build & Production
+
+Build and run the production bundle:
+
+```bash
+npm run build
+npm start
+```
+
+Analyze bundle sizes (optional):
+
+```bash
+ANALYZE=true npm run build
+```
+
+If analysis is enabled, the report will be available at `.next/analyze/client.html`.
+
+---
+
+## 🧩 Main Dependencies (examples)
+
+* `next` — React framework (SSR / SSG)
+* `react`, `react-dom` — React core
+* `tailwindcss` — Utility-first CSS
+* `framer-motion` — Animations
+* `@heroicons/react`, `react-icons` — Icon sets
+
+(For the full and exact versions, check `package.json`.)
+
+---
+
+## 🛠 Development Tips
+
+* Centralize color & theme variables (CSS variables / global stylesheet) to change site-wide color quickly.
+* If you change `tailwind.config.js`, restart the dev server so Tailwind can regenerate classes.
+* Use your browser devtools to live-edit CSS variables when experimenting with palettes.
+
+---
+
+## 🗺 Roadmap / TODO
+
+* [ ] Polish light/dark theme switching and persistence
+* [ ] Improve mobile UX and accessibility
+* [ ] Add multilingual support (i18n)
+* [ ] Enhance the music player / media components (if used)
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and pull requests are welcome. Feel free to:
+
+* Open an issue to discuss a change
+* Submit a small PR for style, copy, or minor functionality improvements
+
+Before contributing, please ensure your code follows existing styles and that you explain the purpose of changes in the PR description.
+
+---
+
+## 🙏 Acknowledgements
+
+Big thanks to the projects and authors that inspired this repo:
+
+* `https://github.com/Rickyoung221/my-portfolio` — Thanks to this repository for structure and stylistic inspiration. (Author: Rickyoung221)
+
+Also thanks to various open-source libraries used throughout the project.&#x20;
+
+---
+
+## 📄 License
+
+Include a `LICENSE` file in your repository to declare the project license (e.g., MIT). If you want, I can add a standard MIT license text for you.
+
+---
+
+## 📬 Contact / Personalize
+
+You can personalize this README by adding:
+
+* Your full name and title (e.g., Sam — Software Engineer)
+* A short “About me” blurb
+* Links to key projects with short descriptions and screenshots/GIFs
+* Contact email and social links (GitHub, LinkedIn, Twitter)
+
+If you want, tell me the exact personal details and links you want included and I’ll generate a fully personalized README ready to paste into your repo.
